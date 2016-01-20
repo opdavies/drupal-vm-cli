@@ -1,0 +1,6 @@
+{
+    "require": {
+        "symfony/console": "^3.0",
+        "symfony/filesystem": "^3.0"
+    }
+}
