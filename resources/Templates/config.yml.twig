@@ -7,9 +7,9 @@ vagrant_synced_folder_default_type: nfs
 
 # If you need to run multiple instances of Drupal VM, set a unique hostname,
 # machine name, and IP address for each instance.
-vagrant_hostname: drupalvm.dev
-vagrant_machine_name: drupalvm
-vagrant_ip: 192.168.88.88
+vagrant_hostname: {{ app.vagrant_hostname }}
+vagrant_machine_name: {{ app.vagrant_machine_name }}
+vagrant_ip: {{ app.vagrant_ip_address }}
 
 # Allow Drupal VM to be accessed via a public network interface on your host.
 # Vagrant boxes are insecure by default, so be careful. You've been warned!
@@ -32,7 +32,7 @@ vagrant_memory: 1024
 vagrant_cpus: 2
 
 # The web server software to use. Can be either 'apache' or 'nginx'.
-drupalvm_webserver: apache
+drupalvm_webserver: {{ app.drupalvm_webserver }}
 
 # Set this to false if you are using a different site deployment strategy and
 # would like to configure 'vagrant_synced_folders' and 'apache_vhosts' manually.
