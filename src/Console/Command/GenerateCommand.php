@@ -42,12 +42,20 @@ class GenerateCommand extends BaseCommand
     private function generate()
     {
         $this->questionHelper = $this->getHelper('question');
-        $args = [];
 
-        $args['vagrant_hostname'] = 'drupaldev-vm';
-        $args['vagrant_machine_name'] = 'drupalvm';
-        $args['vagrant_ip_address'] = '192.168.88.88';
-        $args['drupalvm_webserver'] = 'apache';
+        $args = [
+            'vagrant_hostname' => 'drupalvm.dev',
+            'vagrant_machine_name' => 'drupalvm',
+            'vagrant_ip_address' => '192.168.88.88',
+            'local_path' => '~/Sites/drupalvm',
+            'destination' => '/var/www/drupalvm',
+            'vagrant_cpus' => 2,
+            'vagrant_memory' => 1024,
+            'drupalvm_webserver' => 'apache',
+            'install_site' => 'true',
+            'drupal_major_version' => 8,
+            'drupal_domain' => 'drupalvm.dev',
+        ];
 
         $this->fileContents = $this->twig->render('config.yml.twig', ['app' => $args]);
 

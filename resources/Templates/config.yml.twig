@@ -1,53 +1,31 @@
 ---
-# `vagrant_box` can also be set to geerlingguy/centos6, geerlingguy/centos7,
-# geerlingguy/ubuntu1204, parallels/ubuntu-14.04, etc.
 vagrant_box: geerlingguy/ubuntu1404
 vagrant_user: vagrant
 vagrant_synced_folder_default_type: nfs
-
-# If you need to run multiple instances of Drupal VM, set a unique hostname,
-# machine name, and IP address for each instance.
 vagrant_hostname: {{ app.vagrant_hostname }}
 vagrant_machine_name: {{ app.vagrant_machine_name }}
 vagrant_ip: {{ app.vagrant_ip_address }}
-
-# Allow Drupal VM to be accessed via a public network interface on your host.
-# Vagrant boxes are insecure by default, so be careful. You've been warned!
-# See: https://docs.vagrantup.com/v2/networking/public_network.html
 vagrant_public_ip: ""
 
-# A list of synced folders, with the keys 'local_path', 'destination', and
-# a 'type' of [nfs|rsync|smb] (leave empty for slow native shares). See
-# http://docs.drupalvm.com/en/latest/extras/syncing-folders/ for more info.
 vagrant_synced_folders:
-  # The first synced folder will be used for the default Drupal installation, if
-  # build_makefile: is 'true'.
-  - local_path: ~/Sites/drupalvm
-    destination: /var/www/drupalvm
+  - local_path: {{ app.local_path }}
+    destination: {{ app.destination }}
     type: nfs
     create: true
 
-# Memory and CPU to use for this VM.
-vagrant_memory: 1024
-vagrant_cpus: 2
+vagrant_memory: {{ app.vagrant_memory }}
+vagrant_cpus: {{ app.vagrant_cpus }}
 
-# The web server software to use. Can be either 'apache' or 'nginx'.
 drupalvm_webserver: {{ app.drupalvm_webserver }}
 
-# Set this to false if you are using a different site deployment strategy and
-# would like to configure 'vagrant_synced_folders' and 'apache_vhosts' manually.
 build_makefile: true
 drush_makefile_path: /vagrant/drupal.make.yml
 
-# Set this to false if you don't need to install drupal (using the drupal_*
-# settings below), but instead copy down a database (e.g. using drush sql-sync).
-install_site: true
+install_site: {{ app.install_site }}
 
-# Settings for building a Drupal site from a makefile (if 'build_makefile:'
-# is 'true').
-drupal_major_version: 8
-drupal_core_path: "/var/www/drupalvm/drupal"
-drupal_domain: "drupalvm.dev"
+drupal_major_version: {{ app.drupal_major_version }}
+drupal_core_path: {{ app.destination}}/drupal"
+drupal_domain: {{ app.drupal_domain }}
 drupal_site_name: "Drupal"
 drupal_install_profile: standard
 drupal_enable_modules: [ 'devel' ]
@@ -57,25 +35,13 @@ drupal_mysql_user: drupal
 drupal_mysql_password: drupal
 drupal_mysql_database: drupal
 
-# Additional arguments or options to pass to `drush site-install`.
 drupal_site_install_extra_args: []
 
-# Cron jobs are added to the root user's crontab. Keys include name (required),
-# minute, hour, day, weekday, month, job (required), and state.
 drupalvm_cron_jobs: []
-  # - {
-  #   name: "Drupal Cron",
-  #   minute: "*/30",
-  #   job: "drush -r {{ drupal_core_path }} core-cron"
-  # }
 
-# Drupal VM automatically creates a drush alias file in your ~/.drush folder if
-# this variable is 'true'.
 configure_local_drush_aliases: true
 
-# Apache VirtualHosts. Add one for each site you are running inside the VM. For
-# multisite deployments, you can point multiple servernames at one documentroot.
-# View the geerlingguy.apache Ansible Role README for more options.
+{% if app.drupalvm_webserver == 'apache' -%}
 apache_vhosts:
   - servername: "{{ drupal_domain }}"
     documentroot: "{{ drupal_core_path }}"
@@ -102,10 +68,9 @@ apache_mods_enabled:
   - expires.load
   - ssl.load
   - rewrite.load
+{%- endif %}
 
-# Nginx hosts. Each site will get a server entry using the configuration defined
-# here. Set the 'is_php' property for document roots that contain PHP apps like
-# Drupal.
+{% if app.drupalvm_webserver == 'nginx' -%}
 nginx_hosts:
   - server_name: "{{ drupal_domain }}"
     root: "{{ drupal_core_path }}"
@@ -124,9 +89,8 @@ nginx_hosts:
     is_php: true
 
 nginx_remove_default_vhost: true
+{%- endif %}
 
-# MySQL Databases and users. If build_makefile: is true, first database will
-# be used for the makefile-built site.
 mysql_databases:
   - name: "{{ drupal_mysql_database }}"
     encoding: utf8
@@ -138,36 +102,25 @@ mysql_users:
     password: "{{ drupal_mysql_password }}"
     priv: "{{ drupal_mysql_database }}.*:ALL"
 
-# Comment out any extra utilities you don't want to install. If you don't want
-# to install *any* extras, make set this value to an empty set, e.g. `[]`.
 installed_extras:
   - adminer
   - drupalconsole
   - mailhog
   - memcached
-  # - nodejs
   - pimpmylog
-  # - redis
-  # - ruby
-  # - selenium
-  # - solr
   - varnish
   - xdebug
   - xhprof
 
-# Add any extra apt or yum packages you would like installed.
 extra_packages:
   - unzip
 
-# `nodejs` must be in installed_extras for this to work.
 nodejs_version: "0.12"
 nodejs_npm_global_packages: []
 
-# `ruby` must be in installed_extras for this to work.
 ruby_install_gems_user: "{{ vagrant_user }}"
 ruby_install_gems: []
 
-# You can configure almost anything else on the server in the rest of this file.
 extra_security_enabled: false
 
 drush_version: master
@@ -187,7 +140,6 @@ firewall_allowed_tcp_ports:
   - "8983"
 firewall_log_dropped_packets: false
 
-# PHP Configuration. Currently-supported versions: 5.5, 5.6, 7.0.
 php_version: "5.6"
 php_memory_limit: "192M"
 php_display_errors: "On"
@@ -199,56 +151,40 @@ php_opcache_memory_consumption: "192"
 php_opcache_max_accelerated_files: 4096
 php_max_input_vars: "4000"
 
-# Drupal VM defaults to using PHP-FPM with either Apache or Nginx. If you wish
-# to instead use Apache + mod_php with an Ubuntu base box, make sure you add
-# libapache2-mod-php5 to `extra_packages` elsewhere in this config file.
 php_enable_php_fpm: true
 php_fpm_listen: "127.0.0.1:9000"
 
 composer_path: /usr/bin/composer
 composer_home_path: '/home/vagrant/.composer'
-# composer_global_packages:
-#   - { name: phpunit/phpunit, release: '@stable' }
 
-# Run specified scripts after VM is provisioned. Path is relative to the
-# `provisioning/playbook.yml` file.
 post_provision_scripts: []
-  # - "../examples/scripts/configure-solr.sh"
 
-# MySQL Configuration.
 mysql_root_password: root
 mysql_slow_query_log_enabled: true
 mysql_slow_query_time: 2
 mysql_wait_timeout: 300
 adminer_install_filename: index.php
 
-# Varnish Configuration.
 varnish_listen_port: "81"
 varnish_default_vcl_template_path: templates/drupalvm.vcl.j2
 varnish_default_backend_host: "127.0.0.1"
 varnish_default_backend_port: "80"
 
-# Pimp my Log settings.
 pimpmylog_install_dir: /usr/share/php/pimpmylog
 pimpmylog_grant_all_privs: true
 
-# XDebug configuration. XDebug is disabled by default for better performance.
 php_xdebug_default_enable: 0
 php_xdebug_coverage_enable: 0
 php_xdebug_cli_enable: 1
 php_xdebug_remote_enable: 1
 php_xdebug_remote_connect_back: 1
-# Use PHPSTORM for PHPStorm, sublime.xdebug for Sublime Text.
 php_xdebug_idekey: PHPSTORM
 php_xdebug_max_nesting_level: 256
 
-# Solr Configuration (if enabled above).
 solr_version: "4.10.4"
 solr_xms: "64M"
 solr_xmx: "128M"
 
-# Selenium configuration.
 selenium_version: 2.46.0
 
-# Other configuration.
 known_hosts_path: ~/.ssh/known_hosts
