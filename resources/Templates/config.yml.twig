@@ -100,15 +100,14 @@ mysql_users:
     password: "{{ drupal_mysql_password }}"
     priv: "{{ drupal_mysql_database }}.*:ALL"
 
+{% if app.installed_extras %}
 installed_extras:
-  - adminer
-  - drupalconsole
-  - mailhog
-  - memcached
-  - pimpmylog
-  - varnish
-  - xdebug
-  - xhprof
+{% for extra in app.installed_extras %}
+  - {{ extra }}
+{% endfor %}
+{%- else %}
+installed_extras: []
+{% endif %}
 
 extra_packages:
   - unzip
