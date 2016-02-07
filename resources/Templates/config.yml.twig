@@ -68,9 +68,7 @@ apache_mods_enabled:
   - expires.load
   - ssl.load
   - rewrite.load
-{%- endif %}
-
-{% if app.drupalvm_webserver == 'nginx' -%}
+{% elseif app.drupalvm_webserver == 'nginx' -%}
 nginx_hosts:
   - server_name: "{{ drupal_domain }}"
     root: "{{ drupal_core_path }}"
@@ -89,7 +87,7 @@ nginx_hosts:
     is_php: true
 
 nginx_remove_default_vhost: true
-{%- endif %}
+{% endif %}
 
 mysql_databases:
   - name: "{{ drupal_mysql_database }}"
