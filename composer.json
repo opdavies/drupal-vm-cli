@@ -4,6 +4,13 @@
         "symfony/filesystem": "^3.0",
         "twig/twig": "^1.24"
     },
+    "authors": [
+        {
+            "name": "Oliver Davies",
+            "email": "oliver@oliverdavies.uk",
+            "homepage": "https://www.oliverdavies.uk"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "DrupalVmConfigGenerator\\": "src/"
