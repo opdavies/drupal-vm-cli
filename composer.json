@@ -8,5 +8,9 @@
         "psr-4": {
             "DrupalVmConfigGenerator\\": "src/"
         }
-    }
+    },
+    "bin": ["bin/drupalvm-generator"],
+    "config": {
+        "bin-dir": "bin/"
+    },
 }
