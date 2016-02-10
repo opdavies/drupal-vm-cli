@@ -1,0 +1,21 @@
+{
+    "chmod": "0775",
+    "directories": [
+        "resources",
+        "src"
+    ],
+    "files": [
+        "bin/generate.php"
+    ],
+    "finder": [
+        {
+            "name": "*.php",
+            "exclude": ["Tests"],
+            "in": "vendor"
+        }
+    ],
+    "git-version": "package_version",
+    "main": "bin/drupalvm-generate",
+    "output": "drupalvm-generate.phar",
+    "stub": true
+}
