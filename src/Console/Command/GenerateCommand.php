@@ -20,8 +20,9 @@ class GenerateCommand extends BaseCommand
     protected function configure()
     {
         $this
-            ->setName('generate')
+            ->setName('config:generate')
             ->setDescription('Generate a new Drupal VM configuration file.')
+            ->setAliases(['generate'])
         ;
     }
 

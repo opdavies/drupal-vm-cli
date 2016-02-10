@@ -9,6 +9,6 @@ $app = new Application('Drupal VM Config Generator', '@package_version@');
 
 $app->add(new GenerateCommand());
 
-$app->setDefaultCommand('generate');
+$app->setDefaultCommand('config:generate');
 
 $app->run();
