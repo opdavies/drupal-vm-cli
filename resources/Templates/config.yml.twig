@@ -18,7 +18,7 @@ vagrant_cpus: {{ app.vagrant_cpus }}
 
 drupalvm_webserver: {{ app.drupalvm_webserver }}
 
-build_makefile: true
+build_makefile: {{ app.build_makefile }}
 drush_makefile_path: /vagrant/drupal.make.yml
 
 install_site: {{ app.install_site }}

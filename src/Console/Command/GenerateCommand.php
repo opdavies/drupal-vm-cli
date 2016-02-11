@@ -123,6 +123,12 @@ class GenerateCommand extends BaseCommand
             new ChoiceQuestion('Which version of Drupal (defaults to 8)?', ['8', '7'], '8')
         );
 
+        $args['build_makefile'] = $helper->ask(
+            $this->input,
+            $this->output,
+            new ChoiceQuestion('Build from make file (defaults to no)?', ['no', 'yes'], 'no')
+        );
+
         $args['install_site'] = $helper->ask(
             $this->input,
             $this->output,
