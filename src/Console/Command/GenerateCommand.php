@@ -123,19 +123,6 @@ class GenerateCommand extends BaseCommand
             new ChoiceQuestion('Which version of Drupal (defaults to 8)?', ['8', '7'], '8')
         );
 
-        // Installed extras.
-        $question = new ChoiceQuestion('Which installed extras?', [
-            'adminer',
-            'drupalconsole',
-            'mailhog',
-            'memcached',
-            'pimpmylog',
-            'varnish',
-            'xdebug',
-            'xhprof'
-        ]);
-        $question->setMultiselect(true);
-
         $args['install_site'] = $helper->ask(
             $this->input,
             $this->output,
@@ -146,7 +133,24 @@ class GenerateCommand extends BaseCommand
             )
         );
 
-        // Extras.
+        // Installed extras.
+        $question = new ChoiceQuestion(
+            'Which installed extras? Enter a comma-separated list, or 0 for none',
+            [
+                'none',
+                'adminer',
+                'drupalconsole',
+                'mailhog',
+                'memcached',
+                'pimpmylog',
+                'varnish',
+                'xdebug',
+                'xhprof'
+            ],
+            'none'
+        );
+        $question->setMultiselect(true);
+
         $args['installed_extras'] = $helper->ask(
             $this->input,
             $this->output,
