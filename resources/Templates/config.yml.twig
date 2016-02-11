@@ -31,9 +31,9 @@ drupal_install_profile: standard
 drupal_enable_modules: [ 'devel' ]
 drupal_account_name: admin
 drupal_account_pass: admin
-drupal_mysql_user: drupal
-drupal_mysql_password: drupal
-drupal_mysql_database: drupal
+drupal_mysql_user: {{ app.drupal_mysql_user }}
+drupal_mysql_password: {{ app.drupal_mysql_password }}
+drupal_mysql_database: {{ app.drupal_mysql_database }}
 
 drupal_site_install_extra_args: []
 
@@ -102,15 +102,15 @@ nginx_remove_default_vhost: true
 {% endif %}
 
 mysql_databases:
-  - name: "{{ drupal_mysql_database }}"
+  - name: "{{ app.drupal_mysql_database }}"
     encoding: utf8
     collation: utf8_general_ci
 
 mysql_users:
-  - name: "{{ drupal_mysql_user }}"
+  - name: "{{ app.drupal_mysql_user }}"
     host: "%"
-    password: "{{ drupal_mysql_password }}"
-    priv: "{{ drupal_mysql_database }}.*:ALL"
+    password: "{{ app.drupal_mysql_password }}"
+    priv: "{{ app.drupal_mysql_database }}.*:ALL"
 
 {% if app.installed_extras[0] != 'none' %}
 installed_extras:

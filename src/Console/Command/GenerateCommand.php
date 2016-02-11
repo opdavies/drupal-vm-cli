@@ -163,6 +163,13 @@ class GenerateCommand extends BaseCommand
             $question
         );
 
+        // Add some default arguments.
+        $args += [
+            'drupal_mysql_database' => 'drupal',
+            'drupal_mysql_user' => 'drupal',
+            'drupal_mysql_password' => 'drupal',
+        ];
+
         $this->fileContents = $this->twig->render('config.yml.twig', ['app' => $args]);
 
         return $this;
