@@ -134,8 +134,8 @@ class GenerateCommand extends BaseCommand
             $this->output,
             new ChoiceQuestion(
                 'Install the site (defaults to "yes"',
-                [0 => 'No', 1 => 'Yes'],
-                0
+                [0 => 'no', 1 => 'yes'],
+                'no'
             )
         );
 
