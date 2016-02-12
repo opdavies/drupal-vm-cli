@@ -112,7 +112,7 @@ mysql_users:
     password: "{{ app.drupal_mysql_password }}"
     priv: "{{ app.drupal_mysql_database }}.*:ALL"
 
-{% if app.installed_extras[0] != 'none' %}
+{% if app.installed_extras %}
 installed_extras:
 {% for extra in app.installed_extras %}
   - {{ extra }}

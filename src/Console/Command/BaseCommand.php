@@ -2,6 +2,7 @@
 
 namespace DrupalVmConfigGenerator\Console\Command;
 
+use DrupalVmConfigGenerator\Console\Style\DrupalVmStyle;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -35,6 +36,11 @@ abstract class BaseCommand extends Command
     protected $projectDir;
 
     /**
+     * @var DrupalVmStyle
+     */
+    protected $io;
+
+    /**
      * {@inheritdoc}
      */
     protected function initialize(InputInterface $input, OutputInterface $output)
@@ -48,5 +54,7 @@ abstract class BaseCommand extends Command
 
         $loader = new \Twig_Loader_Filesystem($this->projectDir . '/resources/Templates');
         $this->twig = new \Twig_Environment($loader);
+
+        $this->io = new DrupalVmStyle($input, $output);
     }
 }

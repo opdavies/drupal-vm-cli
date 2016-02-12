@@ -2,14 +2,14 @@
 
 namespace DrupalVmConfigGenerator\Console\Command;
 
-use Symfony\Component\Console\Helper\QuestionHelper;
+use DrupalVmConfigGenerator\Console\Command\ExtrasTrait;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\ChoiceQuestion;
-use Symfony\Component\Console\Question\Question;
 
 class GenerateCommand extends BaseCommand
 {
+    use ExtrasTrait;
+
     const FILENAME = 'config.yml';
 
     private $fileContents;
@@ -44,124 +44,80 @@ class GenerateCommand extends BaseCommand
      */
     private function generate()
     {
-        $helper = $this->getHelper('question');
         $args = [];
 
         // Vagrant hostname.
-        $args['vagrant_hostname'] = $helper->ask(
-            $this->input,
-            $this->output,
-            new Question('Enter a hostname for Vagrant (defaults to drupalvm.dev)', 'drupalvm.dev')
+        $args['vagrant_hostname'] = $this->io->ask(
+            'Enter a hostname for Vagrant',
+            'drupalvm.dev'
         );
 
         // Vagrant machine name.
-        $args['vagrant_machine_name'] = $helper->ask(
-            $this->input,
-            $this->output,
-            new Question('Enter a Vagrant machine name (defaults to drupalvm)', 'drupalvm')
+        $args['vagrant_machine_name'] = $this->io->ask(
+            'Enter a Vagrant machine name',
+            'drupalvm'
         );
 
         // Vagrant IP address.
-        $args['vagrant_ip_address'] = $helper->ask(
-            $this->input,
-            $this->output,
-            new Question('Enter an IP address for the Vagrant VM (defaults to 192.168.88.88)', '192.168.88.88')
+        $args['vagrant_ip_address'] = $this->io->ask(
+            'Enter an IP address for the Vagrant VM',
+            '192.168.88.88'
         );
 
         // CPUs.
-        $args['vagrant_cpus'] = $helper->ask(
-            $this->input,
-            $this->output,
-            new Question('How many CPUs (defaults to 2)', 2)
+        $args['vagrant_cpus'] = $this->io->ask(
+            'How many CPUs?',
+            2
         );
 
         // Memory.
-        $args['vagrant_memory'] = $helper->ask(
-            $this->input,
-            $this->output,
-            new Question('How much memory (defaults to 1024)', 1024)
+        $args['vagrant_memory'] = $this->io->ask(
+            'How much memory?',
+            1024
         );
 
         // Which web server to use?
-        $args['drupalvm_webserver'] = $helper->ask(
-            $this->input,
-            $this->output,
-            new ChoiceQuestion('Which web server?', ['apache', 'nginx'])
+        $args['drupalvm_webserver'] = $this->io->choiceNoList(
+            'Apache or Nginx?',
+            ['apache', 'nginx'],
+            null
         );
 
         // Domain name.
-        $args['drupal_domain'] = $helper->ask(
-            $this->input,
-            $this->output,
-            new Question('Enter a domain for your site (defaults to drupalvm.dev)', 'drupalvm.dev')
+        $args['drupal_domain'] = $this->io->ask(
+            'Enter a domain for your site',
+            $args['vagrant_hostname']
         );
 
         // Local site path.
-        $args['local_path'] = $helper->ask(
-            $this->input,
-            $this->output,
-            new Question(
-                'Enter the local path for your Drupal site (defaults to ~/Sites/drupalvm)',
-                '~/Sites/drupalvm'
-            )
+        $args['local_path'] = $this->io->ask(
+            'Enter the local path for your Drupal site',
+            '~/Sites/drupalvm'
         );
 
         // Destination site path.
-        $args['destination'] = $helper->ask(
-            $this->input,
-            $this->output,
-            new Question(
-                'Enter the destination path for your Drupal site (defaults to /var/www/drupalvm)',
-                '/var/www/drupalvm'
-            )
+        $args['destination'] = $this->io->ask(
+            'Enter the destination path for your Drupal site',
+            '/var/www/drupalvm'
         );
 
         // Which version of Drupal?
-        $args['drupal_major_version'] = $helper->ask(
-            $this->input,
-            $this->output,
-            new ChoiceQuestion('Which version of Drupal (defaults to 8)?', ['8', '7'], '8')
+        $args['drupal_major_version'] = $this->io->choiceNoList(
+            'Which version of Drupal',
+            ['8', '7']
         );
 
-        $args['build_makefile'] = $helper->ask(
-            $this->input,
-            $this->output,
-            new ChoiceQuestion('Build from make file (defaults to no)?', ['no', 'yes'], 'no')
-        );
+        $args['build_makefile'] = $this->io->confirm(
+            'Build from make file',
+            false
+        ) ? 'yes' : 'no';
 
-        $args['install_site'] = $helper->ask(
-            $this->input,
-            $this->output,
-            new ChoiceQuestion(
-                'Install the site (defaults to "yes"',
-                [0 => 'no', 1 => 'yes'],
-                'no'
-            )
-        );
+        $args['install_site'] = $this->io->confirm(
+            'Install the site',
+            false
+        ) ? 'yes' : 'no';
 
-        // Installed extras.
-        $question = new ChoiceQuestion(
-            'Which installed extras? Enter a comma-separated list, or 0 for none',
-            [
-                'none',
-                'adminer',
-                'drupalconsole',
-                'mailhog',
-                'memcached',
-                'pimpmylog',
-                'varnish',
-                'xdebug',
-                'xhprof'
-            ],
-            'none'
-        );
-        $question->setMultiselect(true);
-
-        $args['installed_extras'] = $helper->ask(
-            $this->input,
-            $this->output,
-            $question
-        );
+        $args['installed_extras'] = $this->extrasQuestion($this->io);
 
         // Add some default arguments.
         $args += [
