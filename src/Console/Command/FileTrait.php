@@ -29,19 +29,15 @@ trait FileTrait
             throw new \Exception('The generated file is empty.');
         }
 
-        $filename = $this->projectDir . DIRECTORY_SEPARATOR . self::FILENAME;
+        if ($filesystem->exists(self::FILENAME) && !$input->getOption('force')) {
+            $io->error(sprintf('%s already exists.', self::FILENAME));
+        } else {
+            $filesystem->dumpFile(
+                self::FILENAME,
+                $this->fileContents
+            );
 
-        if ($filesystem->exists($filename)) {
-            if (!$input->getOption('force')) {
-                $io->error(sprintf('%s already exists.', self::FILENAME));
-            } else {
-                $filesystem->dumpFile(
-                    $filename,
-                    $this->fileContents
-                );
-
-                $io->success(sprintf('%s created', self::FILENAME));
-            }
+            $io->success(sprintf('%s created', self::FILENAME));
         }
 
         return $this;
