@@ -3,14 +3,17 @@
 namespace DrupalVmConfigGenerator\Console\Command;
 
 use DrupalVmConfigGenerator\Console\Command\ExtrasTrait;
+use DrupalVmConfigGenerator\Console\Command\FileTrait;
 use DrupalVmConfigGenerator\Console\Style\DrupalVmStyle;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Filesystem\Filesystem;
 
 class GenerateCommand extends BaseCommand
 {
     use ExtrasTrait;
+    use FileTrait;
 
     const FILENAME = 'config.yml';
 
@@ -103,6 +106,11 @@ class GenerateCommand extends BaseCommand
                 null,
                 InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
                 'Install from a predefined list of extra packages'
+            )
+            ->addOption(
+                'force',
+                'f',
+                InputOption::VALUE_NONE
             )
         ;
     }
@@ -224,7 +232,7 @@ class GenerateCommand extends BaseCommand
     {
         $this
             ->generate($input)
-            ->writeFile()
+            ->writeFile(new Filesystem(), $input, $this->io)
         ;
     }
 
@@ -264,19 +272,6 @@ class GenerateCommand extends BaseCommand
         }
 
         $this->fileContents = $this->twig->render('config.yml.twig', ['app' => $args]);
-
-        return $this;
-    }
-
-    /**
-     * @return GenerateCommand
-     */
-    private function writeFile()
-    {
-        $this->fs->dumpFile(
-            $this->projectDir . DIRECTORY_SEPARATOR . self::FILENAME,
-            $this->fileContents
-        );
 
         return $this;
     }
