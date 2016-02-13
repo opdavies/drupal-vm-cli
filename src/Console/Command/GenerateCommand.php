@@ -83,6 +83,12 @@ class GenerateCommand extends BaseCommand
                 'The destination path'
             )
             ->addOption(
+                'docroot',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'The path to the Drupal installation'
+            )
+            ->addOption(
                 'drupal-version',
                 null,
                 InputOption::VALUE_OPTIONAL,
@@ -195,6 +201,14 @@ class GenerateCommand extends BaseCommand
             ));
         }
 
+        // --docroot option
+        if (!$input->getOption('docroot')) {
+            $input->setOption('docroot', $this->io->ask(
+                'Enter the path to the docroot of the Drupal site',
+                $input->getOption('destination') . DIRECTORY_SEPARATOR . 'drupal'
+            ));
+        }
+
         // --drupal-version option
         if (!$input->getOption('drupal-version')) {
             $input->setOption('drupal-version', $this->io->choiceNoList(
@@ -257,6 +271,7 @@ class GenerateCommand extends BaseCommand
         $args['vagrant_memory'] = $input->getOption('memory');
         $args['drupalvm_webserver'] = $input->getOption('webserver');
         $args['drupal_domain'] = $input->getOption('domain');
+        $args['drupal_core_path'] = $input->getOption('docroot');
         $args['local_path'] = $input->getOption('path');
         $args['destination'] = $input->getOption('destination');
         $args['drupal_major_version'] = $input->getOption('drupal-version');
