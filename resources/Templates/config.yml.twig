@@ -124,15 +124,15 @@ installed_extras: []
 extra_packages:
   - unzip
 
-{% if nodejs in app.installed_extras -%}
+{% if 'nodejs' in app.installed_extras %}
 nodejs_version: "0.12"
 nodejs_npm_global_packages: []
-{%- endif  %}
+{% endif  %}
 
-{% if ruby in app.installed_extras -%}
+{% if 'ruby' in app.installed_extras %}
 ruby_install_gems_user: "{{ vagrant_user }}"
 ruby_install_gems: []
-{%- endif %}
+{% endif %}
 
 extra_security_enabled: false
 
@@ -176,23 +176,23 @@ mysql_root_password: root
 mysql_slow_query_log_enabled: true
 mysql_slow_query_time: 2
 mysql_wait_timeout: 300
-{% if adminer in app.installed_extras %}
+{% if 'adminer' in app.installed_extras %}
 adminer_install_filename: index.php
 {% endif %}
 
-{% if varnish in app.installed_extras %}
+{% if 'varnish' in app.installed_extras %}
 varnish_listen_port: "81"
 varnish_default_vcl_template_path: templates/drupalvm.vcl.j2
 varnish_default_backend_host: "127.0.0.1"
 varnish_default_backend_port: "80"
 {% endif %}
 
-{% if pimpmylog in app.installed_extras %}
+{% if 'pimpmylog' in app.installed_extras %}
 pimpmylog_install_dir: /usr/share/php/pimpmylog
 pimpmylog_grant_all_privs: true
 {% endif %}
 
-{% if xdebug in app.installed_extras %}
+{% if 'xdebug' in app.installed_extras %}
 php_xdebug_default_enable: 0
 php_xdebug_coverage_enable: 0
 php_xdebug_cli_enable: 1
@@ -202,12 +202,14 @@ php_xdebug_idekey: PHPSTORM
 php_xdebug_max_nesting_level: 256
 {% endif %}
 
-{% if solr in app.installed_extras %}
+{% if 'solr' in app.installed_extras %}
 solr_version: "4.10.4"
 solr_xms: "64M"
 solr_xmx: "128M"
 {% endif %}
 
+{% if 'selenium' in app.installed_extras %}
 selenium_version: 2.46.0
+{% endif %}
 
 known_hosts_path: ~/.ssh/known_hosts
