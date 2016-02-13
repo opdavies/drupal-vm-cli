@@ -20,7 +20,12 @@ trait ExtrasTrait
               'drupalconsole',
               'mailhog',
               'memcached',
+              'nodejs',
               'pimpmylog',
+              'redis',
+              'ruby',
+              'selenium',
+              'solr',
               'varnish',
               'xdebug',
               'xhprof'
