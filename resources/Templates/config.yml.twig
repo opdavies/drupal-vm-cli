@@ -4,7 +4,7 @@ vagrant_user: vagrant
 vagrant_synced_folder_default_type: nfs
 vagrant_hostname: {{ app.vagrant_hostname }}
 vagrant_machine_name: {{ app.vagrant_machine_name }}
-vagrant_ip: {{ app.vagrant_ip_address }}
+vagrant_ip: "{{ app.vagrant_ip_address }}"
 vagrant_public_ip: ""
 
 vagrant_synced_folders:
