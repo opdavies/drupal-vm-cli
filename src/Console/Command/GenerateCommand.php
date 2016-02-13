@@ -181,7 +181,7 @@ class GenerateCommand extends BaseCommand
         if (!$input->getOption('domain')) {
             $input->setOption('domain', $this->io->ask(
                 'Enter a domain for your site',
-                'drupalvm.dev'
+                $input->getOption('hostname')
             ));
         }
 
