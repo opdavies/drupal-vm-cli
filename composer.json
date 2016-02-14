@@ -22,5 +22,9 @@
     "config": {
         "bin-dir": "bin/"
     },
-    "license": "MIT"
+    "license": "MIT",
+    "bin": [
+        "bin/drupalvm-generate",
+        "bin/generate.php"
+    ]
 }
