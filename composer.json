@@ -1,4 +1,6 @@
 {
+    "name": "opdavies/drupal-vm-config-generator",
+    "description": "A CLI tool for generating Drupal VM configuration files.",
     "require": {
         "symfony/console": "^3.0",
         "symfony/filesystem": "^3.0",
