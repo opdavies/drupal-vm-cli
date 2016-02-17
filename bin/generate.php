@@ -1,6 +1,12 @@
 <?php
 
-require_once __DIR__ . '/../vendor/autoload.php';
+// Look for and require the autoloader.
+$appDir = __DIR__ . '/../';
+if (file_exists($appDir . 'vendor/autoload.php')) {
+    require_once $appDir . 'vendor/autoload.php';
+} elseif (file_exists($appDir . '../../autoload.php')) {
+    require_once $appDir . '../../autoload.php';
+}
 
 use DrupalVmConfigGenerator\Console\Application;
 

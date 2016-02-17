@@ -9,7 +9,7 @@ A [Symfony Console](http://symfony.com/doc/current/components/console/introducti
 ### Download the Phar
 
 ```
-curl -LO https://github.com/opdavies/drupal-vm-config-generator/releases/download/1.0.0/drupalvm-generate.phar
+curl -LO https://github.com/opdavies/drupal-vm-config-generator/releases/download/1.0.1/drupalvm-generate.phar
 chmod +x drupalvm-generate.phar
 mv drupalvm-generate.phar /usr/local/bin/drupalvm-generate
 ```
