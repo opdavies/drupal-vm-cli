@@ -26,9 +26,9 @@ You can add the Drupal VM Config Generator into any existing Composer managed pr
 
 ```json
 {
-  "require": {
-    "opdavies/drupal-vm-config-generator": "@stable"
-  }
+    "require": {
+        "opdavies/drupal-vm-config-generator": "@stable"
+    }
 }
 ```
 
@@ -78,3 +78,13 @@ If an option is not set, you will be asked a question instead to collect the val
 ## Author
 
 [Oliver Davies](https://www.oliverdavies.uk) - PHP Developer & Linux System Administrator
+
+## Contributing
+
+I’m happy to receive support and feature requests, bug reports, and [pull requests](https://help.github.com/articles/creating-a-pull-request) torwards this project.
+
+All bug reports and feature and support requests should be logged in the [issue tracker](https://github.com/opdavies/drupal-vm-config-generator/issues).
+
+Please run `drupalvm-generate --version` and include the version number with any bug report or support request.
+
+All pull requests should be from a topic branch in your forked repository, merging back into `master`.
