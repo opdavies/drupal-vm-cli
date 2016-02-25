@@ -65,12 +65,6 @@ class GenerateCommand extends BaseCommand
                 'Which webserver to use'
             )
             ->addOption(
-                'domain',
-                null,
-                InputOption::VALUE_OPTIONAL,
-                'The domain name for the site'
-            )
-            ->addOption(
                 'path',
                 null,
                 InputOption::VALUE_OPTIONAL,
@@ -177,14 +171,6 @@ class GenerateCommand extends BaseCommand
         }
 
 
-        // --domain option
-        if (!$input->getOption('domain')) {
-            $input->setOption('domain', $this->io->ask(
-                'Enter a domain for your site',
-                $input->getOption('hostname')
-            ));
-        }
-
         // --path option
         if (!$input->getOption('path')) {
             $input->setOption('path', $this->io->ask(
@@ -270,7 +256,6 @@ class GenerateCommand extends BaseCommand
         $args['vagrant_cpus'] = $input->getOption('cpus');
         $args['vagrant_memory'] = $input->getOption('memory');
         $args['drupalvm_webserver'] = $input->getOption('webserver');
-        $args['drupal_domain'] = $input->getOption('domain');
         $args['drupal_core_path'] = $input->getOption('docroot');
         $args['local_path'] = $input->getOption('path');
         $args['destination'] = $input->getOption('destination');

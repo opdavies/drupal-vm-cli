@@ -19,13 +19,13 @@ vagrant_cpus: {{ app.vagrant_cpus }}
 drupalvm_webserver: {{ app.drupalvm_webserver }}
 
 build_makefile: {{ app.build_makefile }}
-drush_makefile_path: /vagrant/drupal.make.yml
+drush_makefile_path: ../../drupal.make.yml
 
 install_site: {{ app.install_site }}
 
 drupal_major_version: {{ app.drupal_major_version }}
 drupal_core_path: {{ app.drupal_core_path }}
-drupal_domain: {{ app.drupal_domain }}
+drupal_domain: "{{ '{{ vagrant_hostname }}' }}"
 drupal_site_name: "Drupal"
 drupal_install_profile: standard
 drupal_enable_modules: [ 'devel' ]
@@ -43,60 +43,69 @@ configure_local_drush_aliases: true
 
 {% if app.drupalvm_webserver == 'apache' -%}
 apache_vhosts:
-  - servername: "{{ app.drupal_domain }}"
-    documentroot: "{{ app.destination }}"
+  - servername: "{{ '{{ vagrant_hostname }}' }}"
+    documentroot: "{{ '{{ drupal_core_path }}' }}"
     extra_parameters: |
           ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000{{ drupal_core_path }}"
 
 {% if 'adminer' in app.installed_extras %}
-  - servername: "adminer.drupalvm.dev"
-    documentroot: "/opt/adminer"
+  - servername: "{{ 'adminer.{{ vagrant_hostname }}' }}"
+    documentroot: "{{ '{{ adminer_install_dir }}' }}"
     extra_parameters: |
-          ProxyPassMatch ^/(.*\.php(/.*)?)$ "unix:/var/run/php5-fpm.sock|fcgi://127.0.0.1:9000/opt/adminer"
+          {{ 'ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000{{ adminer_install_dir }}"' }}
 {% endif %}
 
 {% if 'xhprof' in app.installed_extras %}
-  - servername: "xhprof.drupalvm.dev"
-    documentroot: "/usr/share/php/xhprof_html"
+  - servername: "{{ 'xhprof.{{ vagrant_hostname }}' }}"
+    documentroot: "{{ '{{ php_xhprof_html_dir }}' }}"
     extra_parameters: |
-          ProxyPassMatch ^/(.*\.php(/.*)?)$ "unix:/var/run/php5-fpm.sock|fcgi://127.0.0.1:9000/usr/share/php/xhprof_html"
+          {{ 'ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000{{ php_xhprof_html_dir }}"' }}
 {% endif %}
 
 {% if 'pimpmylog' in app.installed_extras %}
-  - servername: "pimpmylog.drupalvm.dev"
-    documentroot: "/usr/share/php/pimpmylog"
+  - servername: "{{ 'pimpmylog.{{ vagrant_hostname }}' }}"
+    documentroot: "{{ '{{ pimpmylog_install_dir }}' }}"
     extra_parameters: |
-          ProxyPassMatch ^/(.*\.php(/.*)?)$ "unix:/var/run/php5-fpm.sock|fcgi://127.0.0.1:9000/usr/share/php/pimpmylog"
+          {{ 'ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000{{ pimpmylog_install_dir }}"' }}
 {% endif %}
+
+  - servername: "{{ '{{ vagrant_ip }}' }}"
+    serveralias: "{{ 'dashboard.{{ vagrant_hostname }}' }}"
+    documentroot: "{{ '{{ dashboard_install_dir }}' }}"
 
 apache_remove_default_vhost: true
 apache_mods_enabled:
   - expires.load
   - ssl.load
   - rewrite.load
+  - proxy.load
+  - proxy_fcgi.load
 {% elseif app.drupalvm_webserver == 'nginx' -%}
 nginx_hosts:
-  - server_name: "{{ app.drupal_domain }}"
+  - server_name: "{{ '{{ vagrant_hostname }}' }}"
     root: "{{ app.destination }}"
     is_php: true
 
 {% if 'adminer' in app.installed_extras %}
-  - server_name: "adminer.drupalvm.dev"
-    root: "/opt/adminer"
+  - server_name: "{{ 'adminer.{{ vagrant_hostname }}' }}"
+    root: "{{ '{{ adminer_install_dir }}' }}"
     is_php: true
 {% endif %}
 
 {% if 'xhprof' in app.installed_extras %}
-  - server_name: "xhprof.drupalvm.dev"
-    root: "/usr/share/php/xhprof_html"
+  - server_name: "{{ 'xhprof.{{ vagrant_hostname }}' }}"
+    root: "{{ '{{ php_xhprof_html_dir }}' }}"
     is_php: true
 {% endif %}
 
 {% if 'pimpmylog' in app.installed_extras %}
-  - server_name: "pimpmylog.drupalvm.dev"
-    root: "/usr/share/php/pimpmylog"
+  - server_name: "{{ 'pimpmylog.{{ vagrant_hostname }}' }}"
+    root: "{{ 'pimpmylog_install_dir' }}"
     is_php: true
 {% endif %}
+
+  - server_name: "{{ '{{ vagrant_ip }} dashboard.{{ vagrant_hostname }}' }}"
+    root: "{{ '{{ dashboard_install_dir }}' }}"
 
 nginx_remove_default_vhost: true
 {% endif %}
@@ -136,7 +145,7 @@ ruby_install_gems: []
 
 extra_security_enabled: false
 
-drush_version: master
+drush_version: "master"
 drush_keep_updated: true
 drush_composer_cli_options: "--prefer-dist --no-interaction"
 
@@ -212,4 +221,5 @@ solr_xmx: "128M"
 selenium_version: 2.46.0
 {% endif %}
 
+dashboard_install_dir: /var/www/dashboard
 known_hosts_path: ~/.ssh/known_hosts
