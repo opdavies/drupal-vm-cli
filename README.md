@@ -10,7 +10,7 @@ A [Symfony Console](http://symfony.com/doc/current/components/console/introducti
 
 Downloading `drupalvm-generate.phar` is the quickest way to get up and running. You can download it like this.
 
-    curl -LO https://github.com/opdavies/drupal-vm-config-generator/releases/download/1.0.1/drupalvm-generate.phar
+    curl -LO https://github.com/opdavies/drupal-vm-config-generator/releases/download/1.1.0/drupalvm-generate.phar
 
 Make it executable.
 
