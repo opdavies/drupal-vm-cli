@@ -130,7 +130,7 @@ nodejs_npm_global_packages: []
 {% endif  %}
 
 {% if 'ruby' in app.installed_extras %}
-ruby_install_gems_user: "{{ vagrant_user }}"
+ruby_install_gems_user: "{{ '{{ vagrant_user }}' }}"
 ruby_install_gems: []
 {% endif %}
 
