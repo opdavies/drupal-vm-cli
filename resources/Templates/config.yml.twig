@@ -69,9 +69,11 @@ apache_vhosts:
           {{ 'ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000{{ pimpmylog_install_dir }}"' }}
 {% endif %}
 
+{% if app.use_dashboard %}
   - servername: "{{ '{{ vagrant_ip }}' }}"
     serveralias: "{{ 'dashboard.{{ vagrant_hostname }}' }}"
     documentroot: "{{ '{{ dashboard_install_dir }}' }}"
+{% endif %}
 
 apache_remove_default_vhost: true
 apache_mods_enabled:
@@ -104,8 +106,10 @@ nginx_hosts:
     is_php: true
 {% endif %}
 
+{% if app.use_dashboard %}
   - server_name: "{{ '{{ vagrant_ip }} dashboard.{{ vagrant_hostname }}' }}"
     root: "{{ '{{ dashboard_install_dir }}' }}"
+{% endif %}
 
 nginx_remove_default_vhost: true
 {% endif %}
@@ -221,5 +225,7 @@ solr_xmx: "128M"
 selenium_version: 2.46.0
 {% endif %}
 
+{% if app.use_dashboard -%}
 dashboard_install_dir: /var/www/dashboard
+{% endif %}
 known_hosts_path: ~/.ssh/known_hosts

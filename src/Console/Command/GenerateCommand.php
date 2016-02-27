@@ -108,6 +108,12 @@ class GenerateCommand extends BaseCommand
                 'Install from a predefined list of extra packages'
             )
             ->addOption(
+                'no-dashboard',
+                null,
+                InputOption::VALUE_NONE,
+                'Install without the Drupal VM Dashboard'
+            )
+            ->addOption(
                 'force',
                 'f',
                 InputOption::VALUE_NONE
@@ -223,6 +229,15 @@ class GenerateCommand extends BaseCommand
         if (!$input->getOption('installed-extras')) {
             $input->setOption('installed-extras', $this->extrasQuestion($io));
         }
+
+        // --no-dashboard option
+        if (!$input->getOption('no-dashboard')) {
+            $useDashboard = $this->io->confirm(
+                'Use the dashboard?',
+                true
+            );
+            $input->setOption('no-dashboard', !$useDashboard);
+        }
     }
 
     /**
@@ -270,6 +285,8 @@ class GenerateCommand extends BaseCommand
                 explode(',', $item)
             );
         }
+
+        $args['use_dashboard'] = !$input->getOption('no-dashboard');
 
         $this->fileContents = $this->twig->render('config.yml.twig', ['app' => $args]);
 
