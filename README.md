@@ -6,17 +6,21 @@ A [Symfony Console](http://symfony.com/doc/current/components/console/introducti
 
 ## Installation
 
-### Download the Phar
+### Download the Phar via the Installer
 
-Downloading `drupalvm-generate.phar` is the quickest way to get up and running. You can download it like this.
+Run this in your Terminal to get the latest stable version of the project:
 
-    curl -LO https://github.com/opdavies/drupal-vm-config-generator/releases/download/1.1.1/drupalvm-generate.phar
+    curl https://drupal-vm-config-generator.oliverdavies.uk -L -o drupalvm-generate.phar
+
+Or if you don’t have `curl`:
+
+    php -r "readfile('https://drupal-vm-config-generator.oliverdavies.uk');" > drupalvm-generate.phar
 
 Make it executable.
 
     chmod +x drupalvm-generate.phar
 
-Rename it and move it into a location within your `$PATH`.
+Rename it and move it somewhere where you can access it from anywhere.
 
     mv drupalvm-generate.phar /usr/local/bin/drupalvm-generate
 
