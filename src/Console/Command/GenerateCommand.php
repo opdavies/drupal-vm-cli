@@ -114,6 +114,12 @@ class GenerateCommand extends BaseCommand
                 'Install without the Drupal VM Dashboard'
             )
             ->addOption(
+                'no-comments',
+                null,
+                InputOption::VALUE_NONE,
+                'Remove comments from config.yml'
+            )
+            ->addOption(
                 'force',
                 'f',
                 InputOption::VALUE_NONE
@@ -238,6 +244,14 @@ class GenerateCommand extends BaseCommand
             );
             $input->setOption('no-dashboard', !$useDashboard);
         }
+
+        // --remove-comments option
+        if (!$input->getOption('no-comments')) {
+            $input->setOption('no-comments', $io->confirm(
+                'Remove comments?',
+                false
+            ));
+        }
     }
 
     /**
@@ -287,6 +301,7 @@ class GenerateCommand extends BaseCommand
         }
 
         $args['use_dashboard'] = !$input->getOption('no-dashboard');
+        $args['keep_comments'] = !$input->getOption('no-comments');
 
         $this->fileContents = $this->twig->render('config.yml.twig', ['app' => $args]);
 
