@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: odavies
- * Date: 13/02/2016
- * Time: 21:22
- */
 
 namespace DrupalVmConfigGenerator\Console\Command;
 
