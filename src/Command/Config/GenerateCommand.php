@@ -1,7 +1,8 @@
 <?php
 
-namespace DrupalVmConfigGenerator\Command;
+namespace DrupalVmConfigGenerator\Command\Config;
 
+use DrupalVmConfigGenerator\Command\BaseCommand;
 use DrupalVmConfigGenerator\Command\ExtrasTrait;
 use DrupalVmConfigGenerator\Command\FileTrait;
 use DrupalVmConfigGenerator\Style\DrupalVmStyle;
