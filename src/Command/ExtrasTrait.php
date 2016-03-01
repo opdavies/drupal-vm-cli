@@ -1,8 +1,8 @@
 <?php
 
-namespace DrupalVmConfigGenerator\Console\Command;
+namespace DrupalVmConfigGenerator\Command;
 
-use DrupalVmConfigGenerator\Console\Style\DrupalVmStyle;
+use DrupalVmConfigGenerator\Style\DrupalVmStyle;
 
 trait ExtrasTrait
 {

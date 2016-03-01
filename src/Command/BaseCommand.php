@@ -1,8 +1,8 @@
 <?php
 
-namespace DrupalVmConfigGenerator\Console\Command;
+namespace DrupalVmConfigGenerator\Command;
 
-use DrupalVmConfigGenerator\Console\Style\DrupalVmStyle;
+use DrupalVmConfigGenerator\Style\DrupalVmStyle;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -52,7 +52,7 @@ abstract class BaseCommand extends Command
 
         $this->fs = new Filesystem();
 
-        $loader = new \Twig_Loader_Filesystem(__DIR__ . '/../../../resources/Templates');
+        $loader = new \Twig_Loader_Filesystem(__DIR__ . '/../../resources/Templates');
         $this->twig = new \Twig_Environment($loader);
 
         $this->io = new DrupalVmStyle($input, $output);

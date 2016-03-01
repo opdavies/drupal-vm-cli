@@ -1,10 +1,10 @@
 <?php
 
-namespace DrupalVmConfigGenerator\Console\Command;
+namespace DrupalVmConfigGenerator\Command;
 
-use DrupalVmConfigGenerator\Console\Command\ExtrasTrait;
-use DrupalVmConfigGenerator\Console\Command\FileTrait;
-use DrupalVmConfigGenerator\Console\Style\DrupalVmStyle;
+use DrupalVmConfigGenerator\Command\ExtrasTrait;
+use DrupalVmConfigGenerator\Command\FileTrait;
+use DrupalVmConfigGenerator\Style\DrupalVmStyle;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;

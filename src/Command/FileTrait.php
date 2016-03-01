@@ -1,8 +1,8 @@
 <?php
 
-namespace DrupalVmConfigGenerator\Console\Command;
+namespace DrupalVmConfigGenerator\Command;
 
-use DrupalVmConfigGenerator\Console\Style\DrupalVmStyle;
+use DrupalVmConfigGenerator\Style\DrupalVmStyle;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Filesystem\Filesystem;

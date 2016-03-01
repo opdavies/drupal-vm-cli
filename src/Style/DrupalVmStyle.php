@@ -1,12 +1,12 @@
 <?php
 
-namespace DrupalVmConfigGenerator\Console\Style;
+namespace DrupalVmConfigGenerator\Style;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Console\Question\ChoiceQuestion;
-use DrupalVmConfigGenerator\Console\Helper\DrupalVmChoiceQuestionHelper;
+use DrupalVmConfigGenerator\Helper\DrupalVmChoiceQuestionHelper;
 
 class DrupalVmStyle extends SymfonyStyle
 {
