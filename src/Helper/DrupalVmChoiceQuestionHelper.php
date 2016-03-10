@@ -1,6 +1,6 @@
 <?php
 
-namespace DrupalVmConfigGenerator\Helper;
+namespace DrupalVmGenerator\Helper;
 
 use Symfony\Component\Console\Helper\SymfonyQuestionHelper;
 use Symfony\Component\Console\Output\OutputInterface;

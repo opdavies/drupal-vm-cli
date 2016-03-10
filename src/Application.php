@@ -1,8 +1,8 @@
 <?php
 
-namespace DrupalVmConfigGenerator;
+namespace DrupalVmGenerator;
 
-use DrupalVmConfigGenerator\Command\Config\GenerateCommand;
+use DrupalVmGenerator\Command\Config\GenerateCommand;
 use Symfony\Component\Console\Application as ConsoleApplication;
 use Symfony\Component\Console\Input\InputInterface;
 

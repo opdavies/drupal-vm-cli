@@ -8,7 +8,7 @@ if (file_exists($appDir . 'vendor/autoload.php')) {
     require_once $appDir . '../autoload.php';
 }
 
-use DrupalVmConfigGenerator\Application;
+use DrupalVmGenerator\Application;
 
 $app = new Application('Drupal VM Config Generator', '@package_version@');
 

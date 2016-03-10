@@ -15,7 +15,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "DrupalVmConfigGenerator\\": "src/"
+            "DrupalVmGenerator\\": "src/"
         }
     },
     "config": {
