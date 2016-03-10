@@ -18,6 +18,9 @@ class GenerateCommand extends BaseCommand
 
     const FILENAME = 'config.yml';
 
+    /**
+     * @var string
+     */
     private $fileContents;
 
     /**
@@ -281,16 +284,27 @@ class GenerateCommand extends BaseCommand
         ];
 
         $args['vagrant_hostname'] = $input->getOption('hostname');
+
         $args['vagrant_machine_name'] = $input->getOption('machine-name');
+
         $args['vagrant_ip_address'] = $input->getOption('ip-address');
+
         $args['vagrant_cpus'] = $input->getOption('cpus');
+
         $args['vagrant_memory'] = $input->getOption('memory');
+
         $args['drupalvm_webserver'] = $input->getOption('webserver');
+
         $args['drupal_core_path'] = $input->getOption('docroot');
+
         $args['local_path'] = $input->getOption('path');
+
         $args['destination'] = $input->getOption('destination');
+
         $args['drupal_major_version'] = $input->getOption('drupal-version');
+
         $args['build_makefile'] = $input->getOption('build-makefile');
+
         $args['install_site'] = $input->getOption('install-site');
 
         $args['installed_extras'] = [];
@@ -302,6 +316,7 @@ class GenerateCommand extends BaseCommand
         }
 
         $args['use_dashboard'] = !$input->getOption('no-dashboard');
+
         $args['keep_comments'] = !$input->getOption('no-comments');
 
         $this->fileContents = $this->twig->render('config.yml.twig', ['app' => $args]);
