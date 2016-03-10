@@ -155,7 +155,7 @@ apache_mods_enabled:
 {% endif %}
 nginx_hosts:
   - server_name: "{{ '{{ vagrant_hostname }}' }}"
-    root: "{{ app.destination }}"
+    root: "{{ '{{ drupal_core_path }}' }}"
     is_php: true
 
 {% if 'adminer' in app.installed_extras %}
