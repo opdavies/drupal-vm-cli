@@ -1,4 +1,4 @@
-# Drupal VM Config Generator
+# Drupal VM Generator
 
 [![Latest Stable Version](https://poser.pugx.org/opdavies/drupal-vm-config-generator/v/stable)](https://packagist.org/packages/opdavies/drupal-vm-config-generator) [![Total Downloads](https://poser.pugx.org/opdavies/drupal-vm-config-generator/downloads)](https://packagist.org/packages/opdavies/drupal-vm-config-generator) [![Latest Unstable Version](https://poser.pugx.org/opdavies/drupal-vm-config-generator/v/unstable)](https://packagist.org/packages/opdavies/drupal-vm-config-generator) [![License](https://poser.pugx.org/opdavies/drupal-vm-config-generator/license)](https://packagist.org/packages/opdavies/drupal-vm-config-generator)
 
@@ -26,7 +26,7 @@ Rename it and move it somewhere where you can access it from anywhere.
 
 ### Install via Composer
 
-You can add the Drupal VM Config Generator into any existing Composer managed project by adding the following to your `composer.json` file.
+You can add the Drupal VM Generator into any existing Composer managed project by adding the following to your `composer.json` file.
 
 ```json
 {
@@ -86,7 +86,7 @@ If an option is not set, you will be asked a question instead to collect the val
 
 I’m happy to receive support and feature requests, bug reports, and [pull requests](https://help.github.com/articles/creating-a-pull-request) torwards this project.
 
-All bug reports and feature and support requests should be logged in the [issue tracker](https://github.com/opdavies/drupal-vm-config-generator/issues).
+All bug reports and feature and support requests should be logged in the [issue tracker](https://github.com/opdavies/drupal-vm-generator/issues).
 
 Please run `drupalvm-generate --version` and include the version number with any bug report or support request.
 
