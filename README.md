@@ -6,49 +6,7 @@ A [Symfony Console](http://symfony.com/doc/current/components/console/introducti
 
 ## Installation
 
-### Download the Phar via the Installer
-
-Run this in your Terminal to get the latest stable version of the project:
-
-    curl https://drupal-vm-config-generator.oliverdavies.uk -L -o drupalvm-generate.phar
-
-Or if you don’t have `curl`:
-
-    php -r "readfile('https://drupal-vm-config-generator.oliverdavies.uk');" > drupalvm-generate.phar
-
-Make it executable.
-
-    chmod +x drupalvm-generate.phar
-
-Rename it and move it somewhere where you can access it from anywhere.
-
-    mv drupalvm-generate.phar /usr/local/bin/drupalvm-generate
-
-### Install via Composer
-
-You can add the Drupal VM Generator into any existing Composer managed project by adding the following to your `composer.json` file.
-
-```json
-{
-    "require": {
-        "opdavies/drupal-vm-config-generator": "@stable"
-    }
-}
-```
-
-By default this will install to `vendor/bin/drupal-vm-config-generator`.
-
-### Download via Git
-
-For development purposes, you can clone the repository from GitHub to get the latest version.
-
-```
-git clone git@github.com:opdavies/drupal-vm-config-generator
-cd drupal-vm-config-generator
-composer install
-```
-
-At this point, `bin/drupalvm-generate` should be usable.
+See https://github.com/opdavies/drupal-vm-generator/wiki/Installation.
 
 ## Usage
 
