@@ -321,35 +321,25 @@ class GenerateCommand extends BaseCommand
      */
     private function generate(InputInterface $input)
     {
-        $args['vagrant_hostname'] = $input->getOption('hostname');
-
-        $args['vagrant_machine_name'] = $input->getOption('machine-name');
-
-        $args['vagrant_ip_address'] = $input->getOption('ip-address');
-
-        $args['vagrant_cpus'] = $input->getOption('cpus');
-
-        $args['vagrant_memory'] = $input->getOption('memory');
-
-        $args['drupalvm_webserver'] = $input->getOption('webserver');
-
-        $args['drupal_core_path'] = $input->getOption('docroot');
-
-        $args['local_path'] = $input->getOption('path');
-
-        $args['destination'] = $input->getOption('destination');
-
-        $args['drupal_major_version'] = $input->getOption('drupal-version');
-
-        $args['drupal_mysql_database'] = $input->getOption('database-name');
-
-        $args['drupal_mysql_user'] = $input->getOption('database-user');
-
-        $args['drupal_mysql_password'] = $input->getOption('database-password');
-
-        $args['build_makefile'] = $input->getOption('build-makefile');
-
-        $args['install_site'] = $input->getOption('install-site');
+        $args = [
+            'vagrant_hostname' => $input->getOption('hostname'),
+            'vagrant_machine_name' => $input->getOption('machine-name'),
+            'vagrant_ip_address' => $input->getOption('ip-address'),
+            'vagrant_cpus' => $input->getOption('cpus'),
+            'vagrant_memory' => $input->getOption('memory'),
+            'drupalvm_webserver' => $input->getOption('webserver'),
+            'drupal_core_path' => $input->getOption('docroot'),
+            'local_path' => $input->getOption('path'),
+            'destination' => $input->getOption('destination'),
+            'drupal_major_version' => $input->getOption('drupal-version'),
+            'drupal_mysql_database' => $input->getOption('database-name'),
+            'drupal_mysql_user' => $input->getOption('database-user'),
+            'drupal_mysql_password' => $input->getOption('database-password'),
+            'build_makefile' => $input->getOption('build-makefile'),
+            'install_site' => $input->getOption('install-site'),
+            'use_dashboard' => !$input->getOption('no-dashboard'),
+            'keep_comments' => !$input->getOption('no-comments'),
+        ];
 
         $args['installed_extras'] = [];
         foreach ($input->getOption('installed-extras') as $item) {
@@ -358,10 +348,6 @@ class GenerateCommand extends BaseCommand
                 explode(',', $item)
             );
         }
-
-        $args['use_dashboard'] = !$input->getOption('no-dashboard');
-
-        $args['keep_comments'] = !$input->getOption('no-comments');
 
         $this->fileContents = $this->twig->render('config.yml.twig', ['app' => $args]);
 
