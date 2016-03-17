@@ -3,7 +3,6 @@
 namespace DrupalVmGenerator\Command;
 
 use DrupalVmGenerator\Style\DrupalVmStyle;
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Filesystem\Filesystem;
 

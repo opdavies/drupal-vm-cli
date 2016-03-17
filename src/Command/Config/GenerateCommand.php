@@ -2,7 +2,7 @@
 
 namespace DrupalVmGenerator\Command\Config;
 
-use DrupalVmGenerator\Command\BaseCommand;
+use DrupalVmGenerator\Command\Command;
 use DrupalVmGenerator\Command\ExtrasTrait;
 use DrupalVmGenerator\Command\FileTrait;
 use DrupalVmGenerator\Style\DrupalVmStyle;
@@ -11,7 +11,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
-class GenerateCommand extends BaseCommand
+class GenerateCommand extends Command
 {
     use ExtrasTrait;
     use FileTrait;
