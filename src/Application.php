@@ -8,6 +8,15 @@ use Symfony\Component\Console\Input\InputInterface;
 
 class Application extends ConsoleApplication
 {
+    const NAME = 'Drupal VM Generator';
+
+    const VERSION = '2.0.0';
+
+    public function __construct()
+    {
+        parent::__construct(self::NAME, self::VERSION);
+    }
+
     /**
      * {@inheritdoc}
      */
