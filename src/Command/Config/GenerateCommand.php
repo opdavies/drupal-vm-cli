@@ -94,6 +94,27 @@ class GenerateCommand extends BaseCommand
                 8
             )
             ->addOption(
+                'database-name',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'The name of the database to use',
+                null
+            )
+            ->addOption(
+                'database-user',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'The database user to use',
+                null
+            )
+            ->addOption(
+                'database-password',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'The database password to use',
+                null
+            )
+            ->addOption(
                 'build-makefile',
                 null,
                 InputOption::VALUE_OPTIONAL,
@@ -219,6 +240,30 @@ class GenerateCommand extends BaseCommand
             ));
         }
 
+        // --database-name option
+        if (!$input->getOption('database-name')) {
+            $input->setOption('database-name', $this->io->ask(
+                'Enter the name of the database to use',
+                'drupal'
+            ));
+        }
+
+        // --database-user option
+        if (!$input->getOption('database-user')) {
+            $input->setOption('database-user', $this->io->ask(
+                'Enter the database username to use',
+                'drupal'
+            ));
+        }
+
+        // --database-password option
+        if (!$input->getOption('database-password')) {
+            $input->setOption('database-password', $this->io->ask(
+                'Enter the database password to use',
+                'drupal'
+            ));
+        }
+
         // --build-makefile option
         if (!$input->getOption('build-makefile')) {
             $input->setOption('build-makefile', $this->io->confirm(
@@ -276,13 +321,6 @@ class GenerateCommand extends BaseCommand
      */
     private function generate(InputInterface $input)
     {
-        $args = [
-            // Add some default arguments.
-            'drupal_mysql_database' => 'drupal',
-            'drupal_mysql_user' => 'drupal',
-            'drupal_mysql_password' => 'drupal',
-        ];
-
         $args['vagrant_hostname'] = $input->getOption('hostname');
 
         $args['vagrant_machine_name'] = $input->getOption('machine-name');
@@ -302,6 +340,12 @@ class GenerateCommand extends BaseCommand
         $args['destination'] = $input->getOption('destination');
 
         $args['drupal_major_version'] = $input->getOption('drupal-version');
+
+        $args['drupal_mysql_database'] = $input->getOption('database-name');
+
+        $args['drupal_mysql_user'] = $input->getOption('database-user');
+
+        $args['drupal_mysql_password'] = $input->getOption('database-password');
 
         $args['build_makefile'] = $input->getOption('build-makefile');
 

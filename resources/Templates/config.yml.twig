@@ -189,15 +189,15 @@ nginx_remove_default_vhost: true
 # be used for the makefile-built site.
 {% endif %}
 mysql_databases:
-  - name: "{{ app.drupal_mysql_database }}"
+  - name: "{{ '{{ drupal_mysql_database }}' }}"
     encoding: utf8
     collation: utf8_general_ci
 
 mysql_users:
-  - name: "{{ app.drupal_mysql_user }}"
+  - name: "{{ '{{ drupal_mysql_user }}' }}"
     host: "%"
-    password: "{{ app.drupal_mysql_password }}"
-    priv: "{{ app.drupal_mysql_database }}.*:ALL"
+    password: "{{ '{{ drupal_mysql_password }}' }}"
+    priv: "{{ '{{ drupal_mysql_database }}.*:ALL' }}"
 
 {% if app.installed_extras %}
 {% if app.keep_comments %}
