@@ -28,6 +28,9 @@ drupalvm-generate \
   --destination=/var/www/site \
   --docroot=/var/www/site/drupal \
   --drupal-version=8 \
+  --database-name=drupal \
+  --database-user=drupal \
+  --database-password=drupal \
   --build-makefile=no \
   --install-site=true \
   --installed-extras=xdebug,xhprof \
