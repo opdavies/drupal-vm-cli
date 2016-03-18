@@ -52,7 +52,7 @@ abstract class Command extends BaseCommand
 
         $this->fs = new Filesystem();
 
-        $loader = new \Twig_Loader_Filesystem(__DIR__ . '/../../resources/Templates');
+        $loader = new \Twig_Loader_Filesystem(__DIR__ . '/../../templates');
         $this->twig = new \Twig_Environment($loader);
 
         $this->io = new DrupalVmStyle($input, $output);
