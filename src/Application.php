@@ -10,7 +10,7 @@ class Application extends ConsoleApplication
 {
     const NAME = 'Drupal VM Generator';
 
-    const VERSION = '2.0.0';
+    const VERSION = '2.1.0';
 
     public function __construct()
     {
