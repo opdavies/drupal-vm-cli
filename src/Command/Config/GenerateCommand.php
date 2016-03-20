@@ -276,7 +276,7 @@ class GenerateCommand extends Command
         if (!$input->getOption('install-site')) {
             $input->setOption('install-site', $this->io->confirm(
                 'Install the site',
-                false
+                true
             ) ? 'yes' : 'no');
         }
 
