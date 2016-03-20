@@ -212,7 +212,7 @@ class GenerateCommand extends Command
         if (!$input->getOption('path')) {
             $input->setOption('path', $this->io->ask(
                 'Enter the local path for your Drupal site',
-                '~/Sites/drupalvm'
+                getcwd()
             ));
         }
 
