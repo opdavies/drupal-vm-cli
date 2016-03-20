@@ -1,3 +1,4 @@
+site/
 vendor/
-config.yml
 *.phar
+config.yml

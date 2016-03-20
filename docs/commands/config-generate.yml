@@ -1,0 +1,29 @@
+The __config:generate__ command generates a new `config.yml` file.
+
+## Usage
+
+    $ drupalvm-generate config:generate [options]
+
+## Available Options
+
+Option | Details
+------ | -------
+--hostname | The hostname to use for the virtual machine (defaults to `drupalvm.dev`).
+--machine-name | The machine name to use for Vagrant (defaults to `drupalvm`).
+--ip-address | The IP address for the virtual machine (defaults to `192.168.88.88`).
+--cpus | The number of CPUs to assign to the virtual machine (defaults to `2`).
+--memory | The amount of RAM to assign to the virtual machine (defaults to `1024`).
+--path | The relative local path to syncronise (defaults to the current working directory).
+--destination | The destination path within the virtual machine (defaults to `/var/www/drupalvm`).
+--docroot | The Drupal docroot (defaults to the value of `--destination`).
+--drupal-version | The Drupal version of the site (defaults to `8`).
+--build-makefile | Whether to build the site from a Drush Make file (defaults to `no`).
+--install-site | Whether to install the site as part of the provisioning process (defaults to `yes`).
+--database-name | The database name (defaults to `drupal`).
+--database-user | The datbase username (defaults to `drupal`).
+--database-password | The database password (defaults to `drupal`).
+--webserver | Which web server to use. This can be `apache` or `nginx` (defaults to `apache`).
+--installed-extras | This is empty by default. The available options are listed at <https://github.com/geerlingguy/drupal-vm#extra-softwareutilities>.
+--force | Override any existing `config.yml` file.
+--no-dashboard | Prevents the installation of the Drupal VM dashboard.
+--no-comments | Removes comments from the generated file.
