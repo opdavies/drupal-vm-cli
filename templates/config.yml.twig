@@ -215,8 +215,13 @@ installed_extras: []
 {% if app.keep_comments %}
 # Add any extra apt or yum packages you would like installed.
 {% endif %}
-extra_packages:
-  - unzip
+{% for package in app.extra_packages %}
+{% if loop.first %}extra_packages:
+{% endif %}
+  - {{ package }}
+{% else %}
+extra_packages: []
+{% endfor %}
 
 {% if 'nodejs' in app.installed_extras %}
 {% if app.keep_comments %}

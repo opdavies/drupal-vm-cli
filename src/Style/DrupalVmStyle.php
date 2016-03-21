@@ -4,6 +4,7 @@ namespace DrupalVmGenerator\Style;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 use DrupalVmGenerator\Helper\DrupalVmChoiceQuestionHelper;
@@ -58,5 +59,13 @@ class DrupalVmStyle extends SymfonyStyle
     {
         $questionHelper = new DrupalVmChoiceQuestionHelper();
         return $questionHelper->ask($this->input, $this, $question);
+    }
+
+    public function askEmpty($question, $validator = null)
+    {
+        $question = new Question($question, ' ');
+        $question->setValidator($validator);
+
+        return trim($this->askQuestion($question));
     }
 }

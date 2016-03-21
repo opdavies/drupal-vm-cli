@@ -5,6 +5,7 @@ namespace DrupalVmGenerator\Command\Config;
 use DrupalVmGenerator\Command\Command;
 use DrupalVmGenerator\Command\ExtrasTrait;
 use DrupalVmGenerator\Command\FileTrait;
+use DrupalVmGenerator\Command\PackagesTrait;
 use DrupalVmGenerator\Style\DrupalVmStyle;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -15,6 +16,7 @@ class GenerateCommand extends Command
 {
     use ExtrasTrait;
     use FileTrait;
+    use PackagesTrait;
 
     const FILENAME = 'config.yml';
 
@@ -131,6 +133,12 @@ class GenerateCommand extends Command
                 null,
                 InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
                 'Install from a predefined list of extra packages'
+            )
+            ->addOption(
+                'extra-packages',
+                null,
+                InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
+                'Add any additional apt or yum packages'
             )
             ->addOption(
                 'no-dashboard',
@@ -285,6 +293,11 @@ class GenerateCommand extends Command
             $input->setOption('installed-extras', $this->extrasQuestion($io));
         }
 
+        // --extra-packages option
+        if (!$input->getOption('extra-packages')) {
+            $input->setOption('extra-packages', $this->packagesQuestion($io));
+        }
+
         // --no-dashboard option
         if (!$input->getOption('no-dashboard')) {
             $useDashboard = $this->io->confirm(
@@ -338,7 +351,7 @@ class GenerateCommand extends Command
             'build_makefile' => $input->getOption('build-makefile'),
             'install_site' => $input->getOption('install-site'),
             'use_dashboard' => !$input->getOption('no-dashboard'),
-            'keep_comments' => !$input->getOption('no-comments'),
+            'keep_comments' => !$input->getOption('no-comments')
         ];
 
         $args['installed_extras'] = [];
@@ -346,6 +359,14 @@ class GenerateCommand extends Command
             $args['installed_extras'] = array_merge(
                 $args['installed_extras'],
                 explode(',', $item)
+            );
+        }
+
+        $args['extra_packages'] = [];
+        foreach ($input->getOption('extra-packages') as $package) {
+            $args['extra_packages'] = array_merge(
+                $args['extra_packages'],
+                explode(',', $package)
             );
         }
 
