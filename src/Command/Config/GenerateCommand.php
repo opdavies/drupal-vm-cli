@@ -35,16 +35,16 @@ class GenerateCommand extends Command
             ->setDescription('Generate a new Drupal VM configuration file.')
             ->setAliases(['generate'])
             ->addOption(
-                'hostname',
-                null,
-                InputOption::VALUE_OPTIONAL,
-                'The Vagrant hostname'
-            )
-            ->addOption(
                 'machine-name',
                 null,
                 InputOption::VALUE_REQUIRED,
                 'The Vagrant machine name'
+            )
+            ->addOption(
+                'hostname',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'The Vagrant hostname'
             )
             ->addOption(
                 'ip-address',
@@ -167,19 +167,19 @@ class GenerateCommand extends Command
     {
         $io = new DrupalVmStyle($input, $output);
 
-        // --hostname option
-        if (!$input->getOption('hostname')) {
-            $input->setOption('hostname', $this->io->ask(
-                'Enter a hostname for Vagrant',
-                'drupalvm.dev'
-            ));
-        }
-
         // --machine-name option
         if (!$input->getOption('machine-name')) {
             $input->setOption('machine-name', $this->io->ask(
                 'Enter a Vagrant machine name',
                 'drupalvm'
+            ));
+        }
+
+        // --hostname option
+        if (!$input->getOption('hostname')) {
+            $input->setOption('hostname', $this->io->ask(
+                'Enter a hostname for Vagrant',
+                $input->getOption('machine-name') . '.dev'
             ));
         }
 
@@ -335,8 +335,8 @@ class GenerateCommand extends Command
     private function generate(InputInterface $input)
     {
         $args = [
-            'vagrant_hostname' => $input->getOption('hostname'),
             'vagrant_machine_name' => $input->getOption('machine-name'),
+            'vagrant_hostname' => $input->getOption('hostname'),
             'vagrant_ip_address' => $input->getOption('ip-address'),
             'vagrant_cpus' => $input->getOption('cpus'),
             'vagrant_memory' => $input->getOption('memory'),
