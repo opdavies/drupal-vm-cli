@@ -5,7 +5,7 @@
         "src"
     ],
     "files": [
-        "bin/generate.php"
+        "bin/drupalvm.php"
     ],
     "finder": [
         {
@@ -15,7 +15,7 @@
         }
     ],
     "git-version": "package_version",
-    "main": "bin/drupalvm-generate",
-    "output": "drupalvm-generate.phar",
+    "main": "bin/drupalvm",
+    "output": "drupalvm.phar",
     "stub": true
 }

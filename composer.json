@@ -23,7 +23,7 @@
     },
     "license": "MIT",
     "bin": [
-        "bin/drupalvm-generate",
-        "bin/generate.php"
+        "bin/drupalvm",
+        "bin/drupalvm.php"
     ]
 }
