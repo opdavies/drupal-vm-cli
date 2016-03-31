@@ -92,8 +92,7 @@ class GenerateCommand extends Command
                 'drupal-version',
                 null,
                 InputOption::VALUE_OPTIONAL,
-                'Which version of Drupal to install',
-                8
+                'Which version of Drupal to install is being used?'
             )
             ->addOption(
                 'database-name',
