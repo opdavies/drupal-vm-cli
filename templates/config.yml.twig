@@ -182,6 +182,7 @@ nginx_hosts:
 {% endif %}
 
 nginx_remove_default_vhost: true
+nginx_ppa_use: true
 {% endif %}
 
 {% if keep_comments %}
@@ -235,7 +236,7 @@ nodejs_npm_global_packages: []
 {% if 'ruby' in installed_extras %}
 {% if keep_comments %}# `ruby` must be in installed_extras for this to work.
 {% endif %}
-ruby_install_gems_user: "{{ '{{ vagrant_user }}' }}"
+ruby_install_gems_user: "{{ '{{ drupalvm_user }}' }}"
 ruby_install_gems: []
 {% endif %}
 
@@ -284,7 +285,10 @@ php_enable_php_fpm: true
 php_fpm_listen: "127.0.0.1:9000"
 
 composer_path: /usr/bin/composer
-composer_home_path: '/home/vagrant/.composer'
+composer_home_path: "/home/{{ '{{ drupalvm_user }}' }}/.composer"
+composer_home_owner: "{{ '{{ drupalvm_user }}' }}"
+composer_home_group: "{{ '{{ drupalvm_user }}' }}"
+
 {% if keep_comments %}
 # composer_global_packages:
 #   - { name: phpunit/phpunit, release: '@stable' }

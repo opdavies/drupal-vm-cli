@@ -8,9 +8,20 @@ use Symfony\Component\Console\Input\InputInterface;
 
 class Application extends ConsoleApplication
 {
+    /**
+     * @var string
+     */
     const NAME = 'Drupal VM Generator';
 
-    const VERSION = '2.1.0';
+    /**
+     * @var string
+     */
+    const VERSION = '2.2.0';
+
+    /**
+     * @var string
+     */
+    const SUPPORTED_DRUPAL_VM_VERSION = '2.4.0';
 
     public function __construct()
     {
