@@ -1,7 +1,7 @@
 {
     "chmod": "0775",
     "directories": [
-        "resources",
+        "templates",
         "src"
     ],
     "files": [
