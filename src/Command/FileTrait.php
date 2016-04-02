@@ -22,7 +22,7 @@ trait FileTrait
             throw new \Exception('The generated file is empty.');
         }
 
-        if ($filesystem->exists(self::FILENAME) && !$input->getOption('force')) {
+        if ($filesystem->exists(self::FILENAME) && !$input->getOption('overwrite')) {
             $io->error(sprintf('%s already exists.', self::FILENAME));
         } else {
             $filesystem->dumpFile(

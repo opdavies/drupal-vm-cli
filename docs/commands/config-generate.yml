@@ -24,6 +24,6 @@ Option | Details
 --database-password | The database password (defaults to `drupal`).
 --webserver | Which web server to use. This can be `apache` or `nginx` (defaults to `apache`).
 --installed-extras | This is empty by default. The available options are listed at <https://github.com/geerlingguy/drupal-vm#extra-softwareutilities>.
---force | Override any existing `config.yml` file.
+--overwrite | Overwrite any existing `config.yml` file.
 --no-dashboard | Prevents the installation of the Drupal VM dashboard.
 --no-comments | Removes comments from the generated file.

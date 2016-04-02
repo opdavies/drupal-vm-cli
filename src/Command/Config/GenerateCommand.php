@@ -152,9 +152,10 @@ class GenerateCommand extends Command
                 'Remove comments from config.yml'
             )
             ->addOption(
-                'force',
-                'f',
-                InputOption::VALUE_NONE
+                'overwrite',
+                null,
+                InputOption::VALUE_NONE,
+                'Overwite an existing file if one exists'
             )
         ;
     }

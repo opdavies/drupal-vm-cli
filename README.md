@@ -34,7 +34,7 @@ drupalvm-generate \
   --build-makefile=no \
   --install-site=true \
   --installed-extras=xdebug,xhprof \
-  --force
+  --overwrite
 ```
 
 If an option is not set, you will be asked a question instead to collect the value.
