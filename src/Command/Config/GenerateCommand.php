@@ -155,7 +155,7 @@ class GenerateCommand extends Command
                 'overwrite',
                 null,
                 InputOption::VALUE_NONE,
-                'Overwite an existing file if one exists'
+                'Overwrite an existing file if one exists'
             )
         ;
     }
