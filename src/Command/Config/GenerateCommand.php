@@ -165,7 +165,9 @@ class GenerateCommand extends Command
      */
     protected function interact(InputInterface $input, OutputInterface $output)
     {
-        $io = new DrupalVmStyle($input, $output);
+        $io = $this->io;
+
+        $this->assertFileAlreadyExists($input);
 
         // --machine-name option
         if (!$input->getOption('machine-name')) {
@@ -322,6 +324,7 @@ class GenerateCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this
+            ->assertFileAlreadyExists($input)
             ->generate($input)
             ->writeFile(new Filesystem(), $input, $this->io)
         ;
@@ -371,6 +374,26 @@ class GenerateCommand extends Command
         }
 
         $this->fileContents = $this->twig->render('config.yml.twig', $args);
+
+        return $this;
+    }
+
+    /**
+     * Check if the file already exists.
+     *
+     * @param InputInterface $input
+     *
+     * @return $this
+     */
+    private function assertFileAlreadyExists(InputInterface $input)
+    {
+        $filename = $this->projectDir . '/' . self::FILENAME;
+
+        if (file_exists($filename) && !$input->getOption('overwrite')) {
+            $this->io->error('config.yml already exists.');
+
+            exit(1);
+        }
 
         return $this;
     }
