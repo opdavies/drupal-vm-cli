@@ -186,7 +186,7 @@ class GenerateCommand extends Command
             ));
         }
 
-        // ip-address option
+        // --ip-address option
         if (!$input->getOption('ip-address')) {
             $input->setOption('ip-address', $this->io->ask(
                 'Enter an IP address for the Vagrant VM',
