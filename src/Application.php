@@ -30,6 +30,9 @@ class Application extends ConsoleApplication
         parent::__construct(self::NAME, self::VERSION);
 
         $this->addCommands($this->getCommands());
+
+        // TODO: Make this configurable when user settings are added.
+        $this->setDefaultCommand('list');
     }
 
     /**
