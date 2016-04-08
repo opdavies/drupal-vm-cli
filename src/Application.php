@@ -4,10 +4,12 @@ namespace DrupalVmGenerator;
 
 use DrupalVmGenerator\Command\Config\GenerateCommand;
 use Symfony\Component\Console\Application as ConsoleApplication;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 
 class Application extends ConsoleApplication
 {
+
     /**
      * @var string
      */
@@ -26,37 +28,20 @@ class Application extends ConsoleApplication
     public function __construct()
     {
         parent::__construct(self::NAME, self::VERSION);
+
+        $this->addCommands($this->getCommands());
     }
 
     /**
-     * {@inheritdoc}
+     * Returns all available commands.
+     *
+     * @return Command[]
      */
-    protected function getCommandName(InputInterface $input)
+    private function getCommands()
     {
-        return 'config:generate';
+        return [
+            new GenerateCommand()
+        ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function getDefaultCommands()
-    {
-        $defaultCommands = parent::getDefaultCommands();
-
-        $defaultCommands[] = new GenerateCommand();
-
-        return $defaultCommands;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getDefinition()
-    {
-        $inputDefinition = parent::getDefinition();
-
-        $inputDefinition->setArguments();
-
-        return $inputDefinition;
-    }
 }

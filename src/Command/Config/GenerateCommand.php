@@ -14,6 +14,7 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class GenerateCommand extends Command
 {
+
     use ExtrasTrait;
     use FileTrait;
     use PackagesTrait;
