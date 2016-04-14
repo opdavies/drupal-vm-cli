@@ -41,6 +41,13 @@ abstract class Command extends BaseCommand
      */
     protected $io;
 
+    public function __construct(Twig_Environment $twig)
+    {
+        $this->twig = $twig;
+
+        parent::__construct();
+    }
+
     /**
      * {@inheritdoc}
      */
