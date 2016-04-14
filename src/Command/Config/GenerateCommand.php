@@ -372,7 +372,7 @@ class GenerateCommand extends Command
             );
         }
 
-        $this->fileContents = $this->twig->render('config.yml.twig', $args);
+        $this->fileContents = $this->render('config.yml.twig', $args);
 
         return $this;
     }
