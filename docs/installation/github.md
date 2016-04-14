@@ -9,4 +9,4 @@ For development purposes, you can clone the repository directly from GitHub.
     cd drupal-vm-generator
     composer install
 
-The `bin/drupalvm-generate` command is now available.
+The `bin/drupalvm` command is now available.

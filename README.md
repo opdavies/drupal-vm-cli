@@ -10,14 +10,14 @@ See https://github.com/opdavies/drupal-vm-generator/wiki/Installation.
 
 ## Usage
 
-With the `drupalvm-generate` command installed, you can now run it to generate your configuration file.
+With the `drupalvm` command installed, you can now run it to generate your configuration file.
 
 Each variable configurable with the application has an option that you can set when running the command.
 
 Here is an example with all of the options set beforehand:
 
 ```
-drupalvm-generate \
+drupalvm \
   --hostname=example.com \
   --machine-name=example \
   --ip-address=192.168.88.88 \
@@ -49,6 +49,6 @@ I’m happy to receive support and feature requests, bug reports, and [pull requ
 
 All bug reports and feature and support requests should be logged in the [issue tracker](https://github.com/opdavies/drupal-vm-generator/issues).
 
-Please run `drupalvm-generate --version` and include the version number with any bug report or support request.
+Please run `drupalvm --version` and include the version number with any bug report or support request.
 
 All pull requests should be from a topic branch in your forked repository, merging back into `master`.

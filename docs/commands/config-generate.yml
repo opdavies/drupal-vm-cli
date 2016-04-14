@@ -2,7 +2,7 @@ The __config:generate__ command generates a new `config.yml` file.
 
 ## Usage
 
-    $ drupalvm-generate config:generate [options]
+    $ drupalvm config:generate [options]
 
 ## Available Options
 
