@@ -14,15 +14,9 @@ class GenerateCommand extends Command
 {
 
     use ExtrasTrait;
-    use FileTrait;
     use PackagesTrait;
 
     const FILENAME = 'config.yml';
-
-    /**
-     * @var string
-     */
-    private $fileContents;
 
     /**
      * {@inheritdoc}
