@@ -4,7 +4,6 @@ namespace DrupalVmGenerator;
 
 use DrupalVmGenerator\Command\Config\GenerateCommand as ConfigGenerateCommand;
 use Symfony\Component\Console\Application as ConsoleApplication;
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Filesystem\Filesystem;
 use Twig_Environment;
 use Twig_Loader_Filesystem;

@@ -6,7 +6,6 @@ use DrupalVmGenerator\Command\Command;
 use DrupalVmGenerator\Command\ExtrasTrait;
 use DrupalVmGenerator\Command\FileTrait;
 use DrupalVmGenerator\Command\PackagesTrait;
-use DrupalVmGenerator\Style\DrupalVmStyle;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
