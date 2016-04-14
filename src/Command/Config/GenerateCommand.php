@@ -327,7 +327,7 @@ class GenerateCommand extends Command
         $this
             ->assertFileAlreadyExists($input)
             ->generate($input)
-            ->writeFile($this->fs, $input, $this->io)
+            ->writeFile($this->filesystem, $input, $this->io)
         ;
     }
 

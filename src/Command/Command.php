@@ -24,7 +24,7 @@ abstract class Command extends BaseCommand
     /**
      * @var Filesystem
      */
-    protected $fs;
+    protected $filesystem;
 
     /**
      * @var Twig_Environment
@@ -51,7 +51,7 @@ abstract class Command extends BaseCommand
         $this->input = $input;
         $this->output = $output;
 
-        $this->fs = new Filesystem();
+        $this->filesystem = new Filesystem();
 
         $this->io = new DrupalVmStyle($input, $output);
     }
