@@ -5,6 +5,8 @@ namespace DrupalVmGenerator;
 use DrupalVmGenerator\Command\Config\GenerateCommand as ConfigGenerateCommand;
 use Symfony\Component\Console\Application as ConsoleApplication;
 use Symfony\Component\Console\Command\Command;
+use Twig_Environment;
+use Twig_Loader_Filesystem;
 
 class Application extends ConsoleApplication
 {
@@ -28,7 +30,13 @@ class Application extends ConsoleApplication
     {
         parent::__construct(self::NAME, self::VERSION);
 
-        $this->addCommands($this->getCommands());
+        $twig = new Twig_Environment(
+            new Twig_Loader_Filesystem(__DIR__ . '/../templates')
+        );
+
+        $this->addCommands([
+            new ConfigGenerateCommand($twig)
+        ]);
 
         // TODO: Make this configurable when user settings are added.
         $this->setDefaultCommand('list');

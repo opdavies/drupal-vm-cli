@@ -8,7 +8,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Twig_Environment;
-use Twig_Loader_Filesystem;
 
 abstract class Command extends BaseCommand
 {
@@ -53,10 +52,6 @@ abstract class Command extends BaseCommand
         $this->output = $output;
 
         $this->fs = new Filesystem();
-
-        $this->twig = new Twig_Environment(
-            new Twig_Loader_Filesystem(__DIR__ . '/../../templates')
-        );
 
         $this->io = new DrupalVmStyle($input, $output);
     }
