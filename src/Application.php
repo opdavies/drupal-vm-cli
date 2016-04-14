@@ -2,7 +2,7 @@
 
 namespace DrupalVmGenerator;
 
-use DrupalVmGenerator\Command\Config\GenerateCommand;
+use DrupalVmGenerator\Command\Config\GenerateCommand as ConfigGenerateCommand;
 use Symfony\Component\Console\Application as ConsoleApplication;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -43,7 +43,7 @@ class Application extends ConsoleApplication
     private function getCommands()
     {
         return [
-            new GenerateCommand()
+            new ConfigGenerateCommand()
         ];
     }
 
