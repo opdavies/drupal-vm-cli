@@ -2,8 +2,8 @@
 
 namespace DrupalVmGenerator\Command\Config;
 
+use DrupalVmGenerator\Command\Command;
 use DrupalVmGenerator\Command\ExtrasTrait;
-use DrupalVmGenerator\Command\FileTrait;
 use DrupalVmGenerator\Command\GeneratorCommand;
 use DrupalVmGenerator\Command\PackagesTrait;
 use Symfony\Component\Console\Input\InputInterface;
@@ -319,7 +319,7 @@ class GenerateCommand extends GeneratorCommand
         $this->assertFileAlreadyExists(self::FILENAME);
 
         $this->generate()
-            ->writeFile($this->filesystem, $input, $this->io)
+            ->writeFile(self::FILENAME)
         ;
     }
 
@@ -371,15 +371,4 @@ class GenerateCommand extends GeneratorCommand
         return $this;
     }
 
-    /**
-     * Check if the file already exists.
-     */
-    private function assertFileAlreadyExists($filename)
-    {
-        if (file_exists($this->projectDir . '/' . $filename) && !$this->input->getOption('overwrite')) {
-            $this->io->error(sprintf('%s already exists.', $filename));
-
-            exit(1);
-        }
-    }
 }
