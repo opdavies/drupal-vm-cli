@@ -45,16 +45,4 @@ class Application extends ConsoleApplication
         $this->setDefaultCommand('list');
     }
 
-    /**
-     * Returns all available commands.
-     *
-     * @return Command[]
-     */
-    private function getCommands()
-    {
-        return [
-            new ConfigGenerateCommand()
-        ];
-    }
-
 }
