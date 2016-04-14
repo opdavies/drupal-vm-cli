@@ -41,9 +41,11 @@ abstract class Command extends BaseCommand
      */
     protected $io;
 
-    public function __construct(Twig_Environment $twig)
+    public function __construct(Twig_Environment $twig, Filesystem $filesystem)
     {
         $this->twig = $twig;
+
+        $this->filesystem = $filesystem;
 
         parent::__construct();
     }
@@ -57,8 +59,6 @@ abstract class Command extends BaseCommand
 
         $this->input = $input;
         $this->output = $output;
-
-        $this->filesystem = new Filesystem();
 
         $this->io = new DrupalVmStyle($input, $output);
     }
