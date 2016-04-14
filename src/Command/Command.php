@@ -22,16 +22,6 @@ abstract class Command extends BaseCommand
     protected $output;
 
     /**
-     * @var Filesystem
-     */
-    protected $filesystem;
-
-    /**
-     * @var Twig_Environment
-     */
-    protected $twig;
-
-    /**
      * @var string
      */
     protected $projectDir;
@@ -40,15 +30,6 @@ abstract class Command extends BaseCommand
      * @var DrupalVmStyle
      */
     protected $io;
-
-    public function __construct(Twig_Environment $twig, Filesystem $filesystem)
-    {
-        $this->twig = $twig;
-
-        $this->filesystem = $filesystem;
-
-        parent::__construct();
-    }
 
     /**
      * {@inheritdoc}

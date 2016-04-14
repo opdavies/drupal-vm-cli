@@ -2,15 +2,15 @@
 
 namespace DrupalVmGenerator\Command\Config;
 
-use DrupalVmGenerator\Command\Command;
 use DrupalVmGenerator\Command\ExtrasTrait;
 use DrupalVmGenerator\Command\FileTrait;
+use DrupalVmGenerator\Command\GeneratorCommand;
 use DrupalVmGenerator\Command\PackagesTrait;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class GenerateCommand extends Command
+class GenerateCommand extends GeneratorCommand
 {
 
     use ExtrasTrait;
