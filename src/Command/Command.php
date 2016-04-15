@@ -44,16 +44,4 @@ abstract class Command extends BaseCommand
         $this->io = new DrupalVmStyle($input, $output);
     }
 
-    /**
-     * A shortcut for rendering a Twig template.
-     *
-     * @param $template
-     * @param array $parameters
-     *
-     * @return string
-     */
-    protected function render($template, array $parameters)
-    {
-        return $this->twig->render($template, $parameters);
-    }
 }
