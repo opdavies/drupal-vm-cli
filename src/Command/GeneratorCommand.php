@@ -2,8 +2,8 @@
 
 namespace DrupalVmGenerator\Command;
 
-use DrupalVmGenerator\Command\Config\GenerateCommand;
-use Symfony\Component\Console\Input\InputInterface;
+use DrupalVmGenerator\Exception\FileEmptyException;
+use Exception;
 use Symfony\Component\Filesystem\Filesystem;
 use Twig_Environment;
 
@@ -48,14 +48,14 @@ abstract class GeneratorCommand extends Command
     /**
      * @param string $filename
      *
-     * @return $this
+     * @return Command
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function writeFile($filename)
     {
         if (empty($this->fileContents)) {
-            throw new \Exception('The generated file is empty.');
+            throw new FileEmptyException('The generated file was empty.');
         }
 
         $this->filesystem->dumpFile($filename, $this->fileContents);
