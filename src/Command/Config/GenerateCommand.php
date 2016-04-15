@@ -166,7 +166,7 @@ class GenerateCommand extends Command
     {
         $io = $this->io;
 
-        $this->assertFileAlreadyExists($input);
+        $this->assertFileAlreadyExists(self::FILENAME);
 
         // --machine-name option
         if (!$input->getOption('machine-name')) {
@@ -322,20 +322,20 @@ class GenerateCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this
-            ->assertFileAlreadyExists($input)
-            ->generate($input)
+        $this->assertFileAlreadyExists(self::FILENAME);
+
+        $this->generate()
             ->writeFile($this->filesystem, $input, $this->io)
         ;
     }
 
     /**
-     * @param InputInterface $input
-     *
-     * @return GenerateCommand
+     * @return Command
      */
-    private function generate(InputInterface $input)
+    private function generate()
     {
+        $input = $this->input;
+
         $args = [
             'vagrant_machine_name' => $input->getOption('machine-name'),
             'vagrant_hostname' => $input->getOption('hostname'),
@@ -379,21 +379,13 @@ class GenerateCommand extends Command
 
     /**
      * Check if the file already exists.
-     *
-     * @param InputInterface $input
-     *
-     * @return $this
      */
-    private function assertFileAlreadyExists(InputInterface $input)
+    private function assertFileAlreadyExists($filename)
     {
-        $filename = $this->projectDir . '/' . self::FILENAME;
-
-        if (file_exists($filename) && !$input->getOption('overwrite')) {
-            $this->io->error('config.yml already exists.');
+        if (file_exists($this->projectDir . '/' . $filename) && !$this->input->getOption('overwrite')) {
+            $this->io->error(sprintf('%s already exists.', $filename));
 
             exit(1);
         }
-
-        return $this;
     }
 }
