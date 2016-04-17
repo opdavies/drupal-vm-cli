@@ -19,11 +19,6 @@ abstract class GeneratorCommand extends Command
      */
     protected $filesystem;
 
-    /**
-     * @var string
-     */
-    protected $fileContents;
-
     public function __construct(Twig_Environment $twig, Filesystem $filesystem)
     {
         $this->twig = $twig;
@@ -65,17 +60,16 @@ abstract class GeneratorCommand extends Command
      *
      * @throws Exception
      */
-    protected function writeFile($filename)
+    protected function writeFile($filename, $contents)
     {
-        if (empty($this->fileContents)) {
+        if (empty($contents)) {
             throw new FileEmptyException('The generated file was empty.');
         }
 
-        $this->filesystem->dumpFile($filename, $this->fileContents);
+        $this->filesystem->dumpFile($filename, $contents);
 
         $this->io->success(sprintf('%s created', $filename));
 
         return $this;
     }
-
 }

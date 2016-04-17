@@ -318,9 +318,7 @@ class GenerateCommand extends GeneratorCommand
     {
         $this->assertFileAlreadyExists(self::FILENAME);
 
-        $this->generate()
-            ->writeFile(self::FILENAME)
-        ;
+        $this->writeFile(self::FILENAME, $this->generate());
     }
 
     /**
@@ -366,9 +364,6 @@ class GenerateCommand extends GeneratorCommand
             );
         }
 
-        $this->fileContents = $this->render('config.yml.twig', $args);
-
-        return $this;
+        return $this->render('config.yml.twig', $args);
     }
-
 }

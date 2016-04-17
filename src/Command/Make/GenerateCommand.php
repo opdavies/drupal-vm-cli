@@ -9,7 +9,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class GenerateCommand extends GeneratorCommand
 {
-
     const FILENAME = 'drupal.make.yml';
 
     /**
@@ -87,6 +86,13 @@ class GenerateCommand extends GeneratorCommand
     {
         $this->assertFileAlreadyExists(self::FILENAME);
 
+        $this->writeFile(self::FILENAME, $this->generate());
+    }
+
+    private function generate()
+    {
+        $input = $this->input;
+
         $parameters = array(
             'drupal_version' => $input->getOption('drupal-version'),
             'branch' => $input->getOption('branch'),
@@ -94,9 +100,7 @@ class GenerateCommand extends GeneratorCommand
             'other_projects' => $input->getOption('other-projects')
         );
 
-        $this->fileContents = $this->render('drupal.make.yml.twig', $parameters);
-
-        $this->writeFile('drupal.make.yml');
+        return $this->render('drupal.make.yml.twig', $parameters);
     }
 
     private function otherProjectQuestion()
