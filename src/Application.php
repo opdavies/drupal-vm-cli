@@ -3,6 +3,7 @@
 namespace DrupalVmGenerator;
 
 use DrupalVmGenerator\Command\Config\GenerateCommand as ConfigGenerateCommand;
+use DrupalVmGenerator\Command\Make\GenerateCommand as MakeGenerateCommand;
 use Symfony\Component\Console\Application as ConsoleApplication;
 use Symfony\Component\Filesystem\Filesystem;
 use Twig_Environment;
@@ -37,7 +38,8 @@ class Application extends ConsoleApplication
         $filesystem = new Filesystem();
 
         $this->addCommands([
-            new ConfigGenerateCommand($twig, $filesystem)
+            new ConfigGenerateCommand($twig, $filesystem),
+            new MakeGenerateCommand($twig, $filesystem),
         ]);
 
         // TODO: Make this configurable when user settings are added.

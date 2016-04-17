@@ -1,0 +1,32 @@
+---
+api: 2
+
+{% if keep_comments %}
+# Basic Drush Make file for Drupal. Be sure to update the drupal_major_version
+# variable inside config.yml if you change the major version in this file.
+
+# Drupal core (major version, e.g. 6.x, 7.x, 8.x).
+{% endif %}
+core: "{{ drupal_version }}"
+
+projects:
+  {% if keep_comments -%}
+  # Core.
+  {% endif -%}
+  drupal:
+    type: "core"
+    download:
+      {% if keep_comments -%}
+      # Drupal core branch (e.g. "6.x", "7.x", "8.0.x").
+      {% endif -%}
+      branch: "{{ branch }}"
+      working-copy: true
+
+  {% if other_projects -%}
+  {%- if keep_comments -%}
+  # Other modules.
+  {% endif -%}
+  {%- for project in other_projects -%}
+  {{ project.name }}: "{{ project.version }}"
+  {% endfor -%}
+ {% endif %}
