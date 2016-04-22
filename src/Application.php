@@ -4,6 +4,8 @@ namespace DrupalVmGenerator;
 
 use DrupalVmGenerator\Command\Config\GenerateCommand as ConfigGenerateCommand;
 use DrupalVmGenerator\Command\Make\GenerateCommand as MakeGenerateCommand;
+use DrupalVmGenerator\Command\NewCommand;
+use GuzzleHttp\Client;
 use Symfony\Component\Console\Application as ConsoleApplication;
 use Symfony\Component\Filesystem\Filesystem;
 use Twig_Environment;
@@ -37,7 +39,10 @@ class Application extends ConsoleApplication
 
         $filesystem = new Filesystem();
 
+        $client = new Client();
+
         $this->addCommands([
+            new NewCommand($client),
             new ConfigGenerateCommand($twig, $filesystem),
             new MakeGenerateCommand($twig, $filesystem),
         ]);
