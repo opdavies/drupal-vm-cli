@@ -17,7 +17,7 @@ class GenerateCommand extends GeneratorCommand
     protected function configure()
     {
         $this->setName('make:generate')
-            ->setDescription('Generate a new drupal.make.yml file.')
+            ->setDescription('Generate a new drupal.make.yml file')
             ->addOption(
                 'drupal-version',
                 null,
