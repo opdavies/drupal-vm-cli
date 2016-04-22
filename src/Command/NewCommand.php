@@ -6,6 +6,7 @@ use GuzzleHttp\ClientInterface;
 use DrupalVmGenerator\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use ZipArchive;
 
@@ -20,6 +21,11 @@ class NewCommand extends Command
      * @var string
      */
     private $zipFile;
+
+    /**
+     * @var string
+     */
+    private $version = 'master';
 
     public function __construct(ClientInterface $client)
     {
@@ -41,6 +47,11 @@ class NewCommand extends Command
                 InputArgument::OPTIONAL,
                 '',
                 'drupal-vm'
+            )
+            ->addOption(
+                'latest',
+                null,
+                InputOption::VALUE_NONE
             );
     }
 
@@ -49,11 +60,33 @@ class NewCommand extends Command
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
+        $this->assertDirectoryDoesNotExist();
+
+        $io = $this->io;
+
+        $io->comment('Downloading Drupal VM...');
+
         $this->zipFile = $this->makeFileName();
 
         $this->download()
             ->extract()
             ->cleanUp();
+
+        $io->success(sprintf('Drupal VM downloaded to %s.', $input->getArgument('directory')));
+    }
+
+    /**
+     * Check that the output directory doesn’t already exist.
+     */
+    private function assertDirectoryDoesNotExist()
+    {
+        $directory = $this->input->getArgument('directory');
+
+        if (is_dir($directory)) {
+            $this->io->error(sprintf('%s already exists.', $this->input->getArgument('directory')));
+
+            exit(1);
+        }
     }
 
     /**
@@ -73,7 +106,11 @@ class NewCommand extends Command
      */
     private function download()
     {
-        $url = 'https://github.com/geerlingguy/drupal-vm/archive/master.zip';
+        if (!$this->input->getOption('latest')) {
+            $this->version = '2.4.0';
+        }
+
+        $url = sprintf('https://github.com/geerlingguy/drupal-vm/archive/%s.zip', $this->version);
 
         $response = $this->client->get($url)->getBody();
 
@@ -95,7 +132,10 @@ class NewCommand extends Command
         $archive->extractTo('.');
         $archive->close();
 
-        rename('drupal-vm-master', $this->input->getArgument('directory'));
+        rename(
+            sprintf('drupal-vm-%s', $this->version),
+            $this->input->getArgument('directory')
+        );
 
         return $this;
     }
