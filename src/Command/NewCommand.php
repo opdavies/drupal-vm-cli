@@ -2,6 +2,7 @@
 
 namespace DrupalVmGenerator\Command;
 
+use Github\Client as GithubClient;
 use GuzzleHttp\ClientInterface;
 use DrupalVmGenerator\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -18,6 +19,11 @@ class NewCommand extends Command
     private $client;
 
     /**
+     * @var GithubClient
+     */
+    private $github;
+
+    /**
      * @var string
      */
     private $zipFile;
@@ -27,9 +33,11 @@ class NewCommand extends Command
      */
     private $version = 'master';
 
-    public function __construct(ClientInterface $client)
+    public function __construct(ClientInterface $client, GithubClient $github)
     {
         $this->client = $client;
+
+        $this->github = $github;
 
         parent::__construct();
     }
@@ -107,7 +115,7 @@ class NewCommand extends Command
     private function download()
     {
         if (!$this->input->getOption('latest')) {
-            $this->version = '2.4.0';
+            $this->version = $this->getLatestVersion();
         }
 
         $url = sprintf('https://github.com/geerlingguy/drupal-vm/archive/%s.zip', $this->version);
@@ -151,5 +159,17 @@ class NewCommand extends Command
         @unlink($this->zipFile);
 
         return $this;
+    }
+
+    /**
+     * Get the latest release from GitHub.
+     *
+     * @return string
+     */
+    private function getLatestVersion()
+    {
+        $result = $this->github->api('repo')->releases()->latest('geerlingguy', 'drupal-vm');
+
+        return $result['tag_name'];
     }
 }
