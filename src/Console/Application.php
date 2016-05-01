@@ -1,10 +1,11 @@
 <?php
 
-namespace DrupalVmGenerator;
+namespace DrupalVmGenerator\Console;
 
 use DrupalVmGenerator\Command\Config\GenerateCommand as ConfigGenerateCommand;
 use DrupalVmGenerator\Command\Make\GenerateCommand as MakeGenerateCommand;
 use DrupalVmGenerator\Command\NewCommand;
+use DrupalVmGenerator\Command\Self\UpdateCommand as SelfUpdateCommand;
 use Github\Client as GithubClient;
 use Github\HttpClient\CachedHttpClient;
 use GuzzleHttp\Client;
@@ -36,7 +37,7 @@ class Application extends ConsoleApplication
         parent::__construct(self::NAME, self::VERSION);
 
         $twig = new Twig_Environment(
-            new Twig_Loader_Filesystem(__DIR__ . '/../templates')
+            new Twig_Loader_Filesystem(__DIR__ . '/../../templates')
         );
 
         $filesystem = new Filesystem();
@@ -51,6 +52,7 @@ class Application extends ConsoleApplication
             new NewCommand($client, $github),
             new ConfigGenerateCommand($twig, $filesystem),
             new MakeGenerateCommand($twig, $filesystem),
+            new SelfUpdateCommand(),
         ]);
 
         // TODO: Make this configurable when user settings are added.

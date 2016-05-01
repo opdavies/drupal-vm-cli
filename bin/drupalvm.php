@@ -1,6 +1,6 @@
 <?php
 
-use DrupalVmGenerator\Application;
+use DrupalVmGenerator\Console\Application;
 
 if (file_exists(__DIR__ . '/../../../autoload.php')) {
     require __DIR__ . '/../../../autoload.php';
