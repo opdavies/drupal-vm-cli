@@ -1,3 +1,5 @@
+bin/jsonlint
+bin/validate-json
 site/
 vendor/
 *.phar
