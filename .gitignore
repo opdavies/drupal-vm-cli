@@ -1,5 +1,6 @@
 site/
 vendor/
 *.phar
+*.phar.version
 config.yml
 drupal.make.yml
