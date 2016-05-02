@@ -16,7 +16,6 @@ use Twig_Loader_Filesystem;
 
 class Application extends ConsoleApplication
 {
-
     /**
      * @var string
      */
@@ -45,18 +44,19 @@ class Application extends ConsoleApplication
         $client = new Client();
 
         $github = new GithubClient(
-           new CachedHttpClient(['cache_dir' => '/tmp/github_api_cache'])
+            new CachedHttpClient(['cache_dir' => '/tmp/github_api_cache'])
         );
 
-        $this->addCommands([
+        $this->addCommands(
+            [
             new NewCommand($client, $github),
             new ConfigGenerateCommand($twig, $filesystem),
             new MakeGenerateCommand($twig, $filesystem),
             new SelfUpdateCommand(),
-        ]);
+            ]
+        );
 
         // TODO: Make this configurable when user settings are added.
         $this->setDefaultCommand('list');
     }
-
 }

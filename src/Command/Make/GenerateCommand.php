@@ -59,18 +59,22 @@ class GenerateCommand extends GeneratorCommand
 
         // --drupal-version option.
         if (!$input->getOption('drupal-version')) {
-            $input->setOption('drupal-version', $this->io->ask(
-                'Enter a Drupal version',
-                '8.x'
-            ));
+            $input->setOption(
+                'drupal-version', $this->io->ask(
+                    'Enter a Drupal version',
+                    '8.x'
+                )
+            );
         }
 
         // --branch option.
         if (!$input->getOption('branch')) {
-            $input->setOption('branch', $this->io->ask(
-                'Enter a branch name',
-                '8.1.x'
-            ));
+            $input->setOption(
+                'branch', $this->io->ask(
+                    'Enter a branch name',
+                    '8.1.x'
+                )
+            );
         }
 
         // --other-projects option.
