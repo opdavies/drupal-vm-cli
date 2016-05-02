@@ -44,7 +44,7 @@ abstract class GeneratorCommand extends Command
      * A shortcut for rendering a Twig template.
      *
      * @param $template
-     * @param array $parameters
+     * @param array    $parameters
      *
      * @return string
      */

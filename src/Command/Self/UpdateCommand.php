@@ -14,7 +14,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class UpdateCommand extends Command
 {
-
     const MANIFEST_FILE = 'https://www.drupalvmgenerator.com/manifest.json';
 
     /**
@@ -50,5 +49,4 @@ class UpdateCommand extends Command
 
         $this->io->writeln(sprintf('SHA1 verified <info>%s</info>', $update->getSha1()));
     }
-
 }

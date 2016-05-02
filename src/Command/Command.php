@@ -43,5 +43,4 @@ abstract class Command extends BaseCommand
 
         $this->io = new DrupalVmStyle($input, $output);
     }
-
 }

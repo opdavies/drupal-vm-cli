@@ -12,7 +12,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class GenerateCommand extends GeneratorCommand
 {
-
     use ExtrasTrait;
     use PackagesTrait;
 
@@ -149,8 +148,7 @@ class GenerateCommand extends GeneratorCommand
                 null,
                 InputOption::VALUE_NONE,
                 'Overwrite an existing file if one exists'
-            )
-        ;
+            );
     }
 
     /**
@@ -164,123 +162,153 @@ class GenerateCommand extends GeneratorCommand
 
         // --machine-name option
         if (!$input->getOption('machine-name')) {
-            $input->setOption('machine-name', $this->io->ask(
-                'Enter a Vagrant machine name',
-                'drupalvm'
-            ));
+            $input->setOption(
+                'machine-name', $this->io->ask(
+                    'Enter a Vagrant machine name',
+                    'drupalvm'
+                )
+            );
         }
 
         // --hostname option
         if (!$input->getOption('hostname')) {
-            $input->setOption('hostname', $this->io->ask(
-                'Enter a hostname for Vagrant',
-                $input->getOption('machine-name') . '.dev'
-            ));
+            $input->setOption(
+                'hostname', $this->io->ask(
+                    'Enter a hostname for Vagrant',
+                    $input->getOption('machine-name') . '.dev'
+                )
+            );
         }
 
         // --ip-address option
         if (!$input->getOption('ip-address')) {
-            $input->setOption('ip-address', $this->io->ask(
-                'Enter an IP address for the Vagrant VM',
-                '192.168.88.88'
-            ));
+            $input->setOption(
+                'ip-address', $this->io->ask(
+                    'Enter an IP address for the Vagrant VM',
+                    '192.168.88.88'
+                )
+            );
         }
 
         // --cpus option
         if (!$input->getOption('cpus')) {
-            $input->setOption('cpus', $this->io->ask(
-                'How many CPUs?',
-                2
-            ));
+            $input->setOption(
+                'cpus', $this->io->ask(
+                    'How many CPUs?',
+                    2
+                )
+            );
         }
 
         // --memory option
         if (!$input->getOption('memory')) {
-            $input->setOption('memory', $this->io->ask(
-                'How much memory?',
-                1024
-            ));
+            $input->setOption(
+                'memory', $this->io->ask(
+                    'How much memory?',
+                    1024
+                )
+            );
         }
 
         // --webserver option
         if (!$input->getOption('webserver')) {
-            $input->setOption('webserver', $this->io->choiceNoList(
-                'Apache or Nginx?',
-                ['apache', 'nginx']
-            ));
+            $input->setOption(
+                'webserver', $this->io->choiceNoList(
+                    'Apache or Nginx?',
+                    ['apache', 'nginx']
+                )
+            );
         }
 
 
         // --path option
         if (!$input->getOption('path')) {
-            $input->setOption('path', $this->io->ask(
-                'Enter the local path for your Drupal site',
-                getcwd()
-            ));
+            $input->setOption(
+                'path', $this->io->ask(
+                    'Enter the local path for your Drupal site',
+                    getcwd()
+                )
+            );
         }
 
         // --destination option
         if (!$input->getOption('destination')) {
-            $input->setOption('destination', $this->io->ask(
-                'Enter the destination path for your Drupal site',
-                '/var/www/drupalvm'
-            ));
+            $input->setOption(
+                'destination', $this->io->ask(
+                    'Enter the destination path for your Drupal site',
+                    '/var/www/drupalvm'
+                )
+            );
         }
 
         // --docroot option
         if (!$input->getOption('docroot')) {
-            $input->setOption('docroot', $this->io->ask(
-                'Enter the path to the docroot of the Drupal site',
-                $input->getOption('destination') . DIRECTORY_SEPARATOR . 'drupal'
-            ));
+            $input->setOption(
+                'docroot', $this->io->ask(
+                    'Enter the path to the docroot of the Drupal site',
+                    $input->getOption('destination') . DIRECTORY_SEPARATOR . 'drupal'
+                )
+            );
         }
 
         // --drupal-version option
         if (!$input->getOption('drupal-version')) {
-            $input->setOption('drupal-version', $this->io->choiceNoList(
-                'Which version of Drupal',
-                ['8', '7']
-            ));
+            $input->setOption(
+                'drupal-version', $this->io->choiceNoList(
+                    'Which version of Drupal',
+                    ['8', '7']
+                )
+            );
         }
 
         // --database-name option
         if (!$input->getOption('database-name')) {
-            $input->setOption('database-name', $this->io->ask(
-                'Enter the name of the database to use',
-                'drupal'
-            ));
+            $input->setOption(
+                'database-name', $this->io->ask(
+                    'Enter the name of the database to use',
+                    'drupal'
+                )
+            );
         }
 
         // --database-user option
         if (!$input->getOption('database-user')) {
-            $input->setOption('database-user', $this->io->ask(
-                'Enter the database username to use',
-                'drupal'
-            ));
+            $input->setOption(
+                'database-user', $this->io->ask(
+                    'Enter the database username to use',
+                    'drupal'
+                )
+            );
         }
 
         // --database-password option
         if (!$input->getOption('database-password')) {
-            $input->setOption('database-password', $this->io->ask(
-                'Enter the database password to use',
-                'drupal'
-            ));
+            $input->setOption(
+                'database-password', $this->io->ask(
+                    'Enter the database password to use',
+                    'drupal'
+                )
+            );
         }
 
         // --build-makefile option
         if (!$input->getOption('build-makefile')) {
-            $input->setOption('build-makefile', $this->io->confirm(
-                'Build from make file',
-                false
-            ) ? 'yes' : 'no');
+            $input->setOption(
+                'build-makefile', $this->io->confirm(
+                    'Build from make file',
+                    false
+                ) ? 'yes' : 'no'
+            );
         }
 
         // --install-site option
         if (!$input->getOption('install-site')) {
-            $input->setOption('install-site', $this->io->confirm(
-                'Install the site',
-                true
-            ) ? 'yes' : 'no');
+            $input->setOption(
+                'install-site', $this->io->confirm(
+                    'Install the site',
+                    true
+                ) ? 'yes' : 'no'
+            );
         }
 
         // --installed-extras option
@@ -304,10 +332,12 @@ class GenerateCommand extends GeneratorCommand
 
         // --remove-comments option
         if (!$input->getOption('no-comments')) {
-            $input->setOption('no-comments', $io->confirm(
-                'Remove comments?',
-                false
-            ));
+            $input->setOption(
+                'no-comments', $io->confirm(
+                    'Remove comments?',
+                    false
+                )
+            );
         }
     }
 
