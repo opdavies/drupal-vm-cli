@@ -24,7 +24,7 @@ class Application extends ConsoleApplication
     /**
      * @var string
      */
-    const VERSION = '@package_version@';
+    const VERSION = '@git_version@';
 
     /**
      * @var string

@@ -20,7 +20,7 @@
         "Herrera\\Box\\Compactor\\Php"
     ],
     "compression": "GZ",
-    "git-version": "package_version",
+    "git-version": "git_version",
     "main": "bin/drupalvm",
     "output": "drupalvm.phar",
     "stub": true
