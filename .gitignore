@@ -1,4 +1,5 @@
 bin/jsonlint
+bin/php-cs-fixer
 bin/validate-json
 site/
 vendor/

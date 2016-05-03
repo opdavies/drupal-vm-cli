@@ -28,5 +28,8 @@
     "bin": [
         "bin/drupalvm",
         "bin/drupalvm.php"
-    ]
+    ],
+    "require-dev": {
+        "fabpot/php-cs-fixer": "^1.11"
+    }
 }
