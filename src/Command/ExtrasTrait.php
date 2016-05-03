@@ -11,24 +11,27 @@ trait ExtrasTrait
         if ($io->confirm(
             'Do you want to install add any packages to installed_extras?',
             false
-        )) {
+        )
+        ) {
             $selectedExtras = [];
-            $io->writeln("\nType the package name from installed_extras or use keyup or keydown.\nThis is optional, press <info>enter</info> to <info>continue</info>.\n");
+            $io->writeln(
+                "\nType the package name from installed_extras or use keyup or keydown.\nThis is optional, press <info>enter</info> to <info>continue</info>.\n"
+            );
 
             $extras = [
-              'adminer',
-              'drupalconsole',
-              'mailhog',
-              'memcached',
-              'nodejs',
-              'pimpmylog',
-              'redis',
-              'ruby',
-              'selenium',
-              'solr',
-              'varnish',
-              'xdebug',
-              'xhprof'
+                'adminer',
+                'drupalconsole',
+                'mailhog',
+                'memcached',
+                'nodejs',
+                'pimpmylog',
+                'redis',
+                'ruby',
+                'selenium',
+                'solr',
+                'varnish',
+                'xdebug',
+                'xhprof',
             ];
 
             while (true) {

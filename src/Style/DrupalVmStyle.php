@@ -2,12 +2,12 @@
 
 namespace DrupalVmGenerator\Style;
 
+use DrupalVmGenerator\Helper\DrupalVmChoiceQuestionHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Console\Question\ChoiceQuestion;
-use DrupalVmGenerator\Helper\DrupalVmChoiceQuestionHelper;
 
 class DrupalVmStyle extends SymfonyStyle
 {
@@ -22,14 +22,18 @@ class DrupalVmStyle extends SymfonyStyle
 
     /**
      * @param string $question
-     * @param array  $choices
-     * @param null   $default
-     * @param bool   $allowEmpty
+     * @param array $choices
+     * @param null $default
+     * @param bool $allowEmpty
      *
      * @return string
      */
-    public function choiceNoList($question, array $choices, $default = null, $allowEmpty = false)
-    {
+    public function choiceNoList(
+        $question,
+        array $choices,
+        $default = null,
+        $allowEmpty = false
+    ) {
         if ($allowEmpty) {
             $default = ' ';
         }
@@ -47,7 +51,11 @@ class DrupalVmStyle extends SymfonyStyle
             $default = $values[$default];
         }
 
-        return trim($this->askChoiceQuestion(new ChoiceQuestion($question, $choices, $default)));
+        return trim(
+            $this->askChoiceQuestion(
+                new ChoiceQuestion($question, $choices, $default)
+            )
+        );
     }
 
     /**
@@ -58,6 +66,7 @@ class DrupalVmStyle extends SymfonyStyle
     public function askChoiceQuestion(ChoiceQuestion $question)
     {
         $questionHelper = new DrupalVmChoiceQuestionHelper();
+
         return $questionHelper->ask($this->input, $this, $question);
     }
 

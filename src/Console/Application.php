@@ -36,7 +36,7 @@ class Application extends ConsoleApplication
         parent::__construct(self::NAME, self::VERSION);
 
         $twig = new Twig_Environment(
-            new Twig_Loader_Filesystem(__DIR__ . '/../../templates')
+            new Twig_Loader_Filesystem(__DIR__.'/../../templates')
         );
 
         $filesystem = new Filesystem();
@@ -49,10 +49,10 @@ class Application extends ConsoleApplication
 
         $this->addCommands(
             [
-            new NewCommand($client, $github),
-            new ConfigGenerateCommand($twig, $filesystem),
-            new MakeGenerateCommand($twig, $filesystem),
-            new SelfUpdateCommand(),
+                new NewCommand($client, $github),
+                new ConfigGenerateCommand($twig, $filesystem),
+                new MakeGenerateCommand($twig, $filesystem),
+                new SelfUpdateCommand(),
             ]
         );
 

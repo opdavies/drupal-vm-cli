@@ -6,8 +6,6 @@ use DrupalVmGenerator\Style\DrupalVmStyle;
 use Symfony\Component\Console\Command\Command as BaseCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Filesystem\Filesystem;
-use Twig_Environment;
 
 abstract class Command extends BaseCommand
 {
@@ -34,8 +32,10 @@ abstract class Command extends BaseCommand
     /**
      * {@inheritdoc}
      */
-    protected function initialize(InputInterface $input, OutputInterface $output)
-    {
+    protected function initialize(
+        InputInterface $input,
+        OutputInterface $output
+    ) {
         $this->projectDir = getcwd();
 
         $this->input = $input;

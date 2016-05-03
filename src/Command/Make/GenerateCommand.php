@@ -33,7 +33,7 @@ class GenerateCommand extends GeneratorCommand
             ->addOption(
                 'other-projects',
                 null,
-                InputOption::VALUE_IS_ARRAY|InputOption::VALUE_OPTIONAL,
+                InputOption::VALUE_IS_ARRAY | InputOption::VALUE_OPTIONAL,
                 ''
             )
             ->addOption(
@@ -60,7 +60,8 @@ class GenerateCommand extends GeneratorCommand
         // --drupal-version option.
         if (!$input->getOption('drupal-version')) {
             $input->setOption(
-                'drupal-version', $this->io->ask(
+                'drupal-version',
+                $this->io->ask(
                     'Enter a Drupal version',
                     '8.x'
                 )
@@ -70,7 +71,8 @@ class GenerateCommand extends GeneratorCommand
         // --branch option.
         if (!$input->getOption('branch')) {
             $input->setOption(
-                'branch', $this->io->ask(
+                'branch',
+                $this->io->ask(
                     'Enter a branch name',
                     '8.1.x'
                 )
@@ -101,7 +103,7 @@ class GenerateCommand extends GeneratorCommand
             'drupal_version' => $input->getOption('drupal-version'),
             'branch' => $input->getOption('branch'),
             'keep_comments' => !$input->getOption('no-comments'),
-            'other_projects' => $input->getOption('other-projects')
+            'other_projects' => $input->getOption('other-projects'),
         );
 
         return $this->render('drupal.make.yml.twig', $parameters);
@@ -114,7 +116,9 @@ class GenerateCommand extends GeneratorCommand
         $projects = [];
 
         if ($this->io->confirm('Add more projects?', false)) {
-            $io->text("\nEnter a project name, such as <info>devel</info>, followed by a version such as <info>8.x-1.x</info>.\nThis is optional, press <info>enter</info> to <info>continue</info>.");
+            $io->text(
+                "\nEnter a project name, such as <info>devel</info>, followed by a version such as <info>8.x-1.x</info>.\nThis is optional, press <info>enter</info> to <info>continue</info>."
+            );
 
             while (true) {
                 $name = $io->ask('Project name', false);
@@ -127,7 +131,7 @@ class GenerateCommand extends GeneratorCommand
 
                 $projects[] = [
                     'name' => $name,
-                    'version' => $version
+                    'version' => $version,
                 ];
             }
         }

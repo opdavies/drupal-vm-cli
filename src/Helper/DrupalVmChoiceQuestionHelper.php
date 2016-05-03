@@ -16,7 +16,11 @@ class DrupalVmChoiceQuestionHelper extends SymfonyQuestionHelper
         $text = $question->getQuestion();
         $default = $question->getDefault();
         $choices = $question->getChoices();
-        $text = sprintf(' <info>%s</info> [<comment>%s</comment>]:', $text, $choices[$default]);
+        $text = sprintf(
+            ' <info>%s</info> [<comment>%s</comment>]:',
+            $text,
+            $choices[$default]
+        );
         $output->writeln($text);
         $output->write(' > ');
     }

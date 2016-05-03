@@ -4,7 +4,6 @@ namespace DrupalVmGenerator\Command;
 
 use Github\Client as GithubClient;
 use GuzzleHttp\ClientInterface;
-use DrupalVmGenerator\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -36,7 +35,6 @@ class NewCommand extends Command
     public function __construct(ClientInterface $client, GithubClient $github)
     {
         $this->client = $client;
-
         $this->github = $github;
 
         parent::__construct();
@@ -80,7 +78,12 @@ class NewCommand extends Command
             ->extract()
             ->cleanUp();
 
-        $io->success(sprintf('Drupal VM downloaded to %s.', $input->getArgument('directory')));
+        $io->success(
+            sprintf(
+                'Drupal VM downloaded to %s.',
+                $input->getArgument('directory')
+            )
+        );
     }
 
     /**
@@ -91,7 +94,12 @@ class NewCommand extends Command
         $directory = $this->input->getArgument('directory');
 
         if (is_dir($directory)) {
-            $this->io->error(sprintf('%s already exists.', $this->input->getArgument('directory')));
+            $this->io->error(
+                sprintf(
+                    '%s already exists.',
+                    $this->input->getArgument('directory')
+                )
+            );
 
             exit(1);
         }
@@ -104,7 +112,7 @@ class NewCommand extends Command
      */
     private function makeFileName()
     {
-        return getcwd() . '/drupalvm_' . md5(time() . uniqid()) . '.zip';
+        return getcwd().'/drupalvm_'.md5(time().uniqid()).'.zip';
     }
 
     /**
@@ -118,7 +126,10 @@ class NewCommand extends Command
             $this->version = $this->getLatestVersion();
         }
 
-        $url = sprintf('https://github.com/geerlingguy/drupal-vm/archive/%s.zip', $this->version);
+        $url = sprintf(
+            'https://github.com/geerlingguy/drupal-vm/archive/%s.zip',
+            $this->version
+        );
 
         $response = $this->client->get($url)->getBody();
 
@@ -168,7 +179,10 @@ class NewCommand extends Command
      */
     private function getLatestVersion()
     {
-        $result = $this->github->api('repo')->releases()->latest('geerlingguy', 'drupal-vm');
+        $result = $this->github->api('repo')->releases()->latest(
+            'geerlingguy',
+            'drupal-vm'
+        );
 
         return $result['tag_name'];
     }

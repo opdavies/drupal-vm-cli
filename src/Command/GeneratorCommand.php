@@ -33,7 +33,10 @@ abstract class GeneratorCommand extends Command
      */
     protected function assertFileAlreadyExists($filename)
     {
-        if (file_exists($this->projectDir . '/' . $filename) && !$this->input->getOption('overwrite')) {
+        if (file_exists(
+                $this->projectDir.'/'.$filename
+            ) && !$this->input->getOption('overwrite')
+        ) {
             $this->io->error(sprintf('%s already exists.', $filename));
 
             exit(1);
@@ -44,7 +47,7 @@ abstract class GeneratorCommand extends Command
      * A shortcut for rendering a Twig template.
      *
      * @param $template
-     * @param array    $parameters
+     * @param array $parameters
      *
      * @return string
      */
@@ -55,6 +58,7 @@ abstract class GeneratorCommand extends Command
 
     /**
      * @param string $filename
+     * @param string $contents
      *
      * @return Command
      *
