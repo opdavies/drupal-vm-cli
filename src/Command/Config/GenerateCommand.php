@@ -347,7 +347,7 @@ class GenerateCommand extends GeneratorCommand
             $input->setOption('no-dashboard', !$useDashboard);
         }
 
-        // --remove-comments option
+        // --no-comments option
         if (!$input->getOption('no-comments')) {
             $input->setOption(
                 'no-comments',
