@@ -29,7 +29,7 @@ class Application extends ConsoleApplication
     /**
      * @var string
      */
-    const SUPPORTED_DRUPAL_VM_VERSION = '2.4.0';
+    const SUPPORTED_DRUPAL_VM_VERSION = '2.5.0';
 
     public function __construct()
     {

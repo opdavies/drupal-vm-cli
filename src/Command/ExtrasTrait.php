@@ -20,9 +20,11 @@ trait ExtrasTrait
 
             $extras = [
                 'adminer',
+                'blackfire',
                 'drupalconsole',
                 'mailhog',
                 'memcached',
+                'newrelic',
                 'nodejs',
                 'pimpmylog',
                 'redis',

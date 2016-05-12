@@ -231,6 +231,7 @@ extra_packages: []
 {% endif %}
 nodejs_version: "0.12"
 nodejs_npm_global_packages: []
+nodejs_install_npm_user: "{{ '{{ drupalvm_user }}' }}"
 {% endif  %}
 
 {% if 'ruby' in installed_extras %}
@@ -298,6 +299,7 @@ composer_home_group: "{{ '{{ drupalvm_user }}' }}"
 # Run specified scripts after VM is provisioned. Path is relative to the
 # `provisioning/playbook.yml` file.
 {% endif %}
+pre_provision_scripts: []
 post_provision_scripts: []
   {% if keep_comments -%}
   # - "../examples/scripts/configure-solr.sh"
