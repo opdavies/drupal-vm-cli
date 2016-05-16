@@ -1,6 +1,8 @@
 {
     "name": "opdavies/drupal-vm-generator",
     "description": "A CLI tool for generating Drupal VM configuration files.",
+    "keywords": ["vagrant", "drupal", "drupal-vm"],
+    "homepage": "https://www.drupalvmgenerator.com",
     "require": {
         "symfony/console": "^3.0",
         "symfony/filesystem": "^3.0",
@@ -16,6 +18,11 @@
             "homepage": "https://www.oliverdavies.uk"
         }
     ],
+    "support": {
+        "issues": "https://github.com/opdavies/drupal-vm-generator/issues",
+        "source": "https://github.com/opdavies/drupal-vm-generator",
+        "docs": "http://docs.drupalvmgenerator.com"
+    },
     "autoload": {
         "psr-4": {
             "DrupalVmGenerator\\": "src/"
