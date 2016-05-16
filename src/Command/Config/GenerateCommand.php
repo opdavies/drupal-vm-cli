@@ -154,11 +154,30 @@ class GenerateCommand extends GeneratorCommand
     /**
      * {@inheritdoc}
      */
+    protected function initialize(
+        InputInterface $input,
+        OutputInterface $output
+    ) {
+        parent::initialize($input, $output);
+
+        // Check for a defaults file.
+        if (!file_exists($path = sprintf('%s/.drupal-vm-generator/%s', $this->getUserHomeDirectory(), 'defaults.yml'))) {
+            $this->io->error('No defaults file found. Please run "drupalvm init", then re-run this command.');
+
+            exit(1);
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     protected function interact(InputInterface $input, OutputInterface $output)
     {
         $io = $this->io;
 
         $this->assertFileAlreadyExists(self::FILENAME);
+
+        $defaults = $this->getDefaultOptions('config');
 
         // --machine-name option
         if (!$input->getOption('machine-name')) {
@@ -166,7 +185,7 @@ class GenerateCommand extends GeneratorCommand
                 'machine-name',
                 $this->io->ask(
                     'Enter a Vagrant machine name',
-                    'drupalvm'
+                    $defaults['vagrant_machine_name']
                 )
             );
         }
@@ -177,7 +196,7 @@ class GenerateCommand extends GeneratorCommand
                 'hostname',
                 $this->io->ask(
                     'Enter a hostname for Vagrant',
-                    $input->getOption('machine-name').'.dev'
+                    $input->getOption('machine-name').'.'.$defaults['vagrant_hostname_suffix']
                 )
             );
         }
@@ -188,7 +207,7 @@ class GenerateCommand extends GeneratorCommand
                 'ip-address',
                 $this->io->ask(
                     'Enter an IP address for the Vagrant VM',
-                    '192.168.88.88'
+                    $defaults['vagrant_ip']
                 )
             );
         }
@@ -199,7 +218,7 @@ class GenerateCommand extends GeneratorCommand
                 'cpus',
                 $this->io->ask(
                     'How many CPUs?',
-                    2
+                    $defaults['vagrant_cpus']
                 )
             );
         }
@@ -210,7 +229,7 @@ class GenerateCommand extends GeneratorCommand
                 'memory',
                 $this->io->ask(
                     'How much memory?',
-                    1024
+                    $defaults['vagrant_memory']
                 )
             );
         }
@@ -221,7 +240,8 @@ class GenerateCommand extends GeneratorCommand
                 'webserver',
                 $this->io->choiceNoList(
                     'Apache or Nginx?',
-                    ['apache', 'nginx']
+                    ['apache', 'nginx'],
+                    $defaults['drupalvm_webserver']
                 )
             );
         }
@@ -244,7 +264,7 @@ class GenerateCommand extends GeneratorCommand
                 'destination',
                 $this->io->ask(
                     'Enter the destination path for your Drupal site',
-                    '/var/www/drupalvm'
+                    $defaults['destination']
                 )
             );
         }
@@ -268,7 +288,8 @@ class GenerateCommand extends GeneratorCommand
                 'drupal-version',
                 $this->io->choiceNoList(
                     'Which version of Drupal',
-                    ['8', '7']
+                    ['8', '7'],
+                    $defaults['drupal_version']
                 )
             );
         }
@@ -279,7 +300,7 @@ class GenerateCommand extends GeneratorCommand
                 'database-name',
                 $this->io->ask(
                     'Enter the name of the database to use',
-                    'drupal'
+                    $defaults['database_name']
                 )
             );
         }
@@ -290,7 +311,7 @@ class GenerateCommand extends GeneratorCommand
                 'database-user',
                 $this->io->ask(
                     'Enter the database username to use',
-                    'drupal'
+                    $defaults['database_user']
                 )
             );
         }
@@ -301,7 +322,7 @@ class GenerateCommand extends GeneratorCommand
                 'database-password',
                 $this->io->ask(
                     'Enter the database password to use',
-                    'drupal'
+                    $defaults['database_password']
                 )
             );
         }
@@ -312,7 +333,7 @@ class GenerateCommand extends GeneratorCommand
                 'build-makefile',
                 $this->io->confirm(
                     'Build from make file',
-                    false
+                    $defaults['build_makefile']
                 ) ? 'yes' : 'no'
             );
         }
@@ -323,7 +344,7 @@ class GenerateCommand extends GeneratorCommand
                 'install-site',
                 $this->io->confirm(
                     'Install the site',
-                    true
+                    $defaults['install_site']
                 ) ? 'yes' : 'no'
             );
         }
@@ -342,7 +363,7 @@ class GenerateCommand extends GeneratorCommand
         if (!$input->getOption('no-dashboard')) {
             $useDashboard = $this->io->confirm(
                 'Use the dashboard?',
-                true
+                $defaults['use_dashboard']
             );
             $input->setOption('no-dashboard', !$useDashboard);
         }
@@ -353,7 +374,7 @@ class GenerateCommand extends GeneratorCommand
                 'no-comments',
                 $io->confirm(
                     'Remove comments?',
-                    false
+                    !$defaults['keep_comments']
                 )
             );
         }

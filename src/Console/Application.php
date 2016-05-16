@@ -3,6 +3,7 @@
 namespace DrupalVmGenerator\Console;
 
 use DrupalVmGenerator\Command\Config\GenerateCommand as ConfigGenerateCommand;
+use DrupalVmGenerator\Command\InitCommand;
 use DrupalVmGenerator\Command\Make\GenerateCommand as MakeGenerateCommand;
 use DrupalVmGenerator\Command\NewCommand;
 use DrupalVmGenerator\Command\Self\UpdateCommand as SelfUpdateCommand;
@@ -49,6 +50,7 @@ class Application extends ConsoleApplication
 
         $this->addCommands(
             [
+                new InitCommand($filesystem),
                 new NewCommand($client, $github),
                 new ConfigGenerateCommand($twig, $filesystem),
                 new MakeGenerateCommand($twig, $filesystem),

@@ -7,7 +7,8 @@
         "twig/twig": "^1.24",
         "knplabs/github-api": "^1.6",
         "guzzlehttp/guzzle": "^6.2",
-        "herrera-io/phar-update": "^2.0"
+        "herrera-io/phar-update": "^2.0",
+        "symfony/yaml": "^3.0"
     },
     "authors": [
         {

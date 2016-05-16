@@ -1,0 +1,17 @@
+defaults:
+    config:
+        vagrant_machine_name: drupalvm
+        vagrant_hostname_suffix: dev
+        vagrant_ip: 192.168.88.88
+        destination: /var/www/drupalvm
+        vagrant_memory: 1024
+        vagrant_cpus: 2
+        drupalvm_webserver: apache
+        build_makefile: true
+        install_site: true
+        drupal_version: 8
+        database_user: drupal
+        database_password: drupal
+        database_name: drupal
+        keep_comments: true
+        use_dashboard: true
