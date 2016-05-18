@@ -47,14 +47,17 @@ class Application extends ConsoleApplication
             new CachedHttpClient(['cache_dir' => '/tmp/github_api_cache'])
         );
 
-        $this->addCommands(
-            [
-                new NewCommand($client, $github),
-                new ConfigGenerateCommand($twig, $filesystem),
-                new MakeGenerateCommand($twig, $filesystem),
-                new SelfUpdateCommand(),
-            ]
-        );
+        $commands = [
+            new NewCommand($client, $github),
+            new ConfigGenerateCommand($twig, $filesystem),
+            new MakeGenerateCommand($twig, $filesystem),
+        ];
+
+        if (substr(__FILE__, 0, 7) === 'phar://') {
+            $commands[] = new SelfUpdateCommand();
+        }
+
+        $this->addCommands($commands);
 
         // TODO: Make this configurable when user settings are added.
         $this->setDefaultCommand('list');
