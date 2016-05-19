@@ -3,7 +3,7 @@
 # `vagrant_box` can also be set to geerlingguy/centos6, geerlingguy/centos7,
 # geerlingguy/ubuntu1204, parallels/ubuntu-14.04, etc.
 {% endif %}
-vagrant_box: geerlingguy/ubuntu1404
+vagrant_box: geerlingguy/ubuntu1604
 vagrant_user: vagrant
 vagrant_synced_folder_default_type: nfs
 
@@ -53,7 +53,7 @@ drupalvm_webserver: {{ drupalvm_webserver }}
 # would like to configure 'vagrant_synced_folders' and 'apache_vhosts' manually.
 {% endif %}
 build_makefile: {{ build_makefile }}
-drush_makefile_path: ../../drupal.make.yml
+drush_makefile_path: "{{ '{{ config_dir }}/drupal.make.yml' }}"
 
 {% if keep_comments %}
 # Set this to false if you are using a different site deployment strategy and
@@ -266,7 +266,7 @@ firewall_log_dropped_packets: false
 {% if keep_comments %}
 # PHP Configuration. Currently-supported versions: 5.5, 5.6, 7.0.
 {% endif %}
-php_version: "5.6"
+php_version: "7.0"
 php_memory_limit: "192M"
 php_display_errors: "On"
 php_display_startup_errors: "On"
