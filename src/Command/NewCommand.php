@@ -57,7 +57,14 @@ class NewCommand extends Command
             ->addOption(
                 'latest',
                 null,
-                InputOption::VALUE_NONE
+                InputOption::VALUE_NONE,
+                'Download the latest development version'
+            )
+            ->addOption(
+                'dev',
+                null,
+                InputOption::VALUE_NONE,
+                'Download the latest development version'
             );
     }
 
@@ -122,7 +129,9 @@ class NewCommand extends Command
      */
     private function download()
     {
-        if (!$this->input->getOption('latest')) {
+        $input = $this->input;
+
+        if (!$input->getOption('latest') && !$input->getOption('dev')) {
             $this->version = $this->getLatestVersion();
         }
 
