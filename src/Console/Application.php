@@ -2,6 +2,7 @@
 
 namespace DrupalVmGenerator\Console;
 
+use DrupalVmGenerator\Command\AboutCommand;
 use DrupalVmGenerator\Command\Config\GenerateCommand as ConfigGenerateCommand;
 use DrupalVmGenerator\Command\InitCommand;
 use DrupalVmGenerator\Command\Make\GenerateCommand as MakeGenerateCommand;
@@ -49,6 +50,8 @@ class Application extends ConsoleApplication
         );
 
         $commands = [
+            new AboutCommand(),
+            new InitCommand($filesystem),
             new NewCommand($client, $github),
             new ConfigGenerateCommand($twig, $filesystem),
             new MakeGenerateCommand($twig, $filesystem),
@@ -61,6 +64,6 @@ class Application extends ConsoleApplication
         $this->addCommands($commands);
 
         // TODO: Make this configurable when user settings are added.
-        $this->setDefaultCommand('list');
+        $this->setDefaultCommand('about');
     }
 }
