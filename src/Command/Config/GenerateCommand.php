@@ -120,12 +120,6 @@ class GenerateCommand extends GeneratorCommand
                 'Install the site when the VM is provisioned'
             )
             ->addOption(
-                'php-version',
-                'null',
-                InputOption::VALUE_OPTIONAL,
-                'Which version of PHP to install'
-            )
-            ->addOption(
                 'installed-extras',
                 null,
                 InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
@@ -355,18 +349,6 @@ class GenerateCommand extends GeneratorCommand
             );
         }
 
-        // --php-version option
-        if (!$input->getOption('php-version')) {
-            $input->setOption(
-                'php-version',
-                $this->io->choice(
-                    'Which version of PHP',
-                    ['7.0', '5.6', '5.5'],
-                    '7.0'
-                )
-            );
-        }
-
         // --installed-extras option
         if (!$input->getOption('installed-extras')) {
             $input->setOption('installed-extras', $this->extrasQuestion($io));
@@ -433,7 +415,6 @@ class GenerateCommand extends GeneratorCommand
             'install_site' => $input->getOption('install-site'),
             'use_dashboard' => !$input->getOption('no-dashboard'),
             'keep_comments' => !$input->getOption('no-comments'),
-            'php_version' => $input->getOption('php-version'),
         ];
 
         $args['installed_extras'] = [];
