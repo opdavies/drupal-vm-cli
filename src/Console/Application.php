@@ -31,7 +31,7 @@ class Application extends ConsoleApplication
     /**
      * @var string
      */
-    const SUPPORTED_DRUPAL_VM_VERSION = '3.0.0';
+    const SUPPORTED_DRUPAL_VM_VERSION = '3.1.2';
 
     public function __construct()
     {

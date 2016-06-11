@@ -99,7 +99,7 @@ drupalvm_cron_jobs: []
 # Drupal VM automatically creates a drush alias file in your ~/.drush folder if
 # this variable is 'true'.
 {% endif %}
-configure_local_drush_aliases: true
+configure_drush_aliases: true
 
 {% if drupalvm_webserver == 'apache' -%}
 {% if keep_comments %}
@@ -354,7 +354,7 @@ php_xdebug_max_nesting_level: 256
 {% if keep_comments %}
 # Solr Configuration (if enabled above).
 {% endif %}
-solr_version: "4.10.4"
+solr_version: "5.5.1"
 solr_xms: "64M"
 solr_xmx: "128M"
 {% endif %}
