@@ -1,5 +1,5 @@
 ---
-{% if keep_comments %}
+{% if comments %}
 # `vagrant_box` can also be set to geerlingguy/centos6, geerlingguy/centos7,
 # geerlingguy/ubuntu1204, parallels/ubuntu-14.04, etc.
 {% endif %}
@@ -7,7 +7,7 @@ vagrant_box: geerlingguy/ubuntu1604
 vagrant_user: vagrant
 vagrant_synced_folder_default_type: nfs
 
-{% if keep_comments %}
+{% if comments %}
 # If you need to run multiple instances of Drupal VM, set a unique hostname,
 # machine name, and IP address for each instance.
 {% endif %}
@@ -15,20 +15,20 @@ vagrant_hostname: {{ vagrant_hostname }}
 vagrant_machine_name: {{ vagrant_machine_name }}
 vagrant_ip: "{{ vagrant_ip_address }}"
 
-{% if keep_comments %}
+{% if comments %}
 # Allow Drupal VM to be accessed via a public network interface on your host.
 # Vagrant boxes are insecure by default, so be careful. You've been warned!
 # See: https://docs.vagrantup.com/v2/networking/public_network.html
 {% endif %}
 vagrant_public_ip: ""
 
-{% if keep_comments %}
+{% if comments %}
 # A list of synced folders, with the keys 'local_path', 'destination', and
 # a 'type' of [nfs|rsync|smb] (leave empty for slow native shares). See
 # http://docs.drupalvm.com/en/latest/extras/syncing-folders/ for more info.
 {% endif %}
 vagrant_synced_folders:
-  {% if keep_comments -%}
+  {% if comments -%}
   # The first synced folder will be used for the default Drupal installation, if
   # build_makefile: is 'true'.
   {% endif -%}
@@ -37,31 +37,31 @@ vagrant_synced_folders:
     type: nfs
     create: true
 
-{% if keep_comments %}
+{% if comments %}
 # Memory and CPU to use for this VM.
 {% endif %}
 vagrant_memory: {{ vagrant_memory }}
 vagrant_cpus: {{ vagrant_cpus }}
 
-{% if keep_comments %}
+{% if comments %}
 # The web server software to use. Can be either 'apache' or 'nginx'.
 {% endif %}
 drupalvm_webserver: {{ drupalvm_webserver }}
 
-{% if keep_comments %}
+{% if comments %}
 # Set this to false if you are using a different site deployment strategy and
 # would like to configure 'vagrant_synced_folders' and 'apache_vhosts' manually.
 {% endif %}
 build_makefile: {{ build_makefile }}
 drush_makefile_path: "{{ '{{ config_dir }}/drupal.make.yml' }}"
 
-{% if keep_comments %}
+{% if comments %}
 # Set this to false if you are using a different site deployment strategy and
 # would like to configure 'vagrant_synced_folders' and 'apache_vhosts' manually.
 {% endif %}
 install_site: {{ install_site }}
 
-{% if keep_comments %}
+{% if comments %}
 # Settings for building a Drupal site from a makefile (if 'build_makefile:'
 # is 'true').
 {% endif %}
@@ -77,17 +77,17 @@ drupal_mysql_user: {{ drupal_mysql_user }}
 drupal_mysql_password: {{ drupal_mysql_password }}
 drupal_mysql_database: {{ drupal_mysql_database }}
 
-{% if keep_comments %}
+{% if comments %}
 # Additional arguments or options to pass to `drush site-install`.
 {% endif %}
 drupal_site_install_extra_args: []
 
-{% if keep_comments %}
+{% if comments %}
 # Cron jobs are added to the root user's crontab. Keys include name (required),
 # minute, hour, day, weekday, month, job (required), and state.
 {% endif %}
 drupalvm_cron_jobs: []
-  {% if keep_comments -%}
+  {% if comments -%}
   # - {
   #   name: "Drupal Cron",
   #   minute: "*/30",
@@ -95,14 +95,14 @@ drupalvm_cron_jobs: []
   # }
   {% endif %}
 
-{% if keep_comments %}
+{% if comments %}
 # Drupal VM automatically creates a drush alias file in your ~/.drush folder if
 # this variable is 'true'.
 {% endif %}
 configure_local_drush_aliases: true
 
 {% if drupalvm_webserver == 'apache' -%}
-{% if keep_comments %}
+{% if comments %}
 # Apache VirtualHosts. Add one for each site you are running inside the VM. For
 # multisite deployments, you can point multiple servernames at one documentroot.
 # View the geerlingguy.apache Ansible Role README for more options.
@@ -148,7 +148,7 @@ apache_mods_enabled:
   - proxy.load
   - proxy_fcgi.load
 {% elseif drupalvm_webserver == 'nginx' -%}
-{% if keep_comments %}
+{% if comments %}
 # Nginx hosts. Each site will get a server entry using the configuration defined
 # here. Set the 'is_php' property for document roots that contain PHP apps like
 # Drupal.
@@ -185,7 +185,7 @@ nginx_remove_default_vhost: true
 nginx_ppa_use: true
 {% endif %}
 
-{% if keep_comments %}
+{% if comments %}
 # MySQL Databases and users. If build_makefile: is true, first database will
 # be used for the makefile-built site.
 {% endif %}
@@ -201,7 +201,7 @@ mysql_users:
     priv: "{{ '{{ drupal_mysql_database }}.*:ALL' }}"
 
 {% if installed_extras %}
-{% if keep_comments %}
+{% if comments %}
 # Comment out any extra utilities you don't want to install. If you don't want
 # to install *any* extras, make set this value to an empty set, e.g. `[]`.
 {% endif %}
@@ -213,7 +213,7 @@ installed_extras:
 installed_extras: []
 {% endif %}
 
-{% if keep_comments %}
+{% if comments %}
 # Add any extra apt or yum packages you would like installed.
 {% endif %}
 {% for package in extra_packages %}
@@ -225,7 +225,7 @@ extra_packages: []
 {% endfor %}
 
 {% if 'nodejs' in installed_extras %}
-{% if keep_comments %}
+{% if comments %}
 # `nodejs` must be in installed_extras for this to work. Valid examples: "0.10",
 # "0.12", "4.x", "5.x".
 {% endif %}
@@ -235,13 +235,13 @@ nodejs_install_npm_user: "{{ '{{ drupalvm_user }}' }}"
 {% endif  %}
 
 {% if 'ruby' in installed_extras %}
-{% if keep_comments %}# `ruby` must be in installed_extras for this to work.
+{% if comments %}# `ruby` must be in installed_extras for this to work.
 {% endif %}
 ruby_install_gems_user: "{{ '{{ drupalvm_user }}' }}"
 ruby_install_gems: []
 {% endif %}
 
-{% if keep_comments %}
+{% if comments %}
 # You can configure almost anything else on the server in the rest of this file.
 {% endif %}
 extra_security_enabled: false
@@ -263,7 +263,7 @@ firewall_allowed_tcp_ports:
   - "8983"
 firewall_log_dropped_packets: false
 
-{% if keep_comments %}
+{% if comments %}
 # PHP Configuration. Currently-supported versions: 5.5, 5.6, 7.0.
 {% endif %}
 php_version: "7.0"
@@ -277,7 +277,7 @@ php_opcache_memory_consumption: "192"
 php_opcache_max_accelerated_files: 4096
 php_max_input_vars: "4000"
 
-{% if keep_comments %}
+{% if comments %}
 # Drupal VM defaults to using PHP-FPM with either Apache or Nginx. If you wish
 # to instead use Apache + mod_php with an Ubuntu base box, make sure you add
 # libapache2-mod-php5 to `extra_packages` elsewhere in this config file.
@@ -290,22 +290,22 @@ composer_home_path: "/home/{{ '{{ drupalvm_user }}' }}/.composer"
 composer_home_owner: "{{ '{{ drupalvm_user }}' }}"
 composer_home_group: "{{ '{{ drupalvm_user }}' }}"
 
-{% if keep_comments %}
+{% if comments %}
 # composer_global_packages:
 #   - { name: phpunit/phpunit, release: '@stable' }
 {% endif %}
 
-{% if keep_comments %}
+{% if comments %}
 # Run specified scripts after VM is provisioned. Path is relative to the
 # `provisioning/playbook.yml` file.
 {% endif %}
 pre_provision_scripts: []
 post_provision_scripts: []
-  {% if keep_comments -%}
+  {% if comments -%}
   # - "../examples/scripts/configure-solr.sh"
   {% endif %}
 
-{% if keep_comments %}
+{% if comments %}
 # MySQL Configuration.
 {% endif %}
 mysql_root_password: root
@@ -317,7 +317,7 @@ adminer_install_filename: index.php
 {% endif %}
 
 {% if 'varnish' in installed_extras %}
-{% if keep_comments %}
+{% if comments %}
 # Varnish Configuration.
 {% endif %}
 varnish_listen_port: "81"
@@ -327,7 +327,7 @@ varnish_default_backend_port: "80"
 {% endif %}
 
 {% if 'pimpmylog' in installed_extras %}
-{% if keep_comments %}
+{% if comments %}
 # Pimp my Log settings.
 {% endif %}
 pimpmylog_install_dir: /usr/share/php/pimpmylog
@@ -335,7 +335,7 @@ pimpmylog_grant_all_privs: true
 {% endif %}
 
 {% if 'xdebug' in installed_extras %}
-{% if keep_comments %}
+{% if comments %}
 # XDebug configuration. XDebug is disabled by default for better performance.
 {% endif %}
 php_xdebug_default_enable: 0
@@ -343,7 +343,7 @@ php_xdebug_coverage_enable: 0
 php_xdebug_cli_enable: 1
 php_xdebug_remote_enable: 1
 php_xdebug_remote_connect_back: 1
-{% if keep_comments %}
+{% if comments %}
 # Use PHPSTORM for PHPStorm, sublime.xdebug for Sublime Text.
 {% endif %}
 php_xdebug_idekey: PHPSTORM
@@ -351,7 +351,7 @@ php_xdebug_max_nesting_level: 256
 {% endif %}
 
 {% if 'solr' in installed_extras %}
-{% if keep_comments %}
+{% if comments %}
 # Solr Configuration (if enabled above).
 {% endif %}
 solr_version: "4.10.4"
@@ -360,13 +360,13 @@ solr_xmx: "128M"
 {% endif %}
 
 {% if 'selenium' in installed_extras %}
-{% if keep_comments %}
+{% if comments %}
 # Selenium configuration.
 {% endif %}
 selenium_version: 2.46.0
 {% endif %}
 
-{% if keep_comments %}
+{% if comments %}
 # Other configuration.
 {% endif %}
 {% if use_dashboard -%}

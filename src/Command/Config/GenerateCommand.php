@@ -414,7 +414,7 @@ class GenerateCommand extends GeneratorCommand
             'build_makefile' => $input->getOption('build-makefile'),
             'install_site' => $input->getOption('install-site'),
             'use_dashboard' => !$input->getOption('no-dashboard'),
-            'keep_comments' => !$input->getOption('no-comments'),
+            'comments' => !$input->getOption('no-comments'),
         ];
 
         $args['installed_extras'] = [];
