@@ -7,6 +7,7 @@ defaults:
         vagrant_memory: 1024
         vagrant_cpus: 2
         drupalvm_webserver: apache
+        use_composer: true
         build_makefile: false
         install_site: true
         drupal_version: 8

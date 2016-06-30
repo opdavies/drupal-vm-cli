@@ -57,6 +57,11 @@ class GenerateCommand extends GeneratorCommand
                 'The amount of memory'
             )
             ->addOption(
+                'use-composer',
+                null,
+                InputOption::VALUE_NONE
+            )
+            ->addOption(
                 'webserver',
                 null,
                 InputOption::VALUE_OPTIONAL,
@@ -411,6 +416,7 @@ class GenerateCommand extends GeneratorCommand
             'drupal_mysql_database' => $input->getOption('database-name'),
             'drupal_mysql_user' => $input->getOption('database-user'),
             'drupal_mysql_password' => $input->getOption('database-password'),
+            'use_composer' => $input->getOption('use-composer'),
             'build_makefile' => $input->getOption('build-makefile'),
             'install_site' => $input->getOption('install-site'),
             'use_dashboard' => !$input->getOption('no-dashboard'),
