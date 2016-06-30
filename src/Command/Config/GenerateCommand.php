@@ -263,30 +263,6 @@ class GenerateCommand extends GeneratorCommand
             );
         }
 
-        // --destination option
-        if (!$input->getOption('destination')) {
-            $input->setOption(
-                'destination',
-                $this->io->ask(
-                    'Enter the destination path for your Drupal site',
-                    $defaults['destination']
-                )
-            );
-        }
-
-        // --docroot option
-        if (!$input->getOption('docroot')) {
-            $input->setOption(
-                'docroot',
-                $this->io->ask(
-                    'Enter the path to the docroot of the Drupal site',
-                    $input->getOption(
-                        'destination'
-                    ).DIRECTORY_SEPARATOR.'drupal'
-                )
-            );
-        }
-
         // --drupal-version option
         if (!$input->getOption('drupal-version')) {
             $input->setOption(
@@ -345,15 +321,49 @@ class GenerateCommand extends GeneratorCommand
 
         if (!$input->getOption('use-composer')) {
             // --build-makefile option
+            // TODO: Rename to --use-drush-make
             if (!$input->getOption('build-makefile')) {
                 $input->setOption(
                     'build-makefile',
                     $this->io->confirm(
                         'Build from make file',
                         $defaults['build_makefile']
-                    ) ? 'yes' : 'no'
+                    )
                 );
             }
+        }
+
+        // --destination option
+        if (!$input->getOption('destination')) {
+            $input->setOption(
+                'destination',
+                $this->io->ask(
+                    'Enter the destination path for your Drupal site',
+                    $defaults['destination']
+                )
+            );
+        }
+
+        // --docroot option
+        if (!$input->getOption('docroot')) {
+            $destination = $input->getOption('destination');
+
+            // Add the appropriate subdirectory if the user is using Composer
+            // or Drush Make.
+            if ($input->getOption('build-makefile')) {
+                $destination .= DIRECTORY_SEPARATOR . 'drupal';
+            }
+            elseif ($input->getOption('use-composer')) {
+                $destination .= DIRECTORY_SEPARATOR . 'web';
+            }
+
+            $input->setOption(
+                'docroot',
+                $this->io->ask(
+                    'Enter the path to the docroot of the Drupal site',
+                    $destination
+                )
+            );
         }
 
         // --install-site option
