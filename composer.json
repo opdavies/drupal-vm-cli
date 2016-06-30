@@ -9,7 +9,6 @@
         "twig/twig": "^1.24",
         "knplabs/github-api": "^1.6",
         "guzzlehttp/guzzle": "^6.2",
-        "herrera-io/phar-update": "^2.0",
         "symfony/yaml": "^3.0"
     },
     "authors": [
@@ -38,6 +37,10 @@
         "bin/drupalvm.php"
     ],
     "require-dev": {
-        "fabpot/php-cs-fixer": "^1.11"
+        "herrera-io/phar-update": "^2.0",
+        "friendsofphp/php-cs-fixer": "^1.11"
+    },
+    "suggest": {
+        "geerlingguy/drupal-vm": "The main Drupal VM project."
     }
 }
