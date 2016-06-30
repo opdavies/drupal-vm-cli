@@ -332,15 +332,28 @@ class GenerateCommand extends GeneratorCommand
             );
         }
 
-        // --build-makefile option
-        if (!$input->getOption('build-makefile')) {
+        // --use-composer option
+        if (!$input->getOption('use-composer')) {
             $input->setOption(
-                'build-makefile',
+                'use-composer',
                 $this->io->confirm(
-                    'Build from make file',
-                    $defaults['build_makefile']
-                ) ? 'yes' : 'no'
+                    'Build using Composer?',
+                    isset($defaults['use_composer']) ? $defaults['use_composer'] : true
+                )
             );
+        }
+
+        if (!$input->getOption('use-composer')) {
+            // --build-makefile option
+            if (!$input->getOption('build-makefile')) {
+                $input->setOption(
+                    'build-makefile',
+                    $this->io->confirm(
+                        'Build from make file',
+                        $defaults['build_makefile']
+                    ) ? 'yes' : 'no'
+                );
+            }
         }
 
         // --install-site option
