@@ -42,5 +42,11 @@
     },
     "suggest": {
         "geerlingguy/drupal-vm": "The main Drupal VM project."
+    },
+    "scripts": {
+        "build": [
+            "box build",
+            "shasum drupalvm.phar | awk '{print $1}' > drupalvm.phar.version"
+        ]
     }
 }
