@@ -48,5 +48,10 @@
             "box build",
             "shasum drupalvm.phar | awk '{print $1}' > drupalvm.phar.version"
         ]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.9.x-dev"
+        }
     }
 }
