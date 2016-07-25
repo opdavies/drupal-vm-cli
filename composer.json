@@ -4,12 +4,12 @@
     "keywords": ["vagrant", "drupal", "drupal-vm"],
     "homepage": "https://www.drupalvmgenerator.com",
     "require": {
+        "guzzlehttp/guzzle": "^6.2",
+        "knplabs/github-api": "^1.6",
         "symfony/console": "^3.0",
         "symfony/filesystem": "^3.0",
-        "twig/twig": "^1.24",
-        "knplabs/github-api": "^1.6",
-        "guzzlehttp/guzzle": "^6.2",
-        "symfony/yaml": "^3.0"
+        "symfony/yaml": "^3.0",
+        "twig/twig": "^1.24"
     },
     "authors": [
         {
