@@ -6,6 +6,7 @@
     "require": {
         "guzzlehttp/guzzle": "^6.2",
         "knplabs/github-api": "^1.6",
+        "opdavies/twig-extensions": "dev-master",
         "symfony/console": "^3.0",
         "symfony/filesystem": "^3.0",
         "symfony/yaml": "^3.0",

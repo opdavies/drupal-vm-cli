@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2bfecc6145801417f605d88fa7cedc01",
-    "content-hash": "2fb04fcc5bfbed130a43eaf97024246b",
+    "hash": "0a54c852cdeb57718d66bf41a8c5afb1",
+    "content-hash": "e5d42deaa7b06986592df94c8aee5f17",
     "packages": [
         {
             "name": "guzzle/guzzle",
@@ -335,6 +335,43 @@
                 "github"
             ],
             "time": "2016-05-29 11:15:42"
+        },
+        {
+            "name": "opdavies/twig-extensions",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/opdavies/twig-extensions.git",
+                "reference": "b96f37debcb07de3f3d1275f9f7ede923e886f97"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/opdavies/twig-extensions/zipball/b96f37debcb07de3f3d1275f9f7ede923e886f97",
+                "reference": "b96f37debcb07de3f3d1275f9f7ede923e886f97",
+                "shasum": ""
+            },
+            "require": {
+                "twig/twig": "^1.24"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Opdavies\\Twig\\Extensions\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Oliver Davies",
+                    "email": "oliver@oliverdavies.uk",
+                    "homepage": "https://www.oliverdavies.uk"
+                }
+            ],
+            "description": "A collection of personal Twig extensions.",
+            "time": "2016-07-15 01:48:19"
         },
         {
             "name": "psr/http-message",
@@ -1265,7 +1302,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "opdavies/twig-extensions": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
