@@ -52,14 +52,14 @@ drupalvm_webserver: {{ drupalvm_webserver }}
 # Set this to false if you are using a different site deployment strategy and
 # would like to configure 'vagrant_synced_folders' and 'apache_vhosts' manually.
 {% endif %}
-build_makefile: {{ build_makefile }}
+build_makefile: {{ build_makefile|boolean_string }}
 drush_makefile_path: "{{ '{{ config_dir }}/drupal.make.yml' }}"
 
 {% if comments %}
 # Set this to false if you are using a different site deployment strategy and
 # would like to configure 'vagrant_synced_folders' and 'apache_vhosts' manually.
 {% endif %}
-install_site: {{ install_site }}
+install_site: {{ install_site|boolean_string }}
 
 {% if comments %}
 # Settings for building a Drupal site from a makefile (if 'build_makefile:'

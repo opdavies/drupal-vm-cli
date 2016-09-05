@@ -11,6 +11,7 @@ use DrupalVmGenerator\Command\Self\UpdateCommand as SelfUpdateCommand;
 use Github\Client as GithubClient;
 use Github\HttpClient\CachedHttpClient;
 use GuzzleHttp\Client;
+use Opdavies\Twig\Extensions\TwigBooleanStringExtension;
 use Symfony\Component\Console\Application as ConsoleApplication;
 use Symfony\Component\Filesystem\Filesystem;
 use Twig_Environment;
@@ -40,6 +41,8 @@ class Application extends ConsoleApplication
         $twig = new Twig_Environment(
             new Twig_Loader_Filesystem(__DIR__.'/../../templates')
         );
+
+        $twig->addExtension(new TwigBooleanStringExtension());
 
         $filesystem = new Filesystem();
 

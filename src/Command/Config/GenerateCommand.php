@@ -334,7 +334,7 @@ class GenerateCommand extends GeneratorCommand
                 $this->io->confirm(
                     'Build from make file',
                     $defaults['build_makefile']
-                ) ? 'yes' : 'no'
+                )
             );
         }
 
@@ -345,7 +345,7 @@ class GenerateCommand extends GeneratorCommand
                 $this->io->confirm(
                     'Install the site',
                     $defaults['install_site']
-                ) ? 'yes' : 'no'
+                )
             );
         }
 
