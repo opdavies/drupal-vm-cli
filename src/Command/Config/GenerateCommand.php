@@ -398,23 +398,26 @@ class GenerateCommand extends GeneratorCommand
         $input = $this->input;
 
         $args = [
-            'vagrant_machine_name' => $input->getOption('machine-name'),
-            'vagrant_hostname' => $input->getOption('hostname'),
-            'vagrant_ip_address' => $input->getOption('ip-address'),
-            'vagrant_cpus' => $input->getOption('cpus'),
-            'vagrant_memory' => $input->getOption('memory'),
-            'drupalvm_webserver' => $input->getOption('webserver'),
-            'drupal_core_path' => $input->getOption('docroot'),
-            'local_path' => $input->getOption('path'),
+            'build_makefile' => $input->getOption('build-makefile'),
+            'comments' => !$input->getOption('no-comments'),
             'destination' => $input->getOption('destination'),
+            'drupal_core_path' => $input->getOption('docroot'),
             'drupal_major_version' => $input->getOption('drupal-version'),
             'drupal_mysql_database' => $input->getOption('database-name'),
-            'drupal_mysql_user' => $input->getOption('database-user'),
             'drupal_mysql_password' => $input->getOption('database-password'),
-            'build_makefile' => $input->getOption('build-makefile'),
+            'drupal_mysql_user' => $input->getOption('database-user'),
+            'drupalvm_webserver' => $input->getOption('webserver'),
             'install_site' => $input->getOption('install-site'),
+            'keep_comments' => !$input->getOption('no-comments'),
+            'local_path' => $input->getOption('path'),
+            'php_version' => $input->getOption('php-version'),
             'use_dashboard' => !$input->getOption('no-dashboard'),
-            'comments' => !$input->getOption('no-comments'),
+            'use_dashboard' => !$input->getOption('no-dashboard'),
+            'vagrant_cpus' => $input->getOption('cpus'),
+            'vagrant_hostname' => $input->getOption('hostname'),
+            'vagrant_ip_address' => $input->getOption('ip-address'),
+            'vagrant_machine_name' => $input->getOption('machine-name'),
+            'vagrant_memory' => $input->getOption('memory'),
         ];
 
         $args['installed_extras'] = [];
