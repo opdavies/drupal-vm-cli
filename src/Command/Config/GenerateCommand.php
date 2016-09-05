@@ -410,8 +410,6 @@ class GenerateCommand extends GeneratorCommand
             'install_site' => $input->getOption('install-site'),
             'keep_comments' => !$input->getOption('no-comments'),
             'local_path' => $input->getOption('path'),
-            'php_version' => $input->getOption('php-version'),
-            'use_dashboard' => !$input->getOption('no-dashboard'),
             'use_dashboard' => !$input->getOption('no-dashboard'),
             'vagrant_cpus' => $input->getOption('cpus'),
             'vagrant_hostname' => $input->getOption('hostname'),
