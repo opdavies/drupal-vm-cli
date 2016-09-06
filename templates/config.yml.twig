@@ -44,6 +44,11 @@ vagrant_memory: {{ vagrant_memory }}
 vagrant_cpus: {{ vagrant_cpus }}
 
 {% if comments %}
+# Force use of ansible_local provisioner, even if Ansible is installed on host.
+{% endif %}
+force_ansible_local: false
+
+{% if comments %}
 # The web server software to use. Can be either 'apache' or 'nginx'.
 {% endif %}
 drupalvm_webserver: {{ drupalvm_webserver }}
@@ -54,6 +59,25 @@ drupalvm_webserver: {{ drupalvm_webserver }}
 {% endif %}
 build_makefile: {{ build_makefile|boolean_string }}
 drush_makefile_path: "{{ '{{ config_dir }}/drupal.make.yml' }}"
+drush_make_options: "--no-gitinfofile"
+
+{% if comments %}
+# Set 'build_makefile' to 'false' and this to 'true' if you are using a
+# composer based site deployment strategy.
+{% endif %}
+build_composer: false
+drupal_composer_path: "{{ config_dir }}/drupal.composer.json"
+drupal_composer_install_dir: "/var/www/drupalvm/drupal"
+drupal_composer_dependencies:
+  - "drupal/devel:8.*"
+
+{% if comments %}
+# Set this to 'true' and 'build_makefile', 'build_composer' to 'false' if you
+# are using Composer's create-project as a site deployment strategy.
+{% endif %}
+build_composer_project: true
+drupal_composer_project_package: "drupal-composer/drupal-project:8.x-dev"
+drupal_composer_project_options: "--prefer-dist --stability dev --no-interaction"
 
 {% if comments %}
 # Set this to false if you are using a different site deployment strategy and
@@ -62,20 +86,23 @@ drush_makefile_path: "{{ '{{ config_dir }}/drupal.make.yml' }}"
 install_site: {{ install_site|boolean_string }}
 
 {% if comments %}
-# Settings for building a Drupal site from a makefile (if 'build_makefile:'
-# is 'true').
+# Required Drupal settings.
+{% endif %}
+drupal_core_path: "{{ drupal_composer_install_dir }}/web"
+drupal_mysql_user: {{ drupal_mysql_user }}
+drupal_mysql_password: {{ drupal_mysql_password }}
+drupal_mysql_database: {{ drupal_mysql_database }}
+
+{% if comments %}
+# Settings for installing a Drupal site if 'install_site:' is 'true'.
 {% endif %}
 drupal_major_version: {{ drupal_major_version }}
-drupal_core_path: {{ drupal_core_path }}
 drupal_domain: "{{ '{{ vagrant_hostname }}' }}"
 drupal_site_name: "Drupal"
 drupal_install_profile: standard
 drupal_enable_modules: [ 'devel' ]
 drupal_account_name: admin
 drupal_account_pass: admin
-drupal_mysql_user: {{ drupal_mysql_user }}
-drupal_mysql_password: {{ drupal_mysql_password }}
-drupal_mysql_database: {{ drupal_mysql_database }}
 
 {% if comments %}
 # Additional arguments or options to pass to `drush site-install`.
@@ -109,6 +136,7 @@ configure_local_drush_aliases: true
 {% endif %}
 apache_vhosts:
   - servername: "{{ '{{ vagrant_hostname }}' }}"
+    serveralias: "{{ 'www.{{ drupal_domain }}' }}"
     documentroot: "{{ '{{ drupal_core_path }}' }}"
     extra_parameters: |
           ProxyPassMatch ^/(.*\.php(/.*)?)$ "fcgi://127.0.0.1:9000{{ drupal_core_path }}"
@@ -154,7 +182,7 @@ apache_mods_enabled:
 # Drupal.
 {% endif %}
 nginx_hosts:
-  - server_name: "{{ '{{ vagrant_hostname }}' }}"
+  - server_name: "{{ '{{ drupal_domain }} www.{{ drupal_domain }}' }}"
     root: "{{ '{{ drupal_core_path }}' }}"
     is_php: true
 
@@ -191,8 +219,8 @@ nginx_ppa_use: true
 {% endif %}
 mysql_databases:
   - name: "{{ '{{ drupal_mysql_database }}' }}"
-    encoding: utf8
-    collation: utf8_general_ci
+    encoding: utf8mb4
+    collation: utf8mb4_general_ci
 
 mysql_users:
   - name: "{{ '{{ drupal_mysql_user }}' }}"
@@ -224,23 +252,6 @@ installed_extras: []
 extra_packages: []
 {% endfor %}
 
-{% if 'nodejs' in installed_extras %}
-{% if comments %}
-# `nodejs` must be in installed_extras for this to work. Valid examples: "0.10",
-# "0.12", "4.x", "5.x".
-{% endif %}
-nodejs_version: "0.12"
-nodejs_npm_global_packages: []
-nodejs_install_npm_user: "{{ '{{ drupalvm_user }}' }}"
-{% endif  %}
-
-{% if 'ruby' in installed_extras %}
-{% if comments %}# `ruby` must be in installed_extras for this to work.
-{% endif %}
-ruby_install_gems_user: "{{ '{{ drupalvm_user }}' }}"
-ruby_install_gems: []
-{% endif %}
-
 {% if comments %}
 # You can configure almost anything else on the server in the rest of this file.
 {% endif %}
@@ -261,17 +272,19 @@ firewall_allowed_tcp_ports:
   - "8080"
   - "8443"
   - "8983"
+  - "9200"
 firewall_log_dropped_packets: false
 
 {% if comments %}
-# PHP Configuration. Currently-supported versions: 5.5, 5.6, 7.0.
+# PHP Configuration. Currently-supported versions: 5.6, 7.0.
+# To use 5.6, see: http://docs.drupalvm.com/en/latest/other/php-56/
 {% endif %}
 php_version: "7.0"
 php_memory_limit: "192M"
 php_display_errors: "On"
 php_display_startup_errors: "On"
 php_realpath_cache_size: "1024K"
-php_sendmail_path: "/usr/sbin/ssmtp -t"
+php_sendmail_path: "/opt/mailhog/mhsendmail"
 php_opcache_enabled_in_ini: true
 php_opcache_memory_consumption: "192"
 php_opcache_max_accelerated_files: 4096
@@ -289,11 +302,8 @@ composer_path: /usr/bin/composer
 composer_home_path: "/home/{{ '{{ drupalvm_user }}' }}/.composer"
 composer_home_owner: "{{ '{{ drupalvm_user }}' }}"
 composer_home_group: "{{ '{{ drupalvm_user }}' }}"
-
-{% if comments %}
-# composer_global_packages:
-#   - { name: phpunit/phpunit, release: '@stable' }
-{% endif %}
+composer_global_packages:
+  - { name: hirak/prestissimo, release: '^0.3' }
 
 {% if comments %}
 # Run specified scripts after VM is provisioned. Path is relative to the
@@ -314,6 +324,23 @@ mysql_slow_query_time: 2
 mysql_wait_timeout: 300
 {% if 'adminer' in installed_extras %}
 adminer_install_filename: index.php
+{% endif %}
+
+{% if 'nodejs' in installed_extras %}
+{% if comments %}
+# `nodejs` must be in installed_extras for this to work. Valid examples: "0.10",
+# "0.12", "4.x", "5.x".
+{% endif %}
+nodejs_version: "0.12"
+nodejs_npm_global_packages: []
+nodejs_install_npm_user: "{{ '{{ drupalvm_user }}' }}"
+{% endif  %}
+
+{% if 'ruby' in installed_extras %}
+{% if comments %}# `ruby` must be in installed_extras for this to work.
+{% endif %}
+ruby_install_gems_user: "{{ '{{ drupalvm_user }}' }}"
+ruby_install_gems: []
 {% endif %}
 
 {% if 'varnish' in installed_extras %}
@@ -354,7 +381,7 @@ php_xdebug_max_nesting_level: 256
 {% if comments %}
 # Solr Configuration (if enabled above).
 {% endif %}
-solr_version: "4.10.4"
+solr_version: "5.5.2"
 solr_xms: "64M"
 solr_xmx: "128M"
 {% endif %}
@@ -363,7 +390,7 @@ solr_xmx: "128M"
 {% if comments %}
 # Selenium configuration.
 {% endif %}
-selenium_version: 2.46.0
+selenium_version: 2.53.0
 {% endif %}
 
 {% if comments %}
@@ -373,3 +400,5 @@ selenium_version: 2.46.0
 dashboard_install_dir: /var/www/dashboard
 {% endif %}
 known_hosts_path: ~/.ssh/known_hosts
+{# TODO: Make ssh_home configurable. #}
+#ssh_home: "{{ drupal_core_path }}"
