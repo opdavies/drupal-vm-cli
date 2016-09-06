@@ -15,6 +15,7 @@ trait ExtrasTrait
         'adminer',
         'blackfire',
         'drupalconsole',
+        'elasticsearch',
         'mailhog',
         'memcached',
         'newrelic',
