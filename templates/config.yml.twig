@@ -235,7 +235,7 @@ mysql_users:
 # to install *any* extras, make set this value to an empty set, e.g. `[]`.
 {% endif %}
 installed_extras:
-{% for extra in installed_extras %}
+{% for extra in installed_extras|sort %}
   - {{ extra }}
 {% endfor %}
 {%- else %}
@@ -245,7 +245,7 @@ installed_extras: []
 {% if comments %}
 # Add any extra apt or yum packages you would like installed.
 {% endif %}
-{% for package in extra_packages %}
+{% for package in extra_packages|sort %}
 {% if loop.first %}extra_packages:
 {% endif %}
   - {{ package }}
