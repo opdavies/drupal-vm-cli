@@ -399,6 +399,8 @@ class GenerateCommand extends GeneratorCommand
 
         $args = [
             'build_makefile' => $input->getOption('build-makefile'),
+            'build_composer' => false,
+            'build_composer_project' => false,
             'comments' => !$input->getOption('no-comments'),
             'destination' => $input->getOption('destination'),
             'drupal_core_path' => $input->getOption('docroot'),
