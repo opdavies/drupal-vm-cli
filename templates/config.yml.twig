@@ -58,7 +58,7 @@ drupalvm_webserver: {{ drupalvm_webserver }}
 # Set this to false if you are using a different site deployment strategy and
 # would like to configure 'vagrant_synced_folders' and 'apache_vhosts' manually.
 {% endif %}
-build_makefile: {{ build_makefile|boolean_string }}
+build_makefile: {{ build_makefile|boolean_as_string }}
 drush_makefile_path: "{{ '{{ config_dir }}/drupal.make.yml' }}"
 drush_make_options: "--no-gitinfofile"
 
@@ -66,7 +66,7 @@ drush_make_options: "--no-gitinfofile"
 # Set 'build_makefile' to 'false' and this to 'true' if you are using a
 # composer based site deployment strategy.
 {% endif %}
-build_composer: {{ build_composer|boolean_string }}
+build_composer: {{ build_composer|boolean_as_string }}
 {% if build_composer %}
 drupal_composer_path: "{{ config_dir }}/drupal.composer.json"
 drupal_composer_install_dir: "/var/www/drupalvm/drupal"
@@ -78,7 +78,7 @@ drupal_composer_dependencies:
 # Set this to 'true' and 'build_makefile', 'build_composer' to 'false' if you
 # are using Composer's create-project as a site deployment strategy.
 {% endif %}
-build_composer_project: {{ build_composer_project|boolean_string }}
+build_composer_project: {{ build_composer_project|boolean_as_string }}
 {% if build_composer_project %}
 drupal_composer_project_package: "drupal-composer/drupal-project:8.x-dev"
 drupal_composer_project_options: "--prefer-dist --stability dev --no-interaction"
@@ -88,7 +88,7 @@ drupal_composer_project_options: "--prefer-dist --stability dev --no-interaction
 # Set this to false if you are using a different site deployment strategy and
 # would like to configure 'vagrant_synced_folders' and 'apache_vhosts' manually.
 {% endif %}
-install_site: {{ install_site|boolean_string }}
+install_site: {{ install_site|boolean_as_string }}
 
 {% if comments %}
 # Required Drupal settings.

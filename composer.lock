@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "0a54c852cdeb57718d66bf41a8c5afb1",
-    "content-hash": "e5d42deaa7b06986592df94c8aee5f17",
+    "hash": "d056fa40d6a45a540a7f511dba4fd1e5",
+    "content-hash": "7ed6ccf9fa3cd062a337c21c12e11c81",
     "packages": [
         {
             "name": "guzzle/guzzle",
@@ -338,22 +338,27 @@
         },
         {
             "name": "opdavies/twig-extensions",
-            "version": "dev-master",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/opdavies/twig-extensions.git",
-                "reference": "b96f37debcb07de3f3d1275f9f7ede923e886f97"
+                "reference": "4d1593523fdf1756a54a148645b2f4bf2afecb75"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/opdavies/twig-extensions/zipball/b96f37debcb07de3f3d1275f9f7ede923e886f97",
-                "reference": "b96f37debcb07de3f3d1275f9f7ede923e886f97",
+                "url": "https://api.github.com/repos/opdavies/twig-extensions/zipball/4d1593523fdf1756a54a148645b2f4bf2afecb75",
+                "reference": "4d1593523fdf1756a54a148645b2f4bf2afecb75",
                 "shasum": ""
             },
             "require": {
                 "twig/twig": "^1.24"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.2-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Opdavies\\Twig\\Extensions\\": "src"
@@ -371,7 +376,7 @@
                 }
             ],
             "description": "A collection of personal Twig extensions.",
-            "time": "2016-07-15 01:48:19"
+            "time": "2016-09-14 21:35:45"
         },
         {
             "name": "psr/http-message",
@@ -1302,9 +1307,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "opdavies/twig-extensions": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
