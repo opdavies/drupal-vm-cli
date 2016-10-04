@@ -37,18 +37,8 @@
         "bin/drupalvm",
         "bin/drupalvm.php"
     ],
-    "require-dev": {
-        "herrera-io/phar-update": "^2.0",
-        "friendsofphp/php-cs-fixer": "^1.11"
-    },
     "suggest": {
         "geerlingguy/drupal-vm": "The main Drupal VM project."
-    },
-    "scripts": {
-        "build": [
-            "box build",
-            "shasum drupalvm.phar | awk '{print $1}' > drupalvm.phar.version"
-        ]
     },
     "extra": {
         "branch-alias": {

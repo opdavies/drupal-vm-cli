@@ -27,7 +27,7 @@ class Application extends ConsoleApplication
     /**
      * @var string
      */
-    const VERSION = '@git_version@';
+    const VERSION = '2.8.0';
 
     /**
      * @var string
@@ -59,10 +59,6 @@ class Application extends ConsoleApplication
             new ConfigGenerateCommand($twig, $filesystem),
             new MakeGenerateCommand($twig, $filesystem),
         ];
-
-        if (substr(__FILE__, 0, 7) === 'phar://') {
-            $commands[] = new SelfUpdateCommand();
-        }
 
         $this->addCommands($commands);
 
