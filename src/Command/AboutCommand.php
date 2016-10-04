@@ -63,8 +63,5 @@ class AboutCommand extends Command
             $io->text($command[1]);
             $io->newLine();
         }
-
-        $io->section('Updating to the latest version');
-        $io->text('drupalvm self:update');
     }
 }
