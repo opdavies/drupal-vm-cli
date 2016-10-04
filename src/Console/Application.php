@@ -27,7 +27,7 @@ class Application extends ConsoleApplication
     /**
      * @var string
      */
-    const VERSION = '2.8.0';
+    const VERSION = '2.8.1';
 
     /**
      * @var string
