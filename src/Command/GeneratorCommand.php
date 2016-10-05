@@ -10,7 +10,7 @@ use Twig_Environment;
 abstract class GeneratorCommand extends Command
 {
     /**
-     * @var Twig_Environment $twig
+     * @var Twig_Environment
      */
     protected $twig;
 

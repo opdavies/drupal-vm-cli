@@ -7,7 +7,6 @@ use DrupalVmGenerator\Command\Config\GenerateCommand as ConfigGenerateCommand;
 use DrupalVmGenerator\Command\InitCommand;
 use DrupalVmGenerator\Command\Make\GenerateCommand as MakeGenerateCommand;
 use DrupalVmGenerator\Command\NewCommand;
-use DrupalVmGenerator\Command\Self\UpdateCommand as SelfUpdateCommand;
 use Github\Client as GithubClient;
 use Github\HttpClient\CachedHttpClient;
 use GuzzleHttp\Client;

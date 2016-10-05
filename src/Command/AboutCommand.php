@@ -13,7 +13,7 @@ class AboutCommand extends Command
      */
     protected function configure()
     {
-         $this->setName('about')
+        $this->setName('about')
              ->setDescription('Display information about the Drupal VM Generator');
     }
 
@@ -37,24 +37,24 @@ class AboutCommand extends Command
         $commands = [
             [
                 'Initialise Drupal VM Generator.',
-                'drupalvm init --overwrite'
+                'drupalvm init --overwrite',
             ],
             [
                 'Download the latest stable version of Drupal VM.',
-                'drupalvm new'
+                'drupalvm new',
             ],
             [
                 'Generate a new configuration file.',
-                'drupalvm config:generate'
+                'drupalvm config:generate',
             ],
             [
                 'Generate a new Drush Make file.',
-                'drupalvm make:generate'
+                'drupalvm make:generate',
             ],
             [
                 'List all available commands.',
-                'drupalvm list'
-            ]
+                'drupalvm list',
+            ],
         ];
 
         foreach ($commands as $command) {

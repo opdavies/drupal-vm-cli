@@ -22,9 +22,9 @@ class DrupalVmStyle extends SymfonyStyle
 
     /**
      * @param string $question
-     * @param array $choices
-     * @param null $default
-     * @param bool $allowEmpty
+     * @param array  $choices
+     * @param null   $default
+     * @param bool   $allowEmpty
      *
      * @return string
      */

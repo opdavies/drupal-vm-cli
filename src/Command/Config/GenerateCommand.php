@@ -246,7 +246,6 @@ class GenerateCommand extends GeneratorCommand
             );
         }
 
-
         // --path option
         if (!$input->getOption('path')) {
             $input->setOption(

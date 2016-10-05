@@ -49,7 +49,7 @@ abstract class Command extends BaseCommand
      * Loads default arguments from a configuration file.
      *
      * @param string $type
-     *   The type of defaults to load (i.e. "config" or "make").
+     *                     The type of defaults to load (i.e. "config" or "make")
      *
      * @return array
      */
