@@ -1,6 +1,8 @@
 defaults:
     config:
-        build_makefile: true
+        build_composer: false
+        build_composer_project: false
+        build_makefile: false
         database_name: drupal
         database_password: drupal
         database_user: drupal
