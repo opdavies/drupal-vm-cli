@@ -397,7 +397,7 @@ class GenerateCommand extends GeneratorCommand
         $input = $this->input;
 
         $args = [
-            'build_makefile' => $input->getOption('build-makefile'),
+            'build_makefile' => $input->getOption('build-makefile') ?: false,
             'build_composer' => false,
             'build_composer_project' => false,
             'comments' => !$input->getOption('no-comments'),
@@ -408,8 +408,7 @@ class GenerateCommand extends GeneratorCommand
             'drupal_mysql_password' => $input->getOption('database-password'),
             'drupal_mysql_user' => $input->getOption('database-user'),
             'drupalvm_webserver' => $input->getOption('webserver'),
-            'install_site' => $input->getOption('install-site'),
-            'keep_comments' => !$input->getOption('no-comments'),
+            'install_site' => $input->getOption('install-site') ?: false,
             'local_path' => $input->getOption('path'),
             'use_dashboard' => !$input->getOption('no-dashboard'),
             'vagrant_cpus' => $input->getOption('cpus'),
