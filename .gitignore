@@ -1,6 +1,6 @@
-bin/jsonlint
-bin/php-cs-fixer
-bin/validate-json
+bin/
+!bin/drupalvm
+!bin/drupalvm.php
 site/
 vendor/
 config.yml
