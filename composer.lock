@@ -338,16 +338,16 @@
         },
         {
             "name": "opdavies/twig-extensions",
-            "version": "1.1.1",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/opdavies/twig-extensions.git",
-                "reference": "4d1593523fdf1756a54a148645b2f4bf2afecb75"
+                "reference": "85eab8c64e24533e7ab4b2fbd9f3bba9073d39e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/opdavies/twig-extensions/zipball/4d1593523fdf1756a54a148645b2f4bf2afecb75",
-                "reference": "4d1593523fdf1756a54a148645b2f4bf2afecb75",
+                "url": "https://api.github.com/repos/opdavies/twig-extensions/zipball/85eab8c64e24533e7ab4b2fbd9f3bba9073d39e0",
+                "reference": "85eab8c64e24533e7ab4b2fbd9f3bba9073d39e0",
                 "shasum": ""
             },
             "require": {
@@ -376,7 +376,7 @@
                 }
             ],
             "description": "A collection of personal Twig extensions.",
-            "time": "2016-09-14 21:35:45"
+            "time": "2016-12-29 23:14:45"
         },
         {
             "name": "psr/http-message",
