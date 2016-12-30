@@ -2,7 +2,7 @@
 
 namespace DrupalVmGenerator\tests\Command\Config;
 
-use DrupalVmGenerator\Tests\Command\FileGeneratorCommandTest;
+use DrupalVmGenerator\tests\Command\FileGeneratorCommandTest;
 
 class GenerateCommandTest extends FileGeneratorCommandTest
 {
