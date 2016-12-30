@@ -10,4 +10,4 @@ install:
 
 script:
   - bin/drupalvm init
-  - bin/phpunit tests
+  - bin/phpunit
