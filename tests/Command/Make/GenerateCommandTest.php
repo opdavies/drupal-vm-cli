@@ -2,9 +2,9 @@
 
 namespace DrupalVmGenerator\Tests\Command\Make;
 
-use DrupalVmGenerator\Tests\Command\CommandTest;
+use DrupalVmGenerator\Tests\Command\FileGeneratorCommandTest;
 
-class GenerateCommandTest extends CommandTest
+class GenerateCommandTest extends FileGeneratorCommandTest
 {
     /**
      * {@inheritdoc}
@@ -14,14 +14,6 @@ class GenerateCommandTest extends CommandTest
         parent::setUp();
 
         $this->filename = 'drupal.make.yml';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function tearDown()
-    {
-        $this->deleteFile();
     }
 
     public function testNoOptions()

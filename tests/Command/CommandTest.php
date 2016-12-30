@@ -18,11 +18,6 @@ abstract class CommandTest extends \PHPUnit_Framework_TestCase
     protected $fs;
 
     /**
-     * @var string
-     */
-    protected $filename;
-
-    /**
      * {@inheritdoc}
      */
     public function setUp()
