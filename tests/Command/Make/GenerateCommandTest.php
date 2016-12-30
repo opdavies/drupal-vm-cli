@@ -1,6 +1,6 @@
 <?php
 
-namespace DrupalVmGenerator\Tests\Command\Make;
+namespace DrupalVmGenerator\tests\Command\Make;
 
 use DrupalVmGenerator\Tests\Command\FileGeneratorCommandTest;
 

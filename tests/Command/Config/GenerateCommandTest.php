@@ -1,6 +1,6 @@
 <?php
 
-namespace DrupalVmGenerator\Tests\Command\Config;
+namespace DrupalVmGenerator\tests\Command\Config;
 
 use DrupalVmGenerator\Tests\Command\FileGeneratorCommandTest;
 
@@ -33,31 +33,36 @@ class GenerateCommandTest extends FileGeneratorCommandTest
         $this->assertFileContains($this->filename, 'vagrant_machine_name: foo');
     }
 
-    public function testHostnameOption() {
+    public function testHostnameOption()
+    {
         $this->runCommand('bin/drupalvm config:generate --hostname=foo');
 
         $this->assertFileContains($this->filename, 'vagrant_hostname: foo');
     }
 
-    public function testIpAddressOption() {
+    public function testIpAddressOption()
+    {
         $this->runCommand('bin/drupalvm config:generate --ip-address=1.2.3.4');
 
         $this->assertFileContains($this->filename, 'vagrant_ip: "1.2.3.4"');
     }
 
-    public function testCpusOption() {
+    public function testCpusOption()
+    {
         $this->runCommand('bin/drupalvm config:generate --cpus=2');
 
         $this->assertFileContains($this->filename, 'vagrant_cpus: 2');
     }
 
-    public function testMemoryOption() {
+    public function testMemoryOption()
+    {
         $this->runCommand('bin/drupalvm config:generate --memory=1024');
 
         $this->assertFileContains($this->filename, 'vagrant_memory: 1024');
     }
 
-    public function testWebServerOption() {
+    public function testWebServerOption()
+    {
         // Apache.
         $this->runCommand('bin/drupalvm config:generate --webserver=apache');
 
@@ -73,7 +78,8 @@ class GenerateCommandTest extends FileGeneratorCommandTest
         $this->assertFileNotContains($this->filename, 'drupalvm_webserver: apache');
     }
 
-    public function testPathOption() {
+    public function testPathOption()
+    {
         $this->runCommand('bin/drupalvm config:generate --path="./site"');
 
         $this->assertFileContains($this->filename, 'local_path: ./site');

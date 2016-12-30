@@ -1,6 +1,6 @@
 <?php
 
-namespace DrupalVmGenerator\Tests\Command;
+namespace DrupalVmGenerator\tests\Command;
 
 abstract class FileGeneratorCommandTest extends CommandTest
 {
