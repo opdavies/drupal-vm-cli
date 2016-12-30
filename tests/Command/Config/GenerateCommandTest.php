@@ -64,10 +64,9 @@ class GenerateCommandTest extends FileGeneratorCommandTest
         $this->assertFileContains($this->filename, 'drupalvm_webserver: apache');
         $this->assertFileContains($this->filename, 'apache_vhosts:');
         $this->assertFileNotContains($this->filename, 'drupalvm_webserver: nginx');
-        $this->deleteFile();
 
         // Nginx.
-        $this->runCommand('bin/drupalvm config:generate --webserver=nginx');
+        $this->runCommand('bin/drupalvm config:generate --overwrite --webserver=nginx');
 
         $this->assertFileContains($this->filename, 'drupalvm_webserver: nginx');
         $this->assertFileContains($this->filename, 'nginx_hosts:');
@@ -111,22 +110,23 @@ EOF;
     {
         // Apache.
         $this->runCommand('bin/drupalvm config:generate --webserver=apache');
+
         $this->assertFileContains($this->filename, 'serveralias: "dashboard.{{ vagrant_hostname }}"');
         $this->assertFileContains($this->filename, 'dashboard_install_dir: /var/www/dashboard');
-        $this->deleteFile();
 
-        $this->runCommand('bin/drupalvm config:generate --webserver=apache --no-dashboard');
+        $this->runCommand('bin/drupalvm config:generate --overwrite --webserver=apache --no-dashboard');
+
         $this->assertFileNotContains($this->filename, 'serveralias: "dashboard.{{ vagrant_hostname }}"');
         $this->assertFileNotContains($this->filename, 'dashboard_install_dir: /var/www/dashboard');
-        $this->deleteFile();
 
         // Nginx.
-        $this->runCommand('bin/drupalvm config:generate --webserver=nginx');
+        $this->runCommand('bin/drupalvm config:generate --overwrite --webserver=nginx');
+
         $this->assertFileContains($this->filename, 'server_name: "{{ vagrant_ip }} dashboard.{{ vagrant_hostname }}"');
         $this->assertFileContains($this->filename, 'dashboard_install_dir: /var/www/dashboard');
-        $this->deleteFile();
 
-        $this->runCommand('bin/drupalvm config:generate --webserver=nginx --no-dashboard');
+        $this->runCommand('bin/drupalvm config:generate --overwrite --webserver=nginx --no-dashboard');
+
         $this->assertFileNotContains($this->filename, 'server_name: "{{ vagrant_ip }} dashboard.{{ vagrant_hostname }}"');
         $this->assertFileNotContains($this->filename, 'dashboard_install_dir: /var/www/dashboard');
     }
@@ -140,9 +140,8 @@ EOF;
 
         $this->runCommand('bin/drupalvm config:generate');
         $this->assertFileContains($this->filename, $comment);
-        $this->deleteFile();
 
-        $this->runCommand('bin/drupalvm config:generate --no-comments');
+        $this->runCommand('bin/drupalvm config:generate --overwrite --no-comments');
         $this->assertFileNotContains($this->filename, $comment);
     }
 }
