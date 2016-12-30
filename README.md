@@ -17,7 +17,7 @@ Each variable configurable with the application has an option that you can set w
 Here is an example with all of the options set beforehand:
 
 ```
-drupalvm \
+drupalvm config:generate \
   --hostname=example.com \
   --machine-name=example \
   --ip-address=192.168.88.88 \
