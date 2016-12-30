@@ -9,4 +9,5 @@ install:
   - composer install
 
 script:
+  - bin/drupalvm init
   - bin/phpunit tests
