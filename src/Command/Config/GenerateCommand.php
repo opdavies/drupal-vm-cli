@@ -173,9 +173,11 @@ class GenerateCommand extends GeneratorCommand
      */
     protected function interact(InputInterface $input, OutputInterface $output)
     {
+        $this->assertFileAlreadyExists(self::FILENAME);
+
         $io = $this->io;
 
-        $this->assertFileAlreadyExists(self::FILENAME);
+        $io->title('Welcome to the Drupal VM config file generator');
 
         $defaults = $this->getDefaultOptions('config');
 

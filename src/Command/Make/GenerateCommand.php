@@ -57,6 +57,10 @@ class GenerateCommand extends GeneratorCommand
     {
         $this->assertFileAlreadyExists(self::FILENAME);
 
+        $io = $this->io;
+
+        $io->title('Welcome to the Drupal VM make file generator');
+
         // --drupal-version option.
         if (!$input->getOption('drupal-version')) {
             $input->setOption(
