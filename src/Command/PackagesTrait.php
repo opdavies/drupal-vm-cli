@@ -1,8 +1,8 @@
 <?php
 
-namespace DrupalVmGenerator\Command;
+namespace DrupalVm\Command;
 
-use DrupalVmGenerator\Style\DrupalVmStyle;
+use DrupalVm\Style\DrupalVmStyle;
 
 trait PackagesTrait
 {

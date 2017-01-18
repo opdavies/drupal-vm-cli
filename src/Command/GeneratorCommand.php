@@ -1,8 +1,8 @@
 <?php
 
-namespace DrupalVmGenerator\Command;
+namespace DrupalVm\Command;
 
-use DrupalVmGenerator\Exception\FileEmptyException;
+use DrupalVm\Exception\FileEmptyException;
 use Exception;
 use Symfony\Component\Filesystem\Filesystem;
 use Twig_Environment;

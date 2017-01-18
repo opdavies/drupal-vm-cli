@@ -1,6 +1,6 @@
 <?php
 
-use DrupalVmGenerator\Tests\Command\CommandTest;
+use DrupalVm\Tests\Command\CommandTest;
 
 class NewCommandTest extends CommandTest
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace DrupalVmGenerator\Exception;
+namespace DrupalVm\Exception;
 
 use RuntimeException;
 use Symfony\Component\Console\Exception\ExceptionInterface;

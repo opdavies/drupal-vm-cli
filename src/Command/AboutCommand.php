@@ -1,8 +1,8 @@
 <?php
 
-namespace DrupalVmGenerator\Command;
+namespace DrupalVm\Command;
 
-use DrupalVmGenerator\Console\Application;
+use DrupalVm\Console\Application;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -14,7 +14,7 @@ class AboutCommand extends Command
     protected function configure()
     {
         $this->setName('about')
-             ->setDescription('Display information about the Drupal VM Generator');
+             ->setDescription('Display information about the Drupal VM CLI');
     }
 
     /**
@@ -36,7 +36,7 @@ class AboutCommand extends Command
 
         $commands = [
             [
-                'Initialise Drupal VM Generator.',
+                'Initialise Drupal VM CLI.',
                 'drupalvm init --overwrite',
             ],
             [

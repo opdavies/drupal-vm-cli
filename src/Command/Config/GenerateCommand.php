@@ -1,11 +1,11 @@
 <?php
 
-namespace DrupalVmGenerator\Command\Config;
+namespace DrupalVm\Command\Config;
 
-use DrupalVmGenerator\Command\Command;
-use DrupalVmGenerator\Command\ExtrasTrait;
-use DrupalVmGenerator\Command\GeneratorCommand;
-use DrupalVmGenerator\Command\PackagesTrait;
+use DrupalVm\Command\Command;
+use DrupalVm\Command\ExtrasTrait;
+use DrupalVm\Command\GeneratorCommand;
+use DrupalVm\Command\PackagesTrait;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;

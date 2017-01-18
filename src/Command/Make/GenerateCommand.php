@@ -1,8 +1,8 @@
 <?php
 
-namespace DrupalVmGenerator\Command\Make;
+namespace DrupalVm\Command\Make;
 
-use DrupalVmGenerator\Command\GeneratorCommand;
+use DrupalVm\Command\GeneratorCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;

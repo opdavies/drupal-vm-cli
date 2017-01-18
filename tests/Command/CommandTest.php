@@ -1,6 +1,6 @@
 <?php
 
-namespace DrupalVmGenerator\tests\Command;
+namespace DrupalVm\tests\Command;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\Process;

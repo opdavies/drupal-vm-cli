@@ -1,12 +1,11 @@
 <?php
 
-namespace DrupalVmGenerator\Console;
+namespace DrupalVm\Console;
 
-use DrupalVmGenerator\Command\AboutCommand;
-use DrupalVmGenerator\Command\Config\GenerateCommand as ConfigGenerateCommand;
-use DrupalVmGenerator\Command\InitCommand;
-use DrupalVmGenerator\Command\Make\GenerateCommand as MakeGenerateCommand;
-use DrupalVmGenerator\Command\NewCommand;
+use DrupalVm\Command\AboutCommand;
+use DrupalVm\Command\Config\GenerateCommand as ConfigGenerateCommand;
+use DrupalVm\Command\InitCommand;
+use DrupalVm\Command\NewCommand;
 use Github\Client as GithubClient;
 use Github\HttpClient\CachedHttpClient;
 use GuzzleHttp\Client;
@@ -21,7 +20,7 @@ class Application extends ConsoleApplication
     /**
      * @var string
      */
-    const NAME = 'Drupal VM Generator';
+    const NAME = 'Drupal VM CLI';
 
     /**
      * @var string

@@ -29,12 +29,12 @@
     },
     "autoload": {
         "psr-4": {
-            "DrupalVmGenerator\\": "src/"
+            "DrupalVm\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "DrupalVmGenerator\\tests\\": "tests"
+            "DrupalVm\\tests\\": "tests"
         }
     },
     "config": {

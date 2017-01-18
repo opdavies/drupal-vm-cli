@@ -1,6 +1,6 @@
 <?php
 
-namespace DrupalVmGenerator\Command;
+namespace DrupalVm\Command;
 
 use Github\Client as GithubClient;
 use GuzzleHttp\ClientInterface;

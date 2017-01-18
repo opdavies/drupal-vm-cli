@@ -1,6 +1,6 @@
 <?php
 
-namespace DrupalVmGenerator\Command;
+namespace DrupalVm\Command;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -26,7 +26,7 @@ class InitCommand extends Command
     protected function configure()
     {
         $this->setName('init')
-            ->setDescription('Initialises the Drupal VM Generator')
+            ->setDescription('Initialises the Drupal VM CLI')
             ->addOption('overwrite', null, InputOption::VALUE_NONE);
     }
 
