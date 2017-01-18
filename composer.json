@@ -23,9 +23,9 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/opdavies/drupal-vm-generator/issues",
-        "source": "https://github.com/opdavies/drupal-vm-generator",
-        "docs": "http://docs.drupalvmgenerator.com"
+        "issues": "https://github.com/opdavies/drupal-vm-cli/issues",
+        "source": "https://github.com/opdavies/drupal-vm-cli",
+        "docs": "https://github.com/opdavies/drupal-vm-cli/wiki"
     },
     "autoload": {
         "psr-4": {
