@@ -48,10 +48,6 @@ class AboutCommand extends Command
                 'drupalvm config:generate',
             ],
             [
-                'Generate a new Drush Make file.',
-                'drupalvm make:generate',
-            ],
-            [
                 'List all available commands.',
                 'drupalvm list',
             ],

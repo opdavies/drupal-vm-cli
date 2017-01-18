@@ -54,8 +54,7 @@ class Application extends ConsoleApplication
             new AboutCommand(),
             new InitCommand($filesystem),
             new NewCommand($client, $github),
-            new ConfigGenerateCommand($twig, $filesystem),
-            new MakeGenerateCommand($twig, $filesystem),
+            new ConfigGenerateCommand($twig, $filesystem)
         ];
 
         $this->addCommands($commands);

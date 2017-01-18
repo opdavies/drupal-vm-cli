@@ -10,8 +10,9 @@
          bootstrap="vendor/autoload.php"
 >
   <testsuites>
-    <testsuite name="Drupal VM Generator Test Suite">
+    <testsuite name="Drupal VM CLI Test Suite">
       <directory>./tests/</directory>
+      <exclude>./tests/Command/Make</exclude>
     </testsuite>
   </testsuites>
 
