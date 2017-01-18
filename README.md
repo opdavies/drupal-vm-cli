@@ -1,4 +1,4 @@
-# Drupal VM Generator
+# Drupal VM CLI
 
 [![Latest Stable Version](https://poser.pugx.org/opdavies/drupal-vm-generator/v/stable)](https://packagist.org/packages/opdavies/drupal-vm-generator) [![License](https://poser.pugx.org/opdavies/drupal-vm-generator/license)](https://packagist.org/packages/opdavies/drupal-vm-generator) [![Build Status](https://travis-ci.org/opdavies/drupal-vm-generator.svg?branch=master)](https://travis-ci.org/opdavies/drupal-vm-generator)
 
@@ -6,7 +6,7 @@ A [Symfony Console](http://symfony.com/doc/current/components/console/introducti
 
 ## Installation
 
-See https://github.com/opdavies/drupal-vm-generator/wiki/Installation.
+See https://github.com/opdavies/drupal-vm-cli/wiki/Installation.
 
 ## Usage
 
@@ -47,7 +47,7 @@ If an option is not set, you will be asked a question instead to collect the val
 
 I’m happy to receive support and feature requests, bug reports, and [pull requests](https://help.github.com/articles/creating-a-pull-request) torwards this project.
 
-All bug reports and feature and support requests should be logged in the [issue tracker](https://github.com/opdavies/drupal-vm-generator/issues).
+All bug reports and feature and support requests should be logged in the [issue tracker](https://github.com/opdavies/drupal-vm-cli/issues).
 
 Please run `drupalvm --version` and include the version number with any bug report or support request.
 
