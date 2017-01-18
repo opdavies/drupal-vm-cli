@@ -25,7 +25,7 @@ class GenerateCommand extends GeneratorCommand
         $this
             ->setName('config:generate')
             ->setDescription('Generate a new config.yml file')
-            ->setAliases(['generate'])
+            ->setAliases(['config', 'generate'])
             ->addOption(
                 'machine-name',
                 null,
