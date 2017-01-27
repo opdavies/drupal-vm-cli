@@ -1,0 +1,10 @@
+#!/usr/bin/env
+<?php
+
+use DrupalVm\Console\Application;
+
+include __DIR__.'/vendor/autoload.php';
+
+$app = new Application();
+
+$app->run();

@@ -18,7 +18,7 @@ class GenerateCommandTest extends FileGeneratorCommandTest
 
     public function testNoOptions()
     {
-        $output = $this->runCommand('bin/drupalvm make:generate');
+        $output = $this->runCommand('drupalvm make:generate');
 
         $this->assertContains('drupal.make.yml created', $output);
         $this->assertTrue($this->fs->exists($this->filename));
@@ -28,7 +28,7 @@ class GenerateCommandTest extends FileGeneratorCommandTest
 
     public function testDrupalCoreVersionOption()
     {
-        $this->runCommand('bin/drupalvm make:generate --drupal-version=8.0.x');
+        $this->runCommand('drupalvm make:generate --drupal-version=8.0.x');
 
         $this->assertFileNotContains($this->filename, 'core: ""');
         $this->assertFileContains($this->filename, 'core: "8.0.x"');
@@ -36,7 +36,7 @@ class GenerateCommandTest extends FileGeneratorCommandTest
 
     public function testBranchOption()
     {
-        $this->runCommand('bin/drupalvm make:generate --branch=8.0.x');
+        $this->runCommand('drupalvm make:generate --branch=8.0.x');
 
         $this->assertFileNotContains($this->filename, 'branch: ""');
         $this->assertFileContains($this->filename, 'branch: "8.0.x"');

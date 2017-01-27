@@ -37,14 +37,7 @@
             "DrupalVm\\tests\\": "tests"
         }
     },
-    "config": {
-        "bin-dir": "bin/"
-    },
     "license": "MIT",
-    "bin": [
-        "bin/drupalvm",
-        "bin/drupalvm.php"
-    ],
     "suggest": {
         "geerlingguy/drupal-vm": "The main Drupal VM project."
     },
