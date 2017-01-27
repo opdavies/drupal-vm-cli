@@ -6,7 +6,7 @@ class NewCommandTest extends CommandTest
 {
     public function testNoOptions()
     {
-        $output = $this->runCommand('drupalvm new');
+        $output = $this->runCommand('php drupalvm new');
 
         $this->assertContains('Drupal VM downloaded to drupal-vm.', $output);
         $this->assertTrue($this->fs->exists('drupal-vm'));
@@ -16,7 +16,7 @@ class NewCommandTest extends CommandTest
 
     public function testWithDirectoryOption()
     {
-        $output = $this->runCommand('drupalvm new foo');
+        $output = $this->runCommand('php drupalvm new foo');
 
         $this->assertContains('Drupal VM downloaded to foo.', $output);
         $this->assertTrue($this->fs->exists('foo'));
