@@ -77,7 +77,7 @@ class NewCommand extends Command
 
         $io = $this->io;
 
-        $io->comment('Downloading Drupal VM...');
+        $output->writeln('<comment>Downloading Drupal VM...</comment>');
 
         $this->zipFile = $this->makeFileName();
 
@@ -85,9 +85,9 @@ class NewCommand extends Command
             ->extract()
             ->cleanUp();
 
-        $io->success(
+        $io->writeln(
             sprintf(
-                'Drupal VM downloaded to %s.',
+                '<info>Drupal VM downloaded to %s.</info>',
                 $input->getArgument('directory')
             )
         );
@@ -101,9 +101,9 @@ class NewCommand extends Command
         $directory = $this->input->getArgument('directory');
 
         if (is_dir($directory)) {
-            $this->io->error(
+            $this->output->writeln(
                 sprintf(
-                    '%s already exists.',
+                    '<error>%s already exists.</error>',
                     $this->input->getArgument('directory')
                 )
             );
