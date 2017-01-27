@@ -1,7 +1,5 @@
-bin/
-!bin/drupalvm
-!bin/drupalvm.php
 site/
 vendor/
+composer.lock
 config.yml
 drupal.make.yml
