@@ -9,5 +9,5 @@ install:
   - composer install
 
 script:
-  - bin/drupalvm init
-  - bin/phpunit
+  - php drupalvm init
+  - vendor/bin/phpunit
