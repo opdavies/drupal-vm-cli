@@ -61,8 +61,10 @@ drupalvm_webserver: {{ drupalvm_webserver }}
 # would like to configure 'vagrant_synced_folders' and 'apache_vhosts' manually.
 {% endif %}
 build_makefile: {{ build_makefile|boolean_as_string }}
+{% if build_makefile %}
 drush_makefile_path: "{{ '{{ config_dir }}/drupal.make.yml' }}"
 drush_make_options: "--no-gitinfofile"
+{% endif %}
 
 {% if comments %}
 # Set 'build_makefile' to 'false' and this to 'true' if you are using a

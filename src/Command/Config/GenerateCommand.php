@@ -39,6 +39,8 @@ class GenerateCommand extends GeneratorCommand
             ->addOption('database-name', null, InputOption::VALUE_OPTIONAL, 'The name of the database to use', null)
             ->addOption('database-user', null, InputOption::VALUE_OPTIONAL, 'The database user to use', null)
             ->addOption('database-password', null, InputOption::VALUE_OPTIONAL, 'The database password to use', null)
+            ->addOption('build-composer', null, InputOption::VALUE_NONE, 'Whether to install using "composer create-project".')
+            ->addOption('build-composer-project', null, InputOption::VALUE_NONE, 'Whether to install from Drupal VM’s drupal.composer.json file.')
             ->addOption('build-makefile', null, InputOption::VALUE_NONE, 'Whether to install from a Drush Make file')
             ->addOption('install-site', null, InputOption::VALUE_NONE, 'Install the site when the VM is provisioned')
             ->addOption('installed-extras', null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'Install from a predefined list of extra packages')
@@ -297,8 +299,8 @@ class GenerateCommand extends GeneratorCommand
 
         $args = [
             'build_makefile' => $input->getOption('build-makefile') ?: false,
-            'build_composer' => false,
-            'build_composer_project' => false,
+            'build_composer' => $input->getOption('build-composer') ?: false,
+            'build_composer_project' => $input->getOption('build-composer-project') ?: false,
             'comments' => !$input->getOption('no-comments'),
             'destination' => $input->getOption('destination'),
             'drupal_core_path' => $input->getOption('docroot'),

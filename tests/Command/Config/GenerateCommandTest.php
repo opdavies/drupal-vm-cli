@@ -150,4 +150,46 @@ EOF;
         $this->runCommand('php drupalvm config:generate --overwrite --no-comments');
         $this->assertFileNotContains($this->filename, $comment);
     }
+
+    public function testBuildComposerProjectOption()
+    {
+        $this->runCommand('php drupalvm config:generate --build-composer-project');
+
+        $this->assertFileContains($this->filename, 'build_composer_project: true');
+        $this->assertFileContains($this->filename, 'drupal_composer_project_package:');
+
+        $this->assertFileContains($this->filename, 'build_composer: false');
+        $this->assertFileNotContains($this->filename, 'drupal_composer_path:');
+
+        $this->assertFileContains($this->filename, 'build_makefile: false');
+        $this->assertFileNotContains($this->filename, 'drush_makefile_path:');
+    }
+
+    public function testBuildComposerOption()
+    {
+        $this->runCommand('php drupalvm config:generate --build-composer');
+
+        $this->assertFileContains($this->filename, 'build_composer: true');
+        $this->assertFileContains($this->filename, 'drupal_composer_path:');
+
+        $this->assertFileContains($this->filename, 'build_composer_project: false');
+        $this->assertFileNotContains($this->filename, 'drupal_composer_project_package:');
+
+        $this->assertFileContains($this->filename, 'build_makefile: false');
+        $this->assertFileNotContains($this->filename, 'drush_makefile_path:');
+    }
+
+    public function testBuildMakefileOptions()
+    {
+        $this->runCommand('php drupalvm config:generate --build-makefile');
+
+        $this->assertFileContains($this->filename, 'build_makefile: true');
+        $this->assertFileContains($this->filename, 'drush_makefile_path:');
+
+        $this->assertFileContains($this->filename, 'build_composer_project: false');
+        $this->assertFileNotContains($this->filename, 'drupal_composer_project_package:');
+
+        $this->assertFileContains($this->filename, 'build_composer: false');
+        $this->assertFileNotContains($this->filename, 'drupal_composer_path:');
+    }
 }
