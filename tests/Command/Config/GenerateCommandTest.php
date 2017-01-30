@@ -23,7 +23,7 @@ class GenerateCommandTest extends FileGeneratorCommandTest
         $this->assertContains("{$this->filename} created", $output);
 
         $this->assertTrue($this->fs->exists($this->filename));
-        $this->assertFileContains($this->filename, '# Created by the Drupal VM CLI (https://github.com/opdavies/drupal-vm-generator).');
+        $this->assertFileContains($this->filename, '# Created by the Drupal VM CLI (https://github.com/opdavies/drupal-vm-cli).');
     }
 
     public function testMachineNameOption()
