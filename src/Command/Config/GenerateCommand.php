@@ -135,6 +135,51 @@ class GenerateCommand extends GeneratorCommand
             );
         }
 
+        $buildOptions = ['build-composer-project', 'build-composer', 'build-makefile'];
+        $selectedBuildOption = null;
+
+        foreach ($buildOptions as $option) {
+            if ($input->getOption($option) === true) {
+                $selectedBuildOption = $option;
+            }
+        }
+
+        if (!$selectedBuildOption) {
+            // --build-composer-project option.
+            $input->setOption(
+                'build-composer-project',
+                $io->confirm('Build with Drupal Composer project')
+            );
+
+            if ($input->getOption('build-composer-project')) {
+                $selectedBuildOption = 'build-composer-project';
+            }
+        }
+
+        if (!$selectedBuildOption) {
+            // --build-composer option.
+            $input->setOption(
+                'build-composer',
+                $io->confirm('Build with Drupal VM\'s composer.json')
+            );
+
+            if ($input->getOption('build-composer')) {
+                $selectedBuildOption = 'build-composer';
+            }
+        }
+
+        if (!$selectedBuildOption) {
+             // --build-makefile option
+            $input->setOption(
+                'build-makefile',
+                $io->confirm('Build from make file')
+            );
+
+            if ($input->getOption('build-makefile')) {
+                $selectedBuildOption = 'build-makefile';
+            }
+        }
+
         // --webserver option
         if (!$input->getOption('webserver')) {
             $input->setOption(
@@ -223,17 +268,6 @@ class GenerateCommand extends GeneratorCommand
                 $this->io->ask(
                     'Enter the database password to use',
                     $defaults['database_password']
-                )
-            );
-        }
-
-        // --build-makefile option
-        if (!$input->getOption('build-makefile')) {
-            $input->setOption(
-                'build-makefile',
-                $this->io->confirm(
-                    'Build from make file',
-                    $defaults['build_makefile']
                 )
             );
         }
