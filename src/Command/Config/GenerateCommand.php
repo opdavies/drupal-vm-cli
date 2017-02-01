@@ -42,6 +42,7 @@ class GenerateCommand extends GeneratorCommand
             ->addOption('path', null, InputOption::VALUE_OPTIONAL, 'The local path for the synchronised folder')
             ->addOption('destination', null, InputOption::VALUE_OPTIONAL, 'The destination path')
             ->addOption('docroot', null, InputOption::VALUE_OPTIONAL, 'The path to the Drupal installation')
+            ->addOption('install-site', null, InputOption::VALUE_NONE, 'Install the site when the VM is provisioned')
             ->addOption('drupal-version', null, InputOption::VALUE_OPTIONAL, 'Which version of Drupal to install is being used?')
             ->addOption('database-name', null, InputOption::VALUE_OPTIONAL, 'The name of the database to use', null)
             ->addOption('database-user', null, InputOption::VALUE_OPTIONAL, 'The database user to use', null)
@@ -49,7 +50,6 @@ class GenerateCommand extends GeneratorCommand
             ->addOption('build-composer', null, InputOption::VALUE_NONE, 'Whether to install using "composer create-project".')
             ->addOption('build-composer-project', null, InputOption::VALUE_NONE, 'Whether to install from Drupal VM’s drupal.composer.json file.')
             ->addOption('build-makefile', null, InputOption::VALUE_NONE, 'Whether to install from a Drush Make file')
-            ->addOption('install-site', null, InputOption::VALUE_NONE, 'Install the site when the VM is provisioned')
             ->addOption('installed-extras', null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'Install from a predefined list of extra packages')
             ->addOption('extra-packages', null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'Add any additional apt or yum packages')
             ->addOption('no-dashboard', null, InputOption::VALUE_NONE, 'Install without the Drupal VM Dashboard')
@@ -240,8 +240,19 @@ class GenerateCommand extends GeneratorCommand
             );
         }
 
+        // --install-site option
+        if (!$input->getOption('install-site')) {
+            $input->setOption(
+                'install-site',
+                $this->io->confirm(
+                    'Install the site',
+                    $defaults['install_site']
+                )
+            );
+        }
+
         // --drupal-version option
-        if (!$input->getOption('drupal-version')) {
+        if ($input->getOption('install-site') && !$input->getOption('drupal-version')) {
             $input->setOption(
                 'drupal-version',
                 $this->io->choiceNoList(
@@ -281,17 +292,6 @@ class GenerateCommand extends GeneratorCommand
                 $this->io->ask(
                     'Enter the database password to use',
                     $defaults['database_password']
-                )
-            );
-        }
-
-        // --install-site option
-        if (!$input->getOption('install-site')) {
-            $input->setOption(
-                'install-site',
-                $this->io->confirm(
-                    'Install the site',
-                    $defaults['install_site']
                 )
             );
         }

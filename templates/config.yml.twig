@@ -102,6 +102,7 @@ drupal_mysql_user: {{ drupal_mysql_user }}
 drupal_mysql_password: {{ drupal_mysql_password }}
 drupal_mysql_database: {{ drupal_mysql_database }}
 
+{% if install_site %}
 {% if comments %}
 # Settings for installing a Drupal site if 'install_site:' is 'true'.
 {% endif %}
@@ -112,6 +113,7 @@ drupal_install_profile: standard
 drupal_enable_modules: [ 'devel' ]
 drupal_account_name: admin
 drupal_account_pass: admin
+{% endif %}
 
 {% if comments %}
 # Additional arguments or options to pass to `drush site-install`.

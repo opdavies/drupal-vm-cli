@@ -195,4 +195,13 @@ EOF;
         $this->assertFileContains($this->filename, 'build_composer: false');
         $this->assertFileNotContains($this->filename, 'drupal_composer_path:');
     }
+
+    public function testInstallSiteOption()
+    {
+        $this->runCommand('php drupalvm config:generate');
+        $this->assertFileNotContains($this->filename, 'drupal_major_version:');
+
+        $this->runCommand('php drupalvm config:generate --install-site --overwrite');
+        $this->assertFileContains($this->filename, 'drupal_major_version:');
+    }
 }
