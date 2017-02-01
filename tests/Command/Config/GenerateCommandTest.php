@@ -157,6 +157,7 @@ EOF;
 
         $this->assertFileContains($this->filename, 'build_composer_project: true');
         $this->assertFileContains($this->filename, 'drupal_composer_project_package:');
+        $this->assertFileContains($this->filename, 'drupal_core_path: "/var/www/drupalvm/drupal/web"');
 
         $this->assertFileContains($this->filename, 'build_composer: false');
         $this->assertFileNotContains($this->filename, 'drupal_composer_path:');
@@ -171,6 +172,7 @@ EOF;
 
         $this->assertFileContains($this->filename, 'build_composer: true');
         $this->assertFileContains($this->filename, 'drupal_composer_path:');
+        $this->assertFileContains($this->filename, 'drupal_core_path: "/var/www/drupalvm/drupal/web"');
 
         $this->assertFileContains($this->filename, 'build_composer_project: false');
         $this->assertFileNotContains($this->filename, 'drupal_composer_project_package:');
@@ -185,6 +187,7 @@ EOF;
 
         $this->assertFileContains($this->filename, 'build_makefile: true');
         $this->assertFileContains($this->filename, 'drush_makefile_path:');
+        $this->assertFileContains($this->filename, 'drupal_core_path: "/var/www/drupalvm/drupal"');
 
         $this->assertFileContains($this->filename, 'build_composer_project: false');
         $this->assertFileNotContains($this->filename, 'drupal_composer_project_package:');

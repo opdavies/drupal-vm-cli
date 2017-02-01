@@ -17,6 +17,13 @@ class GenerateCommand extends GeneratorCommand
 
     const FILENAME = 'config.yml';
 
+    private static $defaults = [
+        'build-composer' => false,
+        'build-composer-project' => true,
+        'build-makefile' => false,
+        'docroot' => '/var/www/drupalvm/drupal'
+    ];
+
     /**
      * {@inheritdoc}
      */
@@ -216,13 +223,19 @@ class GenerateCommand extends GeneratorCommand
 
         // --docroot option
         if (!$input->getOption('docroot')) {
+            $suffix = DIRECTORY_SEPARATOR.'drupal';
+
+            if ($selectedBuildOption == 'build-composer-project' || $selectedBuildOption == 'build-composer') {
+                $suffix .= DIRECTORY_SEPARATOR.'web';
+            }
+
             $input->setOption(
                 'docroot',
                 $this->io->ask(
                     'Enter the path to the docroot of the Drupal site',
                     $input->getOption(
                         'destination'
-                    ).DIRECTORY_SEPARATOR.'drupal'
+                    ).$suffix
                 )
             );
         }
@@ -337,7 +350,7 @@ class GenerateCommand extends GeneratorCommand
             'build_composer_project' => $input->getOption('build-composer-project') ?: false,
             'comments' => !$input->getOption('no-comments'),
             'destination' => $input->getOption('destination'),
-            'drupal_core_path' => $input->getOption('docroot'),
+            'drupal_core_path' => $this->getDocroot(),
             'drupal_major_version' => $input->getOption('drupal-version'),
             'drupal_mysql_database' => $input->getOption('database-name'),
             'drupal_mysql_password' => $input->getOption('database-password'),
@@ -370,5 +383,36 @@ class GenerateCommand extends GeneratorCommand
         }
 
         return $this->render('config.yml.twig', $args);
+    }
+
+    private function get($name, $getDefault = true)
+    {
+        if ($result = $this->input->getOption($name)) {
+            return $result;
+        }
+
+        return $getDefault ? self::$defaults[$name] : null;
+    }
+
+    private function getDocroot()
+    {
+        if ($result = $this->get('docroot', false)) {
+            return $result;
+        }
+
+        $default = self::$defaults['docroot'];
+
+        if ($this->get('build-makefile')) {
+            return $default;
+        }
+
+        $build_composer = $this->get('build-composer');
+        $build_composer_project = $this->get('build-composer-project');
+
+        if ($build_composer || $build_composer_project) {
+            return $default.DIRECTORY_SEPARATOR.'web';
+        }
+
+        return $default;
     }
 }
