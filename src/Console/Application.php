@@ -6,6 +6,7 @@ use Github\Client as GithubClient;
 use Github\HttpClient\CachedHttpClient;
 use GuzzleHttp\Client;
 use Opdavies\Twig\Extensions\TwigBooleanStringExtension;
+use Pimple\Container;
 use Symfony\Component\Console\Application as ConsoleApplication;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -19,39 +20,55 @@ class Application extends ConsoleApplication
     /**
      * @var string
      */
-    const VERSION = '2.9.1';
+    const VERSION = '2.10.0';
 
     /**
      * @var string
      */
-    const SUPPORTED_DRUPAL_VM_VERSION = '3.0.0';
+    const SUPPORTED_DRUPAL_VM_VERSION = '3.5.2';
 
-    public function __construct()
+    public function __construct(Container $container)
     {
         parent::__construct(self::NAME, self::VERSION);
 
-        $twig = new \Twig_Environment(
-            new \Twig_Loader_Filesystem(__DIR__.'/../../templates')
-        );
+        $container['twig.template_dir'] = __DIR__.'/../../templates';
 
-        $twig->addExtension(new TwigBooleanStringExtension());
+        $container['twig'] = function ($container) {
+            return new \Twig_Environment(
+                new \Twig_Loader_Filesystem($container['twig.template_dir'])
+            );
+        };
 
-        $filesystem = new Filesystem();
+        $container['twig']->addExtension(new TwigBooleanStringExtension());
 
-        $client = new Client();
+        $container['filesystem'] = function () {
+            return new Filesystem();
+        };
 
-        $github = new GithubClient(
-            new CachedHttpClient(['cache_dir' => '/tmp/github_api_cache'])
-        );
+        $container['guzzle'] = function () {
+            return new Client();
+        };
+
+        $container['github.cache_dir'] = '/tmp/github_api_cache';
+
+        $container['github'] = function ($container) {
+            return new GithubClient(
+              new CachedHttpClient([
+                  'cache_dir' => $container['github.cache_dir']
+              ])
+          );
+        };
 
         $commands = [
-            new \DrupalVm\Command\AboutCommand(),
-            new \DrupalVm\Command\InitCommand($filesystem),
-            new \DrupalVm\Command\NewCommand($client, $github),
-            new \DrupalVm\Command\Config\GenerateCommand($twig, $filesystem)
+            \DrupalVm\Command\AboutCommand::class,
+            \DrupalVm\Command\InitCommand::class,
+            \DrupalVm\Command\NewCommand::class,
+            \DrupalVm\Command\Config\GenerateCommand::class
         ];
 
-        $this->addCommands($commands);
+        foreach ($commands as $command) {
+            $this->add(new $command($container));
+        }
 
         // TODO: Make this configurable when user settings are added.
         $this->setDefaultCommand('about');

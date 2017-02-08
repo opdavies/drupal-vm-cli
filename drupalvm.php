@@ -1,11 +1,10 @@
 <?php
 
 use DrupalVm\Console\Application;
+use Pimple\Container;
 
 include __DIR__.'/vendor/autoload.php';
 
-$container = new Pimple\Container();
-
-$app = new Application($container);
+$app = new Application(new Container());
 
 $app->run();
