@@ -176,7 +176,7 @@ class GenerateCommand extends GeneratorCommand
         }
 
         if (!$selectedBuildOption) {
-             // --build-makefile option
+            // --build-makefile option
             $input->setOption(
                 'build-makefile',
                 $io->confirm('Build from make file')
