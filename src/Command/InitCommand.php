@@ -10,17 +10,6 @@ use Symfony\Component\Filesystem\Filesystem;
 class InitCommand extends Command
 {
     /**
-     * @var Filesystem
-     */
-    private $filesystem;
-
-    public function __construct($filesystem)
-    {
-        parent::__construct();
-
-        $this->filesystem = $filesystem;
-    }
-    /**
      * {@inheritdoc}
      */
     protected function configure()

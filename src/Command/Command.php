@@ -3,6 +3,7 @@
 namespace DrupalVm\Command;
 
 use DrupalVm\Style\DrupalVmStyle;
+use Pimple\Container;
 use Symfony\Component\Console\Command\Command as BaseCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -29,6 +30,18 @@ abstract class Command extends BaseCommand
      * @var DrupalVmStyle
      */
     protected $io;
+
+    /**
+     * @var Container
+     */
+    protected $container;
+
+    public function __construct(Container $container)
+    {
+        $this->container = $container;
+
+        parent::__construct();
+    }
 
     /**
      * {@inheritdoc}

@@ -6,6 +6,7 @@
         "guzzlehttp/guzzle": "^6.2",
         "knplabs/github-api": "^1.6",
         "opdavies/twig-extensions": "^1.1",
+        "pimple/pimple": "^3.0",
         "symfony/console": "^2.7|^3.0",
         "symfony/filesystem": "^2.7|^3.0",
         "symfony/yaml": "^2.7|^3.0",
@@ -45,5 +46,8 @@
         "branch-alias": {
             "dev-master": "2.9.x-dev"
         }
+    },
+    "config": {
+        "sort-packages": true
     }
 }

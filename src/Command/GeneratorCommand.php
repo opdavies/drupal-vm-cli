@@ -10,25 +10,6 @@ use Twig_Environment;
 abstract class GeneratorCommand extends Command
 {
     /**
-     * @var Twig_Environment
-     */
-    protected $twig;
-
-    /**
-     * @var Filesystem
-     */
-    protected $filesystem;
-
-    public function __construct(Twig_Environment $twig, Filesystem $filesystem)
-    {
-        $this->twig = $twig;
-
-        $this->filesystem = $filesystem;
-
-        parent::__construct();
-    }
-
-    /**
      * Check if the file already exists.
      */
     protected function assertFileAlreadyExists($filename)
@@ -53,7 +34,7 @@ abstract class GeneratorCommand extends Command
      */
     protected function render($template, array $parameters)
     {
-        return $this->twig->render($template, $parameters);
+        return $this->container['twig']->render($template, $parameters);
     }
 
     /**
@@ -70,7 +51,7 @@ abstract class GeneratorCommand extends Command
             throw new FileEmptyException('The generated file was empty.');
         }
 
-        $this->filesystem->dumpFile($filename, $contents);
+        $this->container['filesystem']->dumpFile($filename, $contents);
 
         $this->io->success(sprintf('%s created', $filename));
 

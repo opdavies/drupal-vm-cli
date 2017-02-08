@@ -13,16 +13,6 @@ use ZipArchive;
 class NewCommand extends Command
 {
     /**
-     * @var ClientInterface
-     */
-    private $client;
-
-    /**
-     * @var GithubClient
-     */
-    private $github;
-
-    /**
      * @var string
      */
     private $zipFile;
@@ -31,14 +21,6 @@ class NewCommand extends Command
      * @var string
      */
     private $version = 'master';
-
-    public function __construct(ClientInterface $client, GithubClient $github)
-    {
-        $this->client = $client;
-        $this->github = $github;
-
-        parent::__construct();
-    }
 
     /**
      * {@inheritdoc}
@@ -140,7 +122,7 @@ class NewCommand extends Command
             $this->version
         );
 
-        $response = $this->client->get($url)->getBody();
+        $response = $this->container['guzzle']->get($url)->getBody();
 
         file_put_contents($this->zipFile, $response);
 
@@ -188,7 +170,7 @@ class NewCommand extends Command
      */
     private function getLatestVersion()
     {
-        $result = $this->github->api('repo')->releases()->latest(
+        $result = $this->container['github']->api('repo')->releases()->latest(
             'geerlingguy',
             'drupal-vm'
         );
