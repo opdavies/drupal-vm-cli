@@ -76,7 +76,8 @@ abstract class Command extends BaseCommand
     /**
      * {@inheritdoc}
      */
-    protected function configure() {
+    protected function configure()
+    {
         $this
             ->setName($this->command)
             ->setDescription($this->description)
