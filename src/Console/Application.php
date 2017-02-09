@@ -31,9 +31,16 @@ class Application extends ConsoleApplication
     {
         parent::__construct(self::NAME, self::VERSION);
 
-        $container['twig.template_dir'] = __DIR__.'/../../templates';
+        $this
+            ->registerServices($container)
+            ->registerCommands($container);
+    }
 
-        $container['twig'] = function ($container) {
+    private function registerServices(Container $container)
+    {
+        $container['twig.template_dir'] = __DIR__ . '/../../templates';
+
+        $container['twig'] = function($container) {
             return new \Twig_Environment(
                 new \Twig_Loader_Filesystem($container['twig.template_dir'])
             );
@@ -41,24 +48,29 @@ class Application extends ConsoleApplication
 
         $container['twig']->addExtension(new TwigBooleanStringExtension());
 
-        $container['filesystem'] = function () {
+        $container['filesystem'] = function() {
             return new Filesystem();
         };
 
-        $container['guzzle'] = function () {
+        $container['guzzle'] = function() {
             return new Client();
         };
 
         $container['github.cache_dir'] = '/tmp/github_api_cache';
 
-        $container['github'] = function ($container) {
+        $container['github'] = function($container) {
             return new GithubClient(
-              new CachedHttpClient([
-                  'cache_dir' => $container['github.cache_dir']
-              ])
-          );
+                new CachedHttpClient([
+                    'cache_dir' => $container['github.cache_dir']
+                ])
+            );
         };
 
+        return $this;
+    }
+
+    private function registerCommands(Container $container)
+    {
         $commands = [
             \DrupalVm\Command\AboutCommand::class,
             \DrupalVm\Command\InitCommand::class,
@@ -72,5 +84,7 @@ class Application extends ConsoleApplication
 
         // TODO: Make this configurable when user settings are added.
         $this->setDefaultCommand('about');
+
+        return $this;
     }
 }

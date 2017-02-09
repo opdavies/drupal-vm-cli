@@ -12,11 +12,21 @@ class InitCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected $command = 'init';
+
+    /**
+     * {@inheritdoc}
+     */
+    protected $description = 'Initialises the Drupal VM CLI';
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function options()
     {
-        $this->setName('init')
-            ->setDescription('Initialises the Drupal VM CLI')
-            ->addOption('overwrite', null, InputOption::VALUE_NONE);
+        return [
+            ['overwrite', null, InputOption::VALUE_NONE]
+        ];
     }
 
     /**
@@ -35,16 +45,16 @@ class InitCommand extends Command
         $filename = 'defaults.yml';
         $path = sprintf('%s/.drupal-vm-generator/%s', $this->getUserHomeDirectory(), $filename);
 
-        if ($this->filesystem->exists($path) && !$this->input->getOption('overwrite')) {
-            return $this->io->error(sprintf('%s already exists', $filename));
+        if ($this->container['filesystem']->exists($path) && !$this->option('overwrite')) {
+            return $this->error(sprintf('%s already exists', $filename));
         }
 
-        $this->filesystem->copy(
+        $this->container['filesystem']->copy(
             __DIR__.'/../../config/dist/defaults.yml',
             $path
         );
 
-        $this->io->success(sprintf('%s copied.', $filename));
+        $this->success(sprintf('%s copied.', $filename));
 
         return $this;
     }

@@ -8,14 +8,15 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class AboutCommand extends Command
 {
-    /*
+    /**
      * {@inheritdoc}
      */
-    protected function configure()
-    {
-        $this->setName('about')
-             ->setDescription('Display information about the Drupal VM CLI');
-    }
+    protected $command = 'about';
+
+    /**
+     * {@inheritdoc}
+     */
+    protected $description = 'Displays information about the Drupal VM CLI';
 
     /**
      * {@inheritdoc}
