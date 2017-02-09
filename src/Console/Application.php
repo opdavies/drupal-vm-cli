@@ -40,7 +40,7 @@ class Application extends ConsoleApplication
     {
         $container['twig.template_dir'] = __DIR__ . '/../../templates';
 
-        $container['twig'] = function($container) {
+        $container['twig'] = function ($container) {
             return new \Twig_Environment(
                 new \Twig_Loader_Filesystem($container['twig.template_dir'])
             );
@@ -48,17 +48,17 @@ class Application extends ConsoleApplication
 
         $container['twig']->addExtension(new TwigBooleanStringExtension());
 
-        $container['filesystem'] = function() {
+        $container['filesystem'] = function () {
             return new Filesystem();
         };
 
-        $container['guzzle'] = function() {
+        $container['guzzle'] = function () {
             return new Client();
         };
 
         $container['github.cache_dir'] = '/tmp/github_api_cache';
 
-        $container['github'] = function($container) {
+        $container['github'] = function ($container) {
             return new GithubClient(
                 new CachedHttpClient([
                     'cache_dir' => $container['github.cache_dir']
