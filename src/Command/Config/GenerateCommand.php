@@ -34,9 +34,24 @@ class GenerateCommand extends GeneratorCommand
 
     private static $defaults = [
         'build-composer' => false,
-        'build-composer-project' => true,
+        'build-composer-project' => false,
         'build-makefile' => false,
-        'docroot' => '/var/www/drupalvm/drupal'
+        'cpus' => 1,
+        'database-name' => 'drupal',
+        'database-password' => 'drupal',
+        'database-user' => 'drupal',
+        'destination' => '/var/www/drupavm',
+        'docroot' => '/var/www/drupalvm/drupal',
+        'drupal-version' => '8.x',
+        'hostname' => 'drupalvm.dev',
+        'install-site' => false,
+        'ip-address' => '192.168.88.88',
+        'machine-name' => 'drupalvm',
+        'memory' => 2048,
+        'no-comments' => false,
+        'no-dashboard' => false,
+        'path' => '.',
+        'webserver' => 'apache',
     ];
 
     /**
@@ -356,25 +371,25 @@ class GenerateCommand extends GeneratorCommand
         $input = $this->input;
 
         $args = [
-            'build_makefile' => $this->option('build-makefile') ?: false,
-            'build_composer' => $this->option('build-composer') ?: false,
-            'build_composer_project' => $this->option('build-composer-project') ?: false,
-            'comments' => !$this->option('no-comments'),
-            'destination' => $this->option('destination'),
+            'build_makefile' => $this->get('build-makefile'),
+            'build_composer' => $this->get('build-composer'),
+            'build_composer_project' => $this->get('build-composer-project'),
+            'comments' => !$this->get('no-comments'),
+            'destination' => $this->get('destination'),
             'drupal_core_path' => $this->getDocroot(),
-            'drupal_major_version' => $this->option('drupal-version'),
-            'drupal_mysql_database' => $this->option('database-name'),
-            'drupal_mysql_password' => $this->option('database-password'),
-            'drupal_mysql_user' => $this->option('database-user'),
-            'drupalvm_webserver' => $this->option('webserver'),
-            'install_site' => $this->option('install-site') ?: false,
-            'local_path' => $this->option('path'),
-            'use_dashboard' => !$this->option('no-dashboard'),
-            'vagrant_cpus' => $this->option('cpus'),
-            'vagrant_hostname' => $this->option('hostname'),
-            'vagrant_ip_address' => $this->option('ip-address'),
-            'vagrant_machine_name' => $this->option('machine-name'),
-            'vagrant_memory' => $this->option('memory'),
+            'drupal_major_version' => $this->get('drupal-version'),
+            'drupal_mysql_database' => $this->get('database-name'),
+            'drupal_mysql_password' => $this->get('database-password'),
+            'drupal_mysql_user' => $this->get('database-user'),
+            'drupalvm_webserver' => $this->get('webserver'),
+            'install_site' => $this->get('install-site'),
+            'local_path' => $this->get('path'),
+            'use_dashboard' => !$this->get('no-dashboard'),
+            'vagrant_cpus' => $this->get('cpus'),
+            'vagrant_hostname' => $this->get('hostname'),
+            'vagrant_ip_address' => $this->get('ip-address'),
+            'vagrant_machine_name' => $this->get('machine-name'),
+            'vagrant_memory' => $this->get('memory'),
         ];
 
         $args['installed_extras'] = [];
