@@ -368,8 +368,6 @@ class GenerateCommand extends GeneratorCommand
      */
     private function generate()
     {
-        $input = $this->input;
-
         $args = [
             'build_makefile' => $this->get('build-makefile'),
             'build_composer' => $this->get('build-composer'),
