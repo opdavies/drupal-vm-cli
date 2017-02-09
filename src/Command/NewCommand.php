@@ -4,6 +4,7 @@ namespace DrupalVm\Command;
 
 use Github\Client as GithubClient;
 use GuzzleHttp\ClientInterface;
+use Symfony\Component\Console\Input\Input;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -12,6 +13,21 @@ use ZipArchive;
 
 class NewCommand extends Command
 {
+    /**
+     * {@inheritdoc}
+     */
+    protected $command = 'new';
+
+    /**
+     * {@inheritdoc}
+     */
+    protected $description = 'Downloads a new copy of Drupal VM';
+
+    /**
+     * {@inheritdoc}
+     */
+    protected $aliases = ['download'];
+
     /**
      * @var string
      */
@@ -25,29 +41,22 @@ class NewCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function arguments()
     {
-        $this->setName('new')
-            ->setDescription('Downloads a new copy of Drupal VM')
-            ->setAliases(['download'])
-            ->addArgument(
-                'directory',
-                InputArgument::OPTIONAL,
-                '',
-                'drupal-vm'
-            )
-            ->addOption(
-                'latest',
-                null,
-                InputOption::VALUE_NONE,
-                'Download the latest development version'
-            )
-            ->addOption(
-                'dev',
-                null,
-                InputOption::VALUE_NONE,
-                'Download the latest development version'
-            );
+        return [
+            ['directory', InputArgument::OPTIONAL, '', 'drupal-vm']
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function options()
+    {
+        return [
+            ['latest', null, InputOption::VALUE_NONE, 'Download the latest development version.'],
+            ['dev', null, InputOption::VALUE_NONE, 'Download the latest development version.'],
+        ];
     }
 
     /**
@@ -70,7 +79,7 @@ class NewCommand extends Command
         $io->writeln(
             sprintf(
                 '<info>Drupal VM downloaded to %s.</info>',
-                $input->getArgument('directory')
+                $this->argument('directory')
             )
         );
     }
@@ -80,13 +89,13 @@ class NewCommand extends Command
      */
     private function assertDirectoryDoesNotExist()
     {
-        $directory = $this->input->getArgument('directory');
+        $directory = $this->argument('directory');
 
         if (is_dir($directory)) {
             $this->output->writeln(
                 sprintf(
                     '<error>%s already exists.</error>',
-                    $this->input->getArgument('directory')
+                    $this->argument('directory')
                 )
             );
 
@@ -111,9 +120,7 @@ class NewCommand extends Command
      */
     private function download()
     {
-        $input = $this->input;
-
-        if (!$input->getOption('latest') && !$input->getOption('dev')) {
+        if (!$this->option('latest') && !$this->option('dev')) {
             $this->version = $this->getLatestVersion();
         }
 

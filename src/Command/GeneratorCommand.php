@@ -3,14 +3,13 @@
 namespace DrupalVm\Command;
 
 use DrupalVm\Exception\FileEmptyException;
-use Exception;
-use Symfony\Component\Filesystem\Filesystem;
-use Twig_Environment;
 
 abstract class GeneratorCommand extends Command
 {
     /**
      * Check if the file already exists.
+     *
+     * @param string $filename The name of the file to check.
      */
     protected function assertFileAlreadyExists($filename)
     {
@@ -18,7 +17,7 @@ abstract class GeneratorCommand extends Command
                 $this->projectDir.'/'.$filename
             ) && !$this->input->getOption('overwrite')
         ) {
-            $this->io->error(sprintf('%s already exists.', $filename));
+            $this->error("$filename already exists.");
 
             exit(1);
         }
@@ -43,7 +42,7 @@ abstract class GeneratorCommand extends Command
      *
      * @return Command
      *
-     * @throws Exception
+     * @throws FileEmptyException
      */
     protected function writeFile($filename, $contents)
     {
@@ -53,7 +52,7 @@ abstract class GeneratorCommand extends Command
 
         $this->container['filesystem']->dumpFile($filename, $contents);
 
-        $this->io->success(sprintf('%s created', $filename));
+        $this->success(sprintf('%s created', $filename));
 
         return $this;
     }

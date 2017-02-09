@@ -36,6 +36,21 @@ abstract class Command extends BaseCommand
      */
     protected $container;
 
+    /**
+     * @var string The new command.
+     */
+    protected $command;
+
+    /**
+     * @var string A description for the new command.
+     */
+    protected $description;
+
+    /**
+     * @var array Aliases for the new command.
+     */
+    protected $aliases = [];
+
     public function __construct(Container $container)
     {
         $this->container = $container;
@@ -56,6 +71,68 @@ abstract class Command extends BaseCommand
         $this->output = $output;
 
         $this->io = new DrupalVmStyle($input, $output);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function configure() {
+        $this
+            ->setName($this->command)
+            ->setDescription($this->description)
+            ->setAliases($this->aliases);
+
+        $this->getArguments();
+        $this->getOptions();
+    }
+
+    protected function arguments()
+    {
+        return [];
+    }
+
+    protected function options()
+    {
+        return [];
+    }
+
+    private function getArguments()
+    {
+        foreach ($this->arguments() as $argument) {
+            $this->addArgument($argument[0], $argument[1], $argument[2], $argument[3]);
+        }
+    }
+
+    private function getOptions()
+    {
+        foreach ($this->options() as $option) {
+            $this->addOption($option[0], $option[1], $option[2]);
+        }
+    }
+
+    protected function argument($name)
+    {
+        return $this->input->getArgument($name);
+    }
+
+    protected function option($name)
+    {
+        return $this->input->getOption($name);
+    }
+
+    protected function error($message)
+    {
+        return $this->io->error($message);
+    }
+
+    protected function ask($question, $default = null)
+    {
+        return $this->io->ask($question, $default);
+    }
+
+    protected function success($message)
+    {
+        return $this->io->success($message);
     }
 
     /**
