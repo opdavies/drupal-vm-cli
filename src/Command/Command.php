@@ -37,17 +37,17 @@ abstract class Command extends BaseCommand
     protected $container;
 
     /**
-     * @var string The new command.
+     * @var string The new command
      */
     protected $command;
 
     /**
-     * @var string A description for the new command.
+     * @var string A description for the new command
      */
     protected $description;
 
     /**
-     * @var array Aliases for the new command.
+     * @var array Aliases for the new command
      */
     protected $aliases = [];
 

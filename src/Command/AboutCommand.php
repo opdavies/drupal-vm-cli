@@ -35,7 +35,7 @@ class AboutCommand extends Command
             $application::SUPPORTED_DRUPAL_VM_VERSION
         ));
 
-        $content = <<<EOF
+        $content = <<<'EOF'
 This is the unofficial CLI app for <info>Drupal VM</info> to start new projects
 and generate configuration files.
 

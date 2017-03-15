@@ -9,7 +9,7 @@ abstract class GeneratorCommand extends Command
     /**
      * Check if the file already exists.
      *
-     * @param string $filename The name of the file to check.
+     * @param string $filename The name of the file to check
      */
     protected function assertFileAlreadyExists($filename)
     {

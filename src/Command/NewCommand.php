@@ -2,8 +2,6 @@
 
 namespace DrupalVm\Command;
 
-use Github\Client as GithubClient;
-use GuzzleHttp\ClientInterface;
 use Symfony\Component\Console\Input\Input;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -44,7 +42,7 @@ class NewCommand extends Command
     protected function arguments()
     {
         return [
-            ['directory', InputArgument::OPTIONAL, '', 'drupal-vm']
+            ['directory', InputArgument::OPTIONAL, '', 'drupal-vm'],
         ];
     }
 

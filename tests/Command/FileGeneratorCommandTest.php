@@ -9,7 +9,7 @@ abstract class FileGeneratorCommandTest extends CommandTest
      */
     protected $filename;
 
-     /**
+    /**
      * {@inheritdoc}
      */
     public function tearDown()

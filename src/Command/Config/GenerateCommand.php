@@ -81,7 +81,7 @@ class GenerateCommand extends GeneratorCommand
             ['extra-packages', null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'Add any additional apt or yum packages'],
             ['no-dashboard', null, InputOption::VALUE_NONE, 'Install without the Drupal VM Dashboard'],
             ['no-comments', null, InputOption::VALUE_NONE, 'Remove comments from config.yml'],
-            ['overwrite', null, InputOption::VALUE_NONE, 'Overwrite an existing file if one exists']
+            ['overwrite', null, InputOption::VALUE_NONE, 'Overwrite an existing file if one exists'],
         ];
     }
 

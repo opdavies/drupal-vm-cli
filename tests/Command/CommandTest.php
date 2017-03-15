@@ -24,7 +24,7 @@ abstract class CommandTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $this->rootDir = realpath(__DIR__ . '/../../');
+        $this->rootDir = realpath(__DIR__.'/../../');
         $this->fs = new Filesystem();
     }
 

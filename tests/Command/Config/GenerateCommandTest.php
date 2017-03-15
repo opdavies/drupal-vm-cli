@@ -99,7 +99,7 @@ class GenerateCommandTest extends FileGeneratorCommandTest
     {
         $this->runCommand('php drupalvm config:generate --database-name=foo --database-user=bar --database-password=baz');
 
-        $output = <<<EOF
+        $output = <<<'EOF'
 drupal_mysql_user: bar
 drupal_mysql_password: baz
 drupal_mysql_database: foo
@@ -112,7 +112,7 @@ EOF;
     {
         $this->runCommand('php drupalvm config:generate --installed-extras=adminer,xdebug');
 
-        $output = <<<EOF
+        $output = <<<'EOF'
 installed_extras:
   - adminer
   - xdebug
@@ -140,7 +140,7 @@ EOF;
 
     public function testNoCommentsOption()
     {
-        $comment = <<<EOF
+        $comment = <<<'EOF'
 # `vagrant_box` can also be set to geerlingguy/centos6, geerlingguy/centos7,
 # geerlingguy/ubuntu1204, parallels/ubuntu-14.04, etc.
 EOF;

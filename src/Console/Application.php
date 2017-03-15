@@ -38,7 +38,7 @@ class Application extends ConsoleApplication
 
     private function registerServices(Container $container)
     {
-        $container['twig.template_dir'] = __DIR__ . '/../../templates';
+        $container['twig.template_dir'] = __DIR__.'/../../templates';
 
         $container['twig'] = function ($container) {
             return new \Twig_Environment(
@@ -61,7 +61,7 @@ class Application extends ConsoleApplication
         $container['github'] = function ($container) {
             return new GithubClient(
                 new CachedHttpClient([
-                    'cache_dir' => $container['github.cache_dir']
+                    'cache_dir' => $container['github.cache_dir'],
                 ])
             );
         };
@@ -75,7 +75,7 @@ class Application extends ConsoleApplication
             \DrupalVm\Command\AboutCommand::class,
             \DrupalVm\Command\InitCommand::class,
             \DrupalVm\Command\NewCommand::class,
-            \DrupalVm\Command\Config\GenerateCommand::class
+            \DrupalVm\Command\Config\GenerateCommand::class,
         ];
 
         foreach ($commands as $command) {

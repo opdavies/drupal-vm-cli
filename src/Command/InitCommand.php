@@ -25,7 +25,7 @@ class InitCommand extends Command
     protected function options()
     {
         return [
-            ['overwrite', null, InputOption::VALUE_NONE]
+            ['overwrite', null, InputOption::VALUE_NONE],
         ];
     }
 
