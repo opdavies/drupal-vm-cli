@@ -16,15 +16,6 @@ class GenerateCommandTest extends FileGeneratorCommandTest
         $this->filename = 'config.yml';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function tearDown()
-    {
-        // Remove any generated files.
-        $this->fs->remove($this->filename);
-    }
-
     public function testNoOptions()
     {
         $output = $this->runCommand('php drupalvm config:generate');
