@@ -20,11 +20,13 @@ class GenerateCommand extends GeneratorCommand
      */
     protected function options()
     {
-        ['drupal-version', null, InputOption::VALUE_OPTIONAL, 'Which version of Drupal'],
-        ['branch', null, InputOption::VALUE_OPTIONAL, 'Which branch to use'],
-        ['other-projects', null, InputOption::VALUE_IS_ARRAY | InputOption::VALUE_OPTIONAL, ''],
-        ['no-comments', null, InputOption::VALUE_NONE, 'Removes all comments from the generated file'],
-        ['overwrite', null, InputOption::VALUE_NONE, 'Overwrites an existing file']
+        return [
+            ['drupal-version', null, InputOption::VALUE_OPTIONAL, 'Which version of Drupal'],
+            ['branch', null, InputOption::VALUE_OPTIONAL, 'Which branch to use'],
+            ['other-projects', null, InputOption::VALUE_IS_ARRAY | InputOption::VALUE_OPTIONAL, ''],
+            ['no-comments', null, InputOption::VALUE_NONE, 'Removes all comments from the generated file'],
+            ['overwrite', null, InputOption::VALUE_NONE, 'Overwrites an existing file']
+        ];
     }
 
     /**
