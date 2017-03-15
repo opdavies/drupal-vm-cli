@@ -16,6 +16,15 @@ class GenerateCommandTest extends FileGeneratorCommandTest
         $this->filename = 'config.yml';
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function tearDown()
+    {
+        // Remove any generated files.
+        $this->fs->remove($this->filename);
+    }
+
     public function testNoOptions()
     {
         $output = $this->runCommand('php drupalvm config:generate');
@@ -61,17 +70,18 @@ class GenerateCommandTest extends FileGeneratorCommandTest
         $this->assertFileContains($this->filename, 'vagrant_memory: 1024');
     }
 
-    public function testWebServerOption()
+    public function testWebServerOptionApache()
     {
-        // Apache.
         $this->runCommand('php drupalvm config:generate --webserver=apache');
 
         $this->assertFileContains($this->filename, 'drupalvm_webserver: apache');
         $this->assertFileContains($this->filename, 'apache_vhosts:');
         $this->assertFileNotContains($this->filename, 'drupalvm_webserver: nginx');
+    }
 
-        // Nginx.
-        $this->runCommand('php drupalvm config:generate --overwrite --webserver=nginx');
+    public function testWebServerOptionNginx()
+    {
+        $this->runCommand('php drupalvm config:generate --webserver=nginx');
 
         $this->assertFileContains($this->filename, 'drupalvm_webserver: nginx');
         $this->assertFileContains($this->filename, 'nginx_hosts:');
@@ -112,26 +122,17 @@ EOF;
         $this->assertFileNotContains($this->filename, 'installed_extras: []');
     }
 
-    public function testNoDashboardOption()
+    public function testNoDashboardOptionApache()
     {
-        // Apache.
-        $this->runCommand('php drupalvm config:generate --webserver=apache');
-
-        $this->assertFileContains($this->filename, 'serveralias: "dashboard.{{ vagrant_hostname }}"');
-        $this->assertFileContains($this->filename, 'dashboard_install_dir: /var/www/dashboard');
-
-        $this->runCommand('php drupalvm config:generate --overwrite --webserver=apache --no-dashboard');
+        $this->runCommand('php drupalvm config:generate --webserver=apache --no-dashboard');
 
         $this->assertFileNotContains($this->filename, 'serveralias: "dashboard.{{ vagrant_hostname }}"');
         $this->assertFileNotContains($this->filename, 'dashboard_install_dir: /var/www/dashboard');
+    }
 
-        // Nginx.
-        $this->runCommand('php drupalvm config:generate --overwrite --webserver=nginx');
-
-        $this->assertFileContains($this->filename, 'server_name: "{{ vagrant_ip }} dashboard.{{ vagrant_hostname }}"');
-        $this->assertFileContains($this->filename, 'dashboard_install_dir: /var/www/dashboard');
-
-        $this->runCommand('php drupalvm config:generate --overwrite --webserver=nginx --no-dashboard');
+    public function testNoDashboardOptionNginx()
+    {
+        $this->runCommand('php drupalvm config:generate --webserver=nginx --no-dashboard');
 
         $this->assertFileNotContains($this->filename, 'server_name: "{{ vagrant_ip }} dashboard.{{ vagrant_hostname }}"');
         $this->assertFileNotContains($this->filename, 'dashboard_install_dir: /var/www/dashboard');
@@ -144,10 +145,7 @@ EOF;
 # geerlingguy/ubuntu1204, parallels/ubuntu-14.04, etc.
 EOF;
 
-        $this->runCommand('php drupalvm config:generate');
-        $this->assertFileContains($this->filename, $comment);
-
-        $this->runCommand('php drupalvm config:generate --overwrite --no-comments');
+        $this->runCommand('php drupalvm config:generate --no-comments');
         $this->assertFileNotContains($this->filename, $comment);
     }
 
