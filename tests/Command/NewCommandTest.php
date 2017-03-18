@@ -1,10 +1,11 @@
 <?php
 
-use DrupalVm\Tests\Command\CommandTest;
+use DrupalVm\tests\Command\CommandTest;
 
 class NewCommandTest extends CommandTest
 {
-    public function testNoOptions()
+    /** @test */
+    public function should_be_able_to_download_a_copy_of_drupal_vm()
     {
         $output = $this->runCommand('php drupalvm new');
 
@@ -14,7 +15,8 @@ class NewCommandTest extends CommandTest
         $this->fs->remove('drupal-vm');
     }
 
-    public function testWithDirectoryOption()
+    /** @test */
+    public function should_be_able_to_download_a_copy_of_drupal_vm_into_a_named_directory()
     {
         $output = $this->runCommand('php drupalvm new foo');
 

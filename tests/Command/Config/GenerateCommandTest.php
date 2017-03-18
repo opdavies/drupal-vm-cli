@@ -16,7 +16,8 @@ class GenerateCommandTest extends FileGeneratorCommandTest
         $this->filename = 'config.yml';
     }
 
-    public function testNoOptions()
+    /** @test */
+    public function should_generate_a_configuration_file()
     {
         $output = $this->runCommand('php drupalvm config:generate');
 
@@ -26,42 +27,48 @@ class GenerateCommandTest extends FileGeneratorCommandTest
         $this->assertFileContains($this->filename, '# Created by the Drupal VM CLI (https://github.com/opdavies/drupal-vm-cli).');
     }
 
-    public function testMachineNameOption()
+    /** @test */
+    public function should_be_able_to_set_the_machine_name()
     {
         $this->runCommand('php drupalvm config:generate --machine-name=foo');
 
         $this->assertFileContains($this->filename, 'vagrant_machine_name: foo');
     }
 
-    public function testHostnameOption()
+    /** @test */
+    public function should_be_able_to_set_the_hostname()
     {
         $this->runCommand('php drupalvm config:generate --hostname=foo');
 
         $this->assertFileContains($this->filename, 'vagrant_hostname: foo');
     }
 
-    public function testIpAddressOption()
+    /** @test */
+    public function should_be_able_to_set_the_ip_address()
     {
         $this->runCommand('php drupalvm config:generate --ip-address=1.2.3.4');
 
         $this->assertFileContains($this->filename, 'vagrant_ip: "1.2.3.4"');
     }
 
-    public function testCpusOption()
+    /** @test */
+    public function should_be_able_to_set_the_number_of_cpus()
     {
         $this->runCommand('php drupalvm config:generate --cpus=2');
 
         $this->assertFileContains($this->filename, 'vagrant_cpus: 2');
     }
 
-    public function testMemoryOption()
+    /** @test */
+    public function should_be_able_to_set_the_amount_of_memory()
     {
         $this->runCommand('php drupalvm config:generate --memory=1024');
 
         $this->assertFileContains($this->filename, 'vagrant_memory: 1024');
     }
 
-    public function testWebServerOptionApache()
+    /** @test */
+    public function should_be_able_to_use_apache()
     {
         $this->runCommand('php drupalvm config:generate --webserver=apache');
 
@@ -70,7 +77,8 @@ class GenerateCommandTest extends FileGeneratorCommandTest
         $this->assertFileNotContains($this->filename, 'drupalvm_webserver: nginx');
     }
 
-    public function testWebServerOptionNginx()
+    /** @test */
+    public function should_be_able_to_use_nginx()
     {
         $this->runCommand('php drupalvm config:generate --webserver=nginx');
 
@@ -79,14 +87,16 @@ class GenerateCommandTest extends FileGeneratorCommandTest
         $this->assertFileNotContains($this->filename, 'drupalvm_webserver: apache');
     }
 
-    public function testPathOption()
+    /** @test */
+    public function should_be_able_to_set_the_local_path()
     {
         $this->runCommand('php drupalvm config:generate --path="./site"');
 
         $this->assertFileContains($this->filename, 'local_path: ./site');
     }
 
-    public function testDatabaseOptions()
+    /** @test */
+    public function should_be_able_to_set_the_database_details()
     {
         $this->runCommand('php drupalvm config:generate --database-name=foo --database-user=bar --database-password=baz');
 
@@ -99,7 +109,8 @@ EOF;
         $this->assertFileContains($this->filename, $output);
     }
 
-    public function testInstalledExtrasOption()
+    /** @test */
+    public function should_be_able_to_add_installed_extras()
     {
         $this->runCommand('php drupalvm config:generate --installed-extras=adminer,xdebug');
 
@@ -113,7 +124,8 @@ EOF;
         $this->assertFileNotContains($this->filename, 'installed_extras: []');
     }
 
-    public function testNoDashboardOptionApache()
+    /** @test */
+    public function should_be_able_to_remove_the_dashboard_with_apache()
     {
         $this->runCommand('php drupalvm config:generate --webserver=apache --no-dashboard');
 
@@ -121,7 +133,8 @@ EOF;
         $this->assertFileNotContains($this->filename, 'dashboard_install_dir: /var/www/dashboard');
     }
 
-    public function testNoDashboardOptionNginx()
+    /** @test */
+    public function should_be_able_to_remove_the_dashboard_with_nginx()
     {
         $this->runCommand('php drupalvm config:generate --webserver=nginx --no-dashboard');
 
@@ -129,7 +142,8 @@ EOF;
         $this->assertFileNotContains($this->filename, 'dashboard_install_dir: /var/www/dashboard');
     }
 
-    public function testNoCommentsOption()
+    /** @test */
+    public function should_be_able_to_remove_comments()
     {
         $comment = <<<'EOF'
 # `vagrant_box` can also be set to geerlingguy/centos6, geerlingguy/centos7,
@@ -137,10 +151,12 @@ EOF;
 EOF;
 
         $this->runCommand('php drupalvm config:generate --no-comments');
+
         $this->assertFileNotContains($this->filename, $comment);
     }
 
-    public function testBuildComposerProjectOption()
+    /** @test */
+    public function should_be_able_to_build_using_drupal_composer_project()
     {
         $this->runCommand('php drupalvm config:generate --build-composer-project');
 
@@ -155,7 +171,8 @@ EOF;
         $this->assertFileNotContains($this->filename, 'drush_makefile_path:');
     }
 
-    public function testBuildComposerOption()
+    /** @test */
+    public function should_be_able_to_build_using_composer()
     {
         $this->runCommand('php drupalvm config:generate --build-composer');
 
@@ -170,7 +187,8 @@ EOF;
         $this->assertFileNotContains($this->filename, 'drush_makefile_path:');
     }
 
-    public function testBuildMakefileOptions()
+    /** @test */
+    public function should_be_able_to_build_with_drush_make()
     {
         $this->runCommand('php drupalvm config:generate --build-makefile');
 
@@ -185,12 +203,19 @@ EOF;
         $this->assertFileNotContains($this->filename, 'drupal_composer_path:');
     }
 
-    public function testInstallSiteOption()
+    /** @test */
+    public function should_be_able_to_set_the_major_drupal_version()
     {
         $this->runCommand('php drupalvm config:generate');
-        $this->assertFileNotContains($this->filename, 'drupal_major_version:');
 
-        $this->runCommand('php drupalvm config:generate --install-site --overwrite');
+        $this->assertFileNotContains($this->filename, 'drupal_major_version:');
+    }
+
+    /** @test */
+    public function should_be_able_to_set_whether_to_install_the_site()
+    {
+        $this->runCommand('php drupalvm config:generate --install-site');
+
         $this->assertFileContains($this->filename, 'drupal_major_version:');
     }
 }
