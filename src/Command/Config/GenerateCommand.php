@@ -71,6 +71,7 @@ class GenerateCommand extends GeneratorCommand
             ['docroot', null, InputOption::VALUE_OPTIONAL, 'The path to the Drupal installation'],
             ['install-site', null, InputOption::VALUE_NONE, 'Install the site when the VM is provisioned'],
             ['drupal-version', null, InputOption::VALUE_OPTIONAL, 'Which version of Drupal to install is being used?'],
+            ['drush-version', null, InputOption::VALUE_OPTIONAL, 'Which version of Drush to install'],
             ['database-name', null, InputOption::VALUE_OPTIONAL, 'The name of the database to use', null],
             ['database-user', null, InputOption::VALUE_OPTIONAL, 'The database user to use', null],
             ['database-password', null, InputOption::VALUE_OPTIONAL, 'The database password to use', null],
@@ -380,6 +381,7 @@ class GenerateCommand extends GeneratorCommand
             'drupal_mysql_password' => $this->get('database-password'),
             'drupal_mysql_user' => $this->get('database-user'),
             'drupalvm_webserver' => $this->get('webserver'),
+            'drush_version' => $this->getDrushVersion(),
             'install_site' => $this->get('install-site'),
             'local_path' => $this->get('path'),
             'use_dashboard' => !$this->get('no-dashboard'),
@@ -438,5 +440,14 @@ class GenerateCommand extends GeneratorCommand
         }
 
         return $default;
+    }
+
+    /**
+     * Calculate the version of Drush to install.
+     *
+     * @return string
+     */
+    private function getDrushVersion() {
+        return $this->get('drush-version') ?: 'master';
     }
 }

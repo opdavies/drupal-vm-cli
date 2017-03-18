@@ -218,4 +218,18 @@ EOF;
 
         $this->assertFileContains($this->filename, 'drupal_major_version:');
     }
+
+    /** @test */
+    public function drush_has_a_default_version() {
+        $this->runCommand('php drupalvm config:generate');
+
+        $this->assertFileContains($this->filename, 'drush_version: "master"');
+    }
+
+    /** @test */
+    public function can_set_the_drush_version() {
+        $this->runCommand('php drupalvm config:generate --drush-version=8.x');
+
+        $this->assertFileContains($this->filename, 'drush_version: "8.x"');
+    }
 }
