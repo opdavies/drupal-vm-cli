@@ -5,7 +5,7 @@ use DrupalVm\tests\Command\CommandTest;
 class NewCommandTest extends CommandTest
 {
     /** @test */
-    public function should_be_able_to_download_a_copy_of_drupal_vm()
+    public function downloads_drupal_vm()
     {
         $output = $this->runCommand('php drupalvm new');
 
@@ -16,7 +16,7 @@ class NewCommandTest extends CommandTest
     }
 
     /** @test */
-    public function should_be_able_to_download_a_copy_of_drupal_vm_into_a_named_directory()
+    public function downloads_drupal_vm_into_a_named_directory()
     {
         $output = $this->runCommand('php drupalvm new foo');
 
