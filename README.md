@@ -1,6 +1,6 @@
 # Drupal VM CLI
 
-[![Latest Stable Version](https://poser.pugx.org/opdavies/drupal-vm-generator/v/stable)](https://packagist.org/packages/opdavies/drupal-vm-generator) [![License](https://poser.pugx.org/opdavies/drupal-vm-generator/license)](https://packagist.org/packages/opdavies/drupal-vm-generator) [![Build Status](https://travis-ci.org/opdavies/drupal-vm-generator.svg?branch=master)](https://travis-ci.org/opdavies/drupal-vm-generator)
+[![Latest Stable Version](https://poser.pugx.org/opdavies/drupal-vm-cli/v/stable)](https://packagist.org/packages/opdavies/drupal-vm-cli) [![License](https://poser.pugx.org/opdavies/drupal-vm-cli/license)](https://packagist.org/packages/opdavies/drupal-vm-cli) [![Build Status](https://travis-ci.org/opdavies/drupal-vm-cli.svg?branch=master)](https://travis-ci.org/opdavies/drupal-vm-cli)
 
 A [Symfony Console](http://symfony.com/doc/current/components/console/introduction.html) application that manages and customises configuration files for [Drupal VM](http://www.drupalvm.com) projects.
 
