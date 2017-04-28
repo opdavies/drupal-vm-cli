@@ -8,7 +8,7 @@ A [Symfony Console](http://symfony.com/doc/current/components/console/introducti
 
 See https://github.com/opdavies/drupal-vm-cli/wiki/Installation.
 
-## Usage
+## Usage
 
 With the `drupalvm` command installed, you can now run it to generate your configuration file.
 
