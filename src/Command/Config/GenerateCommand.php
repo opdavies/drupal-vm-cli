@@ -6,14 +6,14 @@ use DrupalVm\Command\Command;
 use DrupalVm\Command\ExtrasTrait;
 use DrupalVm\Command\GeneratorCommand;
 use DrupalVm\Command\PackagesTrait;
+use Pimple\Container;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class GenerateCommand extends GeneratorCommand
 {
-    use ExtrasTrait;
-    use PackagesTrait;
+    use ExtrasTrait, PackagesTrait;
 
     const FILENAME = 'config.yml';
 
@@ -32,27 +32,15 @@ class GenerateCommand extends GeneratorCommand
      */
     protected $description = 'Generates a new config.yml file';
 
-    private static $defaults = [
-        'build-composer' => false,
-        'build-composer-project' => false,
-        'build-makefile' => false,
-        'cpus' => 1,
-        'database-name' => 'drupal',
-        'database-password' => 'drupal',
-        'database-user' => 'drupal',
-        'destination' => '/var/www/drupavm',
-        'docroot' => '/var/www/drupalvm/drupal',
-        'drupal-version' => '8.x',
-        'hostname' => 'drupalvm.dev',
-        'install-site' => false,
-        'ip-address' => '192.168.88.88',
-        'machine-name' => 'drupalvm',
-        'memory' => 2048,
-        'no-comments' => false,
-        'no-dashboard' => false,
-        'path' => '.',
-        'webserver' => 'apache',
-    ];
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct(Container $container)
+    {
+        parent::__construct($container);
+
+        $this->configFile = new ConfigFile();
+    }
 
     /**
      * {@inheritdoc}
@@ -87,12 +75,15 @@ class GenerateCommand extends GeneratorCommand
     }
 
     /**
+     * @var \DrupalVm\Command\Config\ConfigFileTemplate
+     */
+    private $template;
+
+    /**
      * {@inheritdoc}
      */
-    protected function initialize(
-        InputInterface $input,
-        OutputInterface $output
-    ) {
+    protected function initialize(InputInterface $input, OutputInterface $output)
+    {
         parent::initialize($input, $output);
 
         // Check for a defaults file.
@@ -114,7 +105,8 @@ class GenerateCommand extends GeneratorCommand
 
         $io->title('Welcome to the Drupal VM config file generator');
 
-        $defaults = $this->getDefaultOptions('config');
+        // Get the default values from the template.
+        $defaults = $this->configFile->toArray();
 
         // --machine-name option
         if (!$this->option('machine-name')) {
@@ -144,7 +136,7 @@ class GenerateCommand extends GeneratorCommand
                 'ip-address',
                 $this->ask(
                     'Enter an IP address for the Vagrant VM',
-                    $defaults['vagrant_ip']
+                    $defaults['vagrant_ip_address']
                 )
             );
         }
@@ -171,49 +163,29 @@ class GenerateCommand extends GeneratorCommand
             );
         }
 
-        $buildOptions = ['build-composer-project', 'build-composer', 'build-makefile'];
-        $selectedBuildOption = null;
+        $this->configFile->setBuildComposerProject($this->option('build-composer-project'));
+        $this->configFile->setBuildComposer($this->option('build-composer'));
+        $this->configFile->setBuildMakeFile($this->option('build-makefile'));
 
-        foreach ($buildOptions as $option) {
-            if ($this->option($option) === true) {
-                $selectedBuildOption = $option;
-            }
-        }
-
-        if (!$selectedBuildOption) {
+        if (!$this->configFile->isSelectedBuildOption()) {
             // --build-composer-project option.
-            $input->setOption(
-                'build-composer-project',
-                $io->confirm('Build with Drupal Composer project')
-            );
-
-            if ($this->option('build-composer-project')) {
-                $selectedBuildOption = 'build-composer-project';
-            }
+            $answer = $io->confirm('Build with Drupal Composer project');
+            $input->setOption('build-composer-project', $answer);
+            $this->configFile->setBuildComposerProject($answer);
         }
 
-        if (!$selectedBuildOption) {
+        if (!$this->configFile->isSelectedBuildOption()) {
             // --build-composer option.
-            $input->setOption(
-                'build-composer',
-                $io->confirm('Build with Drupal VM\'s composer.json')
-            );
-
-            if ($this->option('build-composer')) {
-                $selectedBuildOption = 'build-composer';
-            }
+            $answer = $io->confirm('Build with Drupal VM\'s composer.json');
+            $input->setOption('build-composer', $answer);
+            $this->configFile->setBuildComposer($answer);
         }
 
-        if (!$selectedBuildOption) {
+        if (!$this->configFile->isSelectedBuildOption()) {
             // --build-makefile option
-            $input->setOption(
-                'build-makefile',
-                $io->confirm('Build from make file')
-            );
-
-            if ($this->option('build-makefile')) {
-                $selectedBuildOption = 'build-makefile';
-            }
+            $answer = $io->confirm('Build from make file');
+            $input->setOption('build-makefile', $answer);
+            $this->configFile->setBuildMakeFile($answer);
         }
 
         // --webserver option
@@ -221,8 +193,8 @@ class GenerateCommand extends GeneratorCommand
             $input->setOption(
                 'webserver',
                 $this->io->choiceNoList(
-                    'Apache or Nginx?',
-                    ['apache', 'nginx'],
+                    'Which webserver?',
+                    $this->configFile->getWebserverOptions(),
                     $defaults['drupalvm_webserver']
                 )
             );
@@ -252,17 +224,11 @@ class GenerateCommand extends GeneratorCommand
 
         // --docroot option
         if (!$this->option('docroot')) {
-            $suffix = DIRECTORY_SEPARATOR.'drupal';
-
-            if ($selectedBuildOption == 'build-composer-project' || $selectedBuildOption == 'build-composer') {
-                $suffix .= DIRECTORY_SEPARATOR.'web';
-            }
-
             $input->setOption(
                 'docroot',
                 $this->ask(
                     'Enter the path to the docroot of the Drupal site',
-                    $this->option('destination').$suffix
+                    $this->configFile->getDocroot()
                 )
             );
         }
@@ -284,8 +250,8 @@ class GenerateCommand extends GeneratorCommand
                 'drupal-version',
                 $this->io->choiceNoList(
                     'Which version of Drupal',
-                    ['8', '7'],
-                    $defaults['drupal_version']
+                    $this->configFile->getDrupalVersions(),
+                    $defaults['drupal_major_version']
                 )
             );
         }
@@ -296,7 +262,7 @@ class GenerateCommand extends GeneratorCommand
                 'database-name',
                 $this->ask(
                     'Enter the name of the database to use',
-                    $defaults['database_name']
+                    $defaults['drupal_mysql_database']
                 )
             );
         }
@@ -307,7 +273,7 @@ class GenerateCommand extends GeneratorCommand
                 'database-user',
                 $this->ask(
                     'Enter the database username to use',
-                    $defaults['database_user']
+                    $defaults['drupal_mysql_user']
                 )
             );
         }
@@ -318,7 +284,7 @@ class GenerateCommand extends GeneratorCommand
                 'database-password',
                 $this->ask(
                     'Enter the database password to use',
-                    $defaults['database_password']
+                    $defaults['drupal_mysql_password']
                 )
             );
         }
@@ -348,7 +314,7 @@ class GenerateCommand extends GeneratorCommand
                 'no-comments',
                 $io->confirm(
                     'Remove comments?',
-                    !$defaults['keep_comments']
+                    !$defaults['comments']
                 )
             );
         }
@@ -361,93 +327,16 @@ class GenerateCommand extends GeneratorCommand
     {
         $this->assertFileAlreadyExists(self::FILENAME);
 
+        $this->configFile->setOptions($input->getOptions());
+
         $this->writeFile(self::FILENAME, $this->generate());
     }
 
     /**
-     * @return Command
+     * @return string
      */
     private function generate()
     {
-        $args = [
-            'build_makefile' => $this->get('build-makefile'),
-            'build_composer' => $this->get('build-composer'),
-            'build_composer_project' => $this->get('build-composer-project'),
-            'comments' => !$this->get('no-comments'),
-            'destination' => $this->get('destination'),
-            'drupal_core_path' => $this->getDocroot(),
-            'drupal_major_version' => $this->get('drupal-version'),
-            'drupal_mysql_database' => $this->get('database-name'),
-            'drupal_mysql_password' => $this->get('database-password'),
-            'drupal_mysql_user' => $this->get('database-user'),
-            'drupalvm_webserver' => $this->get('webserver'),
-            'drush_version' => $this->getDrushVersion(),
-            'install_site' => $this->get('install-site'),
-            'local_path' => $this->get('path'),
-            'use_dashboard' => !$this->get('no-dashboard'),
-            'vagrant_cpus' => $this->get('cpus'),
-            'vagrant_hostname' => $this->get('hostname'),
-            'vagrant_ip_address' => $this->get('ip-address'),
-            'vagrant_machine_name' => $this->get('machine-name'),
-            'vagrant_memory' => $this->get('memory'),
-        ];
-
-        $args['installed_extras'] = [];
-        foreach ($this->option('installed-extras') as $item) {
-            $args['installed_extras'] = array_merge(
-                $args['installed_extras'],
-                explode(',', $item)
-            );
-        }
-
-        $args['extra_packages'] = [];
-        foreach ($this->option('extra-packages') as $package) {
-            $args['extra_packages'] = array_merge(
-                $args['extra_packages'],
-                explode(',', $package)
-            );
-        }
-
-        return $this->render('config.yml.twig', $args);
-    }
-
-    private function get($name, $getDefault = true)
-    {
-        if ($result = $this->option($name)) {
-            return $result;
-        }
-
-        return $getDefault ? self::$defaults[$name] : null;
-    }
-
-    private function getDocroot()
-    {
-        if ($result = $this->get('docroot', false)) {
-            return $result;
-        }
-
-        $default = self::$defaults['docroot'];
-
-        if ($this->get('build-makefile')) {
-            return $default;
-        }
-
-        $build_composer = $this->get('build-composer');
-        $build_composer_project = $this->get('build-composer-project');
-
-        if ($build_composer || $build_composer_project) {
-            return $default.DIRECTORY_SEPARATOR.'web';
-        }
-
-        return $default;
-    }
-
-    /**
-     * Calculate the version of Drush to install.
-     *
-     * @return string
-     */
-    private function getDrushVersion() {
-        return $this->get('drush-version') ?: 'master';
+        return $this->render('config.yml.twig', $this->configFile->toArray());
     }
 }

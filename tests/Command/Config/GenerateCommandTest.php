@@ -77,8 +77,7 @@ class GenerateCommandTest extends FileGeneratorCommandTest {
 
         $this->assertFileContains($this->filename, 'drupalvm_webserver: nginx');
         $this->assertFileContains($this->filename, 'nginx_hosts:');
-        $this->assertFileNotContains($this->filename,
-            'drupalvm_webserver: apache');
+        $this->assertFileNotContains($this->filename, 'drupalvm_webserver: apache');
     }
 
     /** @test */
@@ -119,20 +118,16 @@ EOF;
     public function can_remove_the_dashboard_with_apache() {
         $this->runCommand('php drupalvm config:generate --webserver=apache --no-dashboard');
 
-        $this->assertFileNotContains($this->filename,
-            'serveralias: "dashboard.{{ vagrant_hostname }}"');
-        $this->assertFileNotContains($this->filename,
-            'dashboard_install_dir: /var/www/dashboard');
+        $this->assertFileNotContains($this->filename, 'serveralias: "dashboard.{{ vagrant_hostname }}"');
+        $this->assertFileNotContains($this->filename, 'dashboard_install_dir: /var/www/dashboard');
     }
 
     /** @test */
     public function can_remove_the_dashboard_with_nginx() {
         $this->runCommand('php drupalvm config:generate --webserver=nginx --no-dashboard');
 
-        $this->assertFileNotContains($this->filename,
-            'server_name: "{{ vagrant_ip }} dashboard.{{ vagrant_hostname }}"');
-        $this->assertFileNotContains($this->filename,
-            'dashboard_install_dir: /var/www/dashboard');
+        $this->assertFileNotContains($this->filename, 'server_name: "{{ vagrant_ip }} dashboard.{{ vagrant_hostname }}"');
+        $this->assertFileNotContains($this->filename, 'dashboard_install_dir: /var/www/dashboard');
     }
 
     /** @test */
@@ -153,13 +148,10 @@ EOF;
 
         $this->assertFileContains($this->filename, 'build_makefile: true');
         $this->assertFileContains($this->filename, 'drush_makefile_path:');
-        $this->assertFileContains($this->filename,
-            'drupal_core_path: "/var/www/drupalvm/drupal"');
+        $this->assertFileContains($this->filename, 'drupal_core_path: "/var/www/drupalvm/drupal"');
 
-        $this->assertFileContains($this->filename,
-            'build_composer_project: false');
-        $this->assertFileNotContains($this->filename,
-            'drupal_composer_project_package:');
+        $this->assertFileContains($this->filename, 'build_composer_project: false');
+        $this->assertFileNotContains($this->filename, 'drupal_composer_project_package:');
 
         $this->assertFileContains($this->filename, 'build_composer: false');
         $this->assertFileNotContains($this->filename, 'drupal_composer_path:');
@@ -171,13 +163,10 @@ EOF;
 
         $this->assertFileContains($this->filename, 'build_composer: true');
         $this->assertFileContains($this->filename, 'drupal_composer_path:');
-        $this->assertFileContains($this->filename,
-            'drupal_core_path: "/var/www/drupalvm/drupal/web"');
+        $this->assertFileContains($this->filename, 'drupal_core_path: "/var/www/drupalvm/drupal/web"');
 
-        $this->assertFileContains($this->filename,
-            'build_composer_project: false');
-        $this->assertFileNotContains($this->filename,
-            'drupal_composer_project_package:');
+        $this->assertFileContains($this->filename, 'build_composer_project: false');
+        $this->assertFileNotContains($this->filename, 'drupal_composer_project_package:');
 
         $this->assertFileContains($this->filename, 'build_makefile: false');
         $this->assertFileNotContains($this->filename, 'drush_makefile_path:');
@@ -187,12 +176,9 @@ EOF;
     public function can_build_using_drupal_composer_project() {
         $this->runCommand('php drupalvm config:generate --build-composer-project');
 
-        $this->assertFileContains($this->filename,
-            'build_composer_project: true');
-        $this->assertFileContains($this->filename,
-            'drupal_composer_project_package:');
-        $this->assertFileContains($this->filename,
-            'drupal_core_path: "/var/www/drupalvm/drupal/web"');
+        $this->assertFileContains($this->filename, 'build_composer_project: true');
+        $this->assertFileContains($this->filename, 'drupal_composer_project_package:');
+        $this->assertFileContains($this->filename, 'drupal_core_path: "/var/www/drupalvm/drupal/web"');
 
         $this->assertFileContains($this->filename, 'build_composer: false');
         $this->assertFileNotContains($this->filename, 'drupal_composer_path:');

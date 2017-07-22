@@ -30,6 +30,11 @@ trait ExtrasTrait
         'xhprof',
     ];
 
+    /**
+     * @param \DrupalVm\Style\DrupalVmStyle $io
+     *
+     * @return array|null
+     */
     public function extrasQuestion(DrupalVmStyle $io)
     {
         if ($io->confirm(

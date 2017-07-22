@@ -6,6 +6,12 @@ use DrupalVm\Style\DrupalVmStyle;
 
 trait PackagesTrait
 {
+
+    /**
+     * @param \DrupalVm\Style\DrupalVmStyle $io
+     *
+     * @return array|null
+     */
     public function packagesQuestion(DrupalVmStyle $io)
     {
         if ($io->confirm(
