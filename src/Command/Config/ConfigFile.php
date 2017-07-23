@@ -4,7 +4,6 @@ namespace DrupalVm\Command\Config;
 
 class ConfigFile
 {
-
     /**
      * Is Composer being used?
      *
@@ -25,13 +24,6 @@ class ConfigFile
      * @var bool
      */
     private $buildMakeFile = false;
-
-    /**
-     * The selected build option.
-     *
-     * @var string|null
-     */
-    private $buildOption = null;
 
     /**
      * The database name.
