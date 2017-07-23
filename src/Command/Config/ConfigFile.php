@@ -230,17 +230,15 @@ class ConfigFile
      */
     public function getDocroot()
     {
-        $docroot = $this->destination;
-
         if ($this->buildMakeFile) {
-            return "$docroot/drupal";
+            return "{$this->destination}/drupal";
         }
 
         if ($this->isUsingComposer()) {
-            return "$docroot/drupal/web";
+            return "{$this->destination}/drupal/web";
         }
 
-        return $docroot;
+        return $this->destination;
     }
 
     /**
