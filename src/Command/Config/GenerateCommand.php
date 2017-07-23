@@ -26,29 +26,147 @@ class GenerateCommand extends GeneratorCommand
             ->setName('config:generate')
             ->setDescription('Generate a new config.yml file')
             ->setAliases(['config', 'generate'])
-            ->addOption('machine-name', null, InputOption::VALUE_REQUIRED, 'The Vagrant machine name')
-            ->addOption('hostname', null, InputOption::VALUE_OPTIONAL, 'The Vagrant hostname')
-            ->addOption('ip-address', null, InputOption::VALUE_REQUIRED, 'The IP address for the VM')
-            ->addOption('cpus', null, InputOption::VALUE_REQUIRED, 'The number of CPUs')
-            ->addOption('memory', null, InputOption::VALUE_REQUIRED, 'The amount of memory')
-            ->addOption('webserver', null, InputOption::VALUE_OPTIONAL, 'Which webserver to use')
-            ->addOption('path', null, InputOption::VALUE_OPTIONAL, 'The local path for the synchronised folder')
-            ->addOption('destination', null, InputOption::VALUE_OPTIONAL, 'The destination path')
-            ->addOption('docroot', null, InputOption::VALUE_OPTIONAL, 'The path to the Drupal installation')
-            ->addOption('install-site', null, InputOption::VALUE_NONE, 'Install the site when the VM is provisioned')
-            ->addOption('drupal-version', null, InputOption::VALUE_OPTIONAL, 'Which version of Drupal to install.')
-            ->addOption('drush-version', null, InputOption::VALUE_OPTIONAL, 'Which version of Drush to install.')
-            ->addOption('database-name', null, InputOption::VALUE_OPTIONAL, 'The name of the database to use', null)
-            ->addOption('database-user', null, InputOption::VALUE_OPTIONAL, 'The database user to use', null)
-            ->addOption('database-password', null, InputOption::VALUE_OPTIONAL, 'The database password to use', null)
-            ->addOption('build-composer', null, InputOption::VALUE_NONE, 'Whether to install using "composer create-project".')
-            ->addOption('build-composer-project', null, InputOption::VALUE_NONE, 'Whether to install from Drupal VM’s drupal.composer.json file.')
-            ->addOption('build-makefile', null, InputOption::VALUE_NONE, 'Whether to install from a Drush Make file')
-            ->addOption('installed-extras', null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'Install from a predefined list of extra packages')
-            ->addOption('extra-packages', null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'Add any additional apt or yum packages')
-            ->addOption('no-dashboard', null, InputOption::VALUE_NONE, 'Install without the Drupal VM Dashboard')
-            ->addOption('no-comments', null, InputOption::VALUE_NONE, 'Remove comments from config.yml')
-            ->addOption('overwrite', null, InputOption::VALUE_NONE, 'Overwrite an existing file if one exists');
+            ->addOption(
+                'machine-name',
+                null,
+                InputOption::VALUE_REQUIRED,
+                'The Vagrant machine name'
+            )
+            ->addOption(
+                'hostname',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'The Vagrant hostname'
+            )
+            ->addOption(
+                'ip-address',
+                null,
+                InputOption::VALUE_REQUIRED,
+                'The IP address for the VM'
+            )
+            ->addOption(
+                'cpus',
+                null,
+                InputOption::VALUE_REQUIRED,
+                'The number of CPUs'
+            )
+            ->addOption(
+                'memory',
+                null,
+                InputOption::VALUE_REQUIRED,
+                'The amount of memory'
+            )
+            ->addOption(
+                'webserver',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'Which webserver to use'
+            )
+            ->addOption(
+                'path',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'The local path for the synchronised folder'
+            )
+            ->addOption(
+                'destination',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'The destination path'
+            )
+            ->addOption(
+                'docroot',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'The path to the Drupal installation'
+            )
+            ->addOption(
+                'install-site',
+                null,
+                InputOption::VALUE_NONE,
+                'Install the site when the VM is provisioned'
+            )
+            ->addOption(
+                'drupal-version',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'Which version of Drupal to install.'
+            )
+            ->addOption(
+                'drush-version',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'Which version of Drush to install.'
+            )
+            ->addOption(
+                'database-name',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'The name of the database to use',
+                null
+            )
+            ->addOption(
+                'database-user',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'The database user to use',
+                null
+            )
+            ->addOption(
+                'database-password',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'The database password to use',
+                null
+            )
+            ->addOption(
+                'build-composer',
+                null,
+                InputOption::VALUE_NONE,
+                'Whether to install using "composer create-project".'
+            )
+            ->addOption(
+                'build-composer-project',
+                null,
+                InputOption::VALUE_NONE,
+                'Whether to install from Drupal VM’s drupal.composer.json file.'
+            )
+            ->addOption(
+                'build-makefile',
+                null,
+                InputOption::VALUE_NONE,
+                'Whether to install from a Drush Make file'
+            )
+            ->addOption(
+                'installed-extras',
+                null,
+                InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
+                'Install from a predefined list of extra packages'
+            )
+            ->addOption(
+                'extra-packages',
+                null,
+                InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
+                'Add any additional apt or yum packages'
+            )
+            ->addOption(
+                'no-dashboard',
+                null,
+                InputOption::VALUE_NONE,
+                'Install without the Drupal VM Dashboard'
+            )
+            ->addOption(
+                'no-comments',
+                null,
+                InputOption::VALUE_NONE,
+                'Remove comments from config.yml'
+            )
+            ->addOption(
+                'overwrite',
+                null,
+                InputOption::VALUE_NONE,
+                'Overwrite an existing file if one exists'
+            );
     }
 
     /**
