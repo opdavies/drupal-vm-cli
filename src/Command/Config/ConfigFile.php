@@ -200,7 +200,8 @@ class ConfigFile
         if ($options['extra-packages']) {
             foreach ($options['extra-packages'] as $package) {
                 $this->extraPackages = array_merge(
-                    preg_split('/s*,/s*', $package)
+                    $this->extraPackages,
+                    preg_split('/\s*,\s*/', $package)
                 );
             }
         }

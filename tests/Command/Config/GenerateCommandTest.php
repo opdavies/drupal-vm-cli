@@ -115,6 +115,20 @@ EOF;
     }
 
     /** @test */
+    public function can_add_extra_packages() {
+        $this->runCommand('php drupalvm config:generate --extra-packages=foo,bar');
+
+        $output = <<<'EOF'
+extra_packages:
+  - bar
+  - foo
+EOF;
+
+        $this->assertFileContains($this->filename, $output);
+        $this->assertFileNotContains($this->filename, 'extra_packages: []');
+    }
+
+    /** @test */
     public function can_remove_the_dashboard_with_apache() {
         $this->runCommand('php drupalvm config:generate --webserver=apache --no-dashboard');
 
