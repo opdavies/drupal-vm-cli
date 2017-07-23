@@ -12,21 +12,11 @@ class InitCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected $command = 'init';
-
-    /**
-     * {@inheritdoc}
-     */
-    protected $description = 'Initialises the Drupal VM CLI';
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function options()
+    protected function configure()
     {
-        return [
-            ['overwrite', null, InputOption::VALUE_NONE],
-        ];
+        $this->setName('init')
+            ->setDescription('Initialises the Drupal VM CLI')
+            ->addOption('overwrite', null, InputOption::VALUE_NONE);
     }
 
     /**
@@ -54,7 +44,7 @@ class InitCommand extends Command
             $path
         );
 
-        $this->success(sprintf('%s copied.', $filename));
+        $this->io->success(sprintf('%s copied.', $filename));
 
         return $this;
     }

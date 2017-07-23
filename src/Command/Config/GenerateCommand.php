@@ -20,21 +20,42 @@ class GenerateCommand extends GeneratorCommand
     /**
      * {@inheritdoc}
      */
-    protected $command = 'config:generate';
+    protected function configure()
+    {
+        $this
+            ->setName('config:generate')
+            ->setDescription('Generate a new config.yml file')
+            ->setAliases(['config', 'generate'])
+            ->addOption('machine-name', null, InputOption::VALUE_REQUIRED, 'The Vagrant machine name')
+            ->addOption('hostname', null, InputOption::VALUE_OPTIONAL, 'The Vagrant hostname')
+            ->addOption('ip-address', null, InputOption::VALUE_REQUIRED, 'The IP address for the VM')
+            ->addOption('cpus', null, InputOption::VALUE_REQUIRED, 'The number of CPUs')
+            ->addOption('memory', null, InputOption::VALUE_REQUIRED, 'The amount of memory')
+            ->addOption('webserver', null, InputOption::VALUE_OPTIONAL, 'Which webserver to use')
+            ->addOption('path', null, InputOption::VALUE_OPTIONAL, 'The local path for the synchronised folder')
+            ->addOption('destination', null, InputOption::VALUE_OPTIONAL, 'The destination path')
+            ->addOption('docroot', null, InputOption::VALUE_OPTIONAL, 'The path to the Drupal installation')
+            ->addOption('install-site', null, InputOption::VALUE_NONE, 'Install the site when the VM is provisioned')
+            ->addOption('drupal-version', null, InputOption::VALUE_OPTIONAL, 'Which version of Drupal to install.')
+            ->addOption('drush-version', null, InputOption::VALUE_OPTIONAL, 'Which version of Drush to install.')
+            ->addOption('database-name', null, InputOption::VALUE_OPTIONAL, 'The name of the database to use', null)
+            ->addOption('database-user', null, InputOption::VALUE_OPTIONAL, 'The database user to use', null)
+            ->addOption('database-password', null, InputOption::VALUE_OPTIONAL, 'The database password to use', null)
+            ->addOption('build-composer', null, InputOption::VALUE_NONE, 'Whether to install using "composer create-project".')
+            ->addOption('build-composer-project', null, InputOption::VALUE_NONE, 'Whether to install from Drupal VM’s drupal.composer.json file.')
+            ->addOption('build-makefile', null, InputOption::VALUE_NONE, 'Whether to install from a Drush Make file')
+            ->addOption('installed-extras', null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'Install from a predefined list of extra packages')
+            ->addOption('extra-packages', null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'Add any additional apt or yum packages')
+            ->addOption('no-dashboard', null, InputOption::VALUE_NONE, 'Install without the Drupal VM Dashboard')
+            ->addOption('no-comments', null, InputOption::VALUE_NONE, 'Remove comments from config.yml')
+            ->addOption('overwrite', null, InputOption::VALUE_NONE, 'Overwrite an existing file if one exists');
+    }
 
     /**
-     * {@inheritdoc}
+     * @var \DrupalVm\Command\Config\ConfigFile
      */
-    protected $aliases = ['config', 'generate'];
+    private $configFile;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected $description = 'Generates a new config.yml file';
-
-    /**
-     * {@inheritdoc}
-     */
     public function __construct(Container $container)
     {
         parent::__construct($container);
@@ -45,50 +66,15 @@ class GenerateCommand extends GeneratorCommand
     /**
      * {@inheritdoc}
      */
-    protected function options()
-    {
-        return [
-            ['machine-name', null, InputOption::VALUE_REQUIRED, 'The Vagrant machine name'],
-            ['hostname', null, InputOption::VALUE_OPTIONAL, 'The Vagrant hostname'],
-            ['ip-address', null, InputOption::VALUE_REQUIRED, 'The IP address for the VM'],
-            ['cpus', null, InputOption::VALUE_REQUIRED, 'The number of CPUs'],
-            ['memory', null, InputOption::VALUE_REQUIRED, 'The amount of memory'],
-            ['webserver', null, InputOption::VALUE_OPTIONAL, 'Which webserver to use'],
-            ['path', null, InputOption::VALUE_OPTIONAL, 'The local path for the synchronised folder'],
-            ['destination', null, InputOption::VALUE_OPTIONAL, 'The destination path'],
-            ['docroot', null, InputOption::VALUE_OPTIONAL, 'The path to the Drupal installation'],
-            ['install-site', null, InputOption::VALUE_NONE, 'Install the site when the VM is provisioned'],
-            ['drupal-version', null, InputOption::VALUE_OPTIONAL, 'Which version of Drupal to install is being used?'],
-            ['drush-version', null, InputOption::VALUE_OPTIONAL, 'Which version of Drush to install'],
-            ['database-name', null, InputOption::VALUE_OPTIONAL, 'The name of the database to use', null],
-            ['database-user', null, InputOption::VALUE_OPTIONAL, 'The database user to use', null],
-            ['database-password', null, InputOption::VALUE_OPTIONAL, 'The database password to use', null],
-            ['build-composer', null, InputOption::VALUE_NONE, 'Whether to install using "composer create-project".'],
-            ['build-composer-project', null, InputOption::VALUE_NONE, 'Whether to install from Drupal VM’s drupal.composer.json file.'],
-            ['build-makefile', null, InputOption::VALUE_NONE, 'Whether to install from a Drush Make file'],
-            ['installed-extras', null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'Install from a predefined list of extra packages'],
-            ['extra-packages', null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'Add any additional apt or yum packages'],
-            ['no-dashboard', null, InputOption::VALUE_NONE, 'Install without the Drupal VM Dashboard'],
-            ['no-comments', null, InputOption::VALUE_NONE, 'Remove comments from config.yml'],
-            ['overwrite', null, InputOption::VALUE_NONE, 'Overwrite an existing file if one exists'],
-        ];
-    }
-
-    /**
-     * @var \DrupalVm\Command\Config\ConfigFileTemplate
-     */
-    private $template;
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function initialize(InputInterface $input, OutputInterface $output)
-    {
+    protected function initialize(
+        InputInterface $input,
+        OutputInterface $output
+    ) {
         parent::initialize($input, $output);
 
         // Check for a defaults file.
         if (!file_exists($path = sprintf('%s/.drupal-vm-generator/%s', $this->getUserHomeDirectory(), 'defaults.yml'))) {
-            $this->error('No defaults file found. Please run "drupalvm init", then re-run this command.');
+            $this->io->error('No defaults file found. Please run "drupalvm init", then re-run this command.');
 
             exit(1);
         }
@@ -109,10 +95,10 @@ class GenerateCommand extends GeneratorCommand
         $defaults = $this->configFile->toArray();
 
         // --machine-name option
-        if (!$this->option('machine-name')) {
+        if (!$input->getOption('machine-name')) {
             $input->setOption(
                 'machine-name',
-                $this->ask(
+                $this->io->ask(
                     'Enter a Vagrant machine name',
                     $defaults['vagrant_machine_name']
                 )
@@ -120,21 +106,21 @@ class GenerateCommand extends GeneratorCommand
         }
 
         // --hostname option
-        if (!$this->option('hostname')) {
+        if (!$input->getOption('hostname')) {
             $input->setOption(
                 'hostname',
-                $this->ask(
+                $this->io->ask(
                     'Enter a hostname for Vagrant',
-                    $this->option('machine-name').'.'.$defaults['vagrant_hostname_suffix']
+                    $input->getOption('machine-name').'.'.$defaults['vagrant_hostname_suffix']
                 )
             );
         }
 
         // --ip-address option
-        if (!$this->option('ip-address')) {
+        if (!$input->getOption('ip-address')) {
             $input->setOption(
                 'ip-address',
-                $this->ask(
+                $this->io->ask(
                     'Enter an IP address for the Vagrant VM',
                     $defaults['vagrant_ip_address']
                 )
@@ -142,10 +128,10 @@ class GenerateCommand extends GeneratorCommand
         }
 
         // --cpus option
-        if (!$this->option('cpus')) {
+        if (!$input->getOption('cpus')) {
             $input->setOption(
                 'cpus',
-                $this->ask(
+                $this->io->ask(
                     'How many CPUs?',
                     $defaults['vagrant_cpus']
                 )
@@ -153,19 +139,19 @@ class GenerateCommand extends GeneratorCommand
         }
 
         // --memory option
-        if (!$this->option('memory')) {
+        if (!$input->getOption('memory')) {
             $input->setOption(
                 'memory',
-                $this->ask(
+                $this->io->ask(
                     'How much memory?',
                     $defaults['vagrant_memory']
                 )
             );
         }
 
-        $this->configFile->setBuildComposerProject($this->option('build-composer-project'));
-        $this->configFile->setBuildComposer($this->option('build-composer'));
-        $this->configFile->setBuildMakeFile($this->option('build-makefile'));
+        $this->configFile->setBuildComposerProject($input->getOption('build-composer-project'));
+        $this->configFile->setBuildComposer($input->getOption('build-composer'));
+        $this->configFile->setBuildMakeFile($input->getOption('build-makefile'));
 
         if (!$this->configFile->isSelectedBuildOption()) {
             // --build-composer-project option.
@@ -189,7 +175,7 @@ class GenerateCommand extends GeneratorCommand
         }
 
         // --webserver option
-        if (!$this->option('webserver')) {
+        if (!$input->getOption('webserver')) {
             $input->setOption(
                 'webserver',
                 $this->io->choiceNoList(
@@ -201,10 +187,10 @@ class GenerateCommand extends GeneratorCommand
         }
 
         // --path option
-        if (!$this->option('path')) {
+        if (!$input->getOption('path')) {
             $input->setOption(
                 'path',
-                $this->ask(
+                $this->io->ask(
                     'Enter the local path for your Drupal site',
                     getcwd()
                 )
@@ -212,10 +198,10 @@ class GenerateCommand extends GeneratorCommand
         }
 
         // --destination option
-        if (!$this->option('destination')) {
+        if (!$input->getOption('destination')) {
             $input->setOption(
                 'destination',
-                $this->ask(
+                $this->io->ask(
                     'Enter the destination path for your Drupal site',
                     $defaults['destination']
                 )
@@ -223,10 +209,10 @@ class GenerateCommand extends GeneratorCommand
         }
 
         // --docroot option
-        if (!$this->option('docroot')) {
+        if (!$input->getOption('docroot')) {
             $input->setOption(
                 'docroot',
-                $this->ask(
+                $this->io->ask(
                     'Enter the path to the docroot of the Drupal site',
                     $this->configFile->getDocroot()
                 )
@@ -234,7 +220,7 @@ class GenerateCommand extends GeneratorCommand
         }
 
         // --install-site option
-        if (!$this->option('install-site')) {
+        if (!$input->getOption('install-site')) {
             $input->setOption(
                 'install-site',
                 $this->io->confirm(
@@ -245,7 +231,7 @@ class GenerateCommand extends GeneratorCommand
         }
 
         // --drupal-version option
-        if ($this->option('install-site') && !$this->option('drupal-version')) {
+        if ($input->getOption('install-site') && !$input->getOption('drupal-version')) {
             $input->setOption(
                 'drupal-version',
                 $this->io->choiceNoList(
@@ -257,10 +243,10 @@ class GenerateCommand extends GeneratorCommand
         }
 
         // --database-name option
-        if (!$this->option('database-name')) {
+        if (!$input->getOption('database-name')) {
             $input->setOption(
                 'database-name',
-                $this->ask(
+                $this->io->ask(
                     'Enter the name of the database to use',
                     $defaults['drupal_mysql_database']
                 )
@@ -268,10 +254,10 @@ class GenerateCommand extends GeneratorCommand
         }
 
         // --database-user option
-        if (!$this->option('database-user')) {
+        if (!$input->getOption('database-user')) {
             $input->setOption(
                 'database-user',
-                $this->ask(
+                $this->io->ask(
                     'Enter the database username to use',
                     $defaults['drupal_mysql_user']
                 )
@@ -279,10 +265,10 @@ class GenerateCommand extends GeneratorCommand
         }
 
         // --database-password option
-        if (!$this->option('database-password')) {
+        if (!$input->getOption('database-password')) {
             $input->setOption(
                 'database-password',
-                $this->ask(
+                $this->io->ask(
                     'Enter the database password to use',
                     $defaults['drupal_mysql_password']
                 )
@@ -290,17 +276,17 @@ class GenerateCommand extends GeneratorCommand
         }
 
         // --installed-extras option
-        if (!$this->option('installed-extras')) {
+        if (!$input->getOption('installed-extras')) {
             $input->setOption('installed-extras', $this->extrasQuestion($io));
         }
 
         // --extra-packages option
-        if (!$this->option('extra-packages')) {
+        if (!$input->getOption('extra-packages')) {
             $input->setOption('extra-packages', $this->packagesQuestion($io));
         }
 
         // --no-dashboard option
-        if (!$this->option('no-dashboard')) {
+        if (!$input->getOption('no-dashboard')) {
             $useDashboard = $this->io->confirm(
                 'Use the dashboard?',
                 $defaults['use_dashboard']
@@ -309,7 +295,7 @@ class GenerateCommand extends GeneratorCommand
         }
 
         // --no-comments option
-        if (!$this->option('no-comments')) {
+        if (!$input->getOption('no-comments')) {
             $input->setOption(
                 'no-comments',
                 $io->confirm(

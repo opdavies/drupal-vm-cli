@@ -11,22 +11,43 @@ class GenerateCommand extends GeneratorCommand
 {
     const FILENAME = 'drupal.make.yml';
 
-    protected $command = 'make:generate';
-
-    protected $description = 'Generate a new drupal.make.yml file';
-
     /**
      * {@inheritdoc}
      */
-    protected function options()
+    protected function configure()
     {
-        return [
-            ['drupal-version', null, InputOption::VALUE_OPTIONAL, 'Which version of Drupal'],
-            ['branch', null, InputOption::VALUE_OPTIONAL, 'Which branch to use'],
-            ['other-projects', null, InputOption::VALUE_IS_ARRAY | InputOption::VALUE_OPTIONAL, ''],
-            ['no-comments', null, InputOption::VALUE_NONE, 'Removes all comments from the generated file'],
-            ['overwrite', null, InputOption::VALUE_NONE, 'Overwrites an existing file']
-        ];
+        $this->setName('make:generate')
+            ->setDescription('Generate a new drupal.make.yml file')
+            ->addOption(
+                'drupal-version',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'Which version of Drupal'
+            )
+            ->addOption(
+                'branch',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'Which branch to use'
+            )
+            ->addOption(
+                'other-projects',
+                null,
+                InputOption::VALUE_IS_ARRAY | InputOption::VALUE_OPTIONAL,
+                ''
+            )
+            ->addOption(
+                'no-comments',
+                null,
+                InputOption::VALUE_NONE,
+                'Removes all comments from the generated file'
+            )
+            ->addOption(
+                'overwrite',
+                null,
+                InputOption::VALUE_NONE,
+                'Overwrites an existing file'
+            );
     }
 
     /**
@@ -44,7 +65,7 @@ class GenerateCommand extends GeneratorCommand
         if (!$input->getOption('drupal-version')) {
             $input->setOption(
                 'drupal-version',
-                $this->ask(
+                $this->io->ask(
                     'Enter a Drupal version',
                     '8.x'
                 )
@@ -55,7 +76,7 @@ class GenerateCommand extends GeneratorCommand
         if (!$input->getOption('branch')) {
             $input->setOption(
                 'branch',
-                $this->ask(
+                $this->io->ask(
                     'Enter a branch name',
                     '8.1.x'
                 )

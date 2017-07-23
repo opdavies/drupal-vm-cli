@@ -17,7 +17,7 @@ abstract class GeneratorCommand extends Command
                 $this->projectDir.'/'.$filename
             ) && !$this->input->getOption('overwrite')
         ) {
-            $this->error("$filename already exists.");
+            $this->io->error(sprintf('%s already exists.', $filename));
 
             exit(1);
         }
@@ -52,7 +52,7 @@ abstract class GeneratorCommand extends Command
 
         $this->container['filesystem']->dumpFile($filename, $contents);
 
-        $this->success(sprintf('%s created', $filename));
+        $this->io->success(sprintf('%s created', $filename));
 
         return $this;
     }
