@@ -252,6 +252,18 @@ class ConfigFile
     }
 
     /**
+     * Determine the version of Drush to install.
+     *
+     * @return string
+     */
+    public function getDrushVersion()
+    {
+        // TODO: Calculate default value based on Drupal version.
+
+        return $this->drushVersion;
+    }
+
+    /**
      * Return possible webserver options.
      *
      * @return array
@@ -295,7 +307,7 @@ class ConfigFile
             'drupal_mysql_password' => $this->databasePassword,
             'drupal_mysql_user' => $this->databaseUser,
             'drupalvm_webserver' => $this->webserver,
-            'drush_version' => $this->drushVersion,
+            'drush_version' => $this->getDrushVersion(),
             'extra_packages' => $this->extraPackages,
             'install_site' => $this->installSite,
             'installed_extras' => $this->installedExtras,
